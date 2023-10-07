@@ -10,5 +10,6 @@ module.exports = {
     `App.{js,ts,vue}`,
     `app.{js,ts,vue}`,
   ],
+  extend: {},
   plugins: ['@tailwindcss/typography'],
 }
