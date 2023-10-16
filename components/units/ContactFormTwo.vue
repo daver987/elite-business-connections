@@ -10,7 +10,10 @@ const schema = z.object({
   phoneNumber: z.string().min(1, 'Phone number is required'),
   email: z.string().email('Invalid email'),
   source: z.string().min(1, 'Please select where you heard about us'),
-  businessType: z.string().min(1, 'Please select your type of business'),
+  businessType: z.object({
+    label: z.string().min(1, 'Please select your type of business'),
+    value: z.number()
+  }),
   additionalInfo: z.string().optional(),
 })
 
@@ -36,8 +39,8 @@ async function submit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UCard
-    class="space-y-4 max-w-2xl w-full"
-    :ui="{ background: 'dark:bg-gray-950' }"
+      class="space-y-4 max-w-2xl w-full"
+      :ui="{ background: 'dark:bg-gray-950' }"
   >
     <template #header>
       <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
@@ -46,81 +49,81 @@ async function submit(event: FormSubmitEvent<Schema>) {
       <div class="grid grid-cols-2 gap-4">
         <UFormGroup class="mb-2" label="First Name" name="firstName" required>
           <UInput
-            v-model="state.firstName"
-            placeholder="Enter your first name"
-            size="lg"
+              v-model="state.firstName"
+              placeholder="Enter your first name"
+              size="lg"
           />
         </UFormGroup>
         <UFormGroup class="mb-3" label="Last Name" name="lastName" required>
           <UInput
-            v-model="state.lastName"
-            placeholder="Enter your last name"
-            size="lg"
+              v-model="state.lastName"
+              placeholder="Enter your last name"
+              size="lg"
           />
         </UFormGroup>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <UFormGroup
-          class="mb-3"
-          label="Phone Number"
-          name="phoneNumber"
-          required
+            class="mb-3"
+            label="Phone Number"
+            name="phoneNumber"
+            required
         >
           <UInput
-            v-model="state.phoneNumber"
-            placeholder="Enter your phone number"
-            type="tel"
-            size="lg"
+              v-model="state.phoneNumber"
+              placeholder="Enter your phone number"
+              type="tel"
+              size="lg"
           />
         </UFormGroup>
         <UFormGroup class="mb-2" label="Email" name="email" required>
           <UInput
-            v-model="state.email"
-            placeholder="you@example.com"
-            size="lg"
-            type="email"
+              v-model="state.email"
+              placeholder="you@example.com"
+              size="lg"
+              type="email"
           />
         </UFormGroup>
       </div>
       <div class="grid grid-cols-2 gap-4">
         <UFormGroup
-          class="mb-3"
-          label="Where did you hear about us?"
-          name="source"
-          required
+            class="mb-3"
+            label="Where did you hear about us?"
+            name="source"
+            required
         >
           <USelectMenu
-            v-model="state.source"
-            :options="sourceOptions"
-            placeholder="Select an option"
-            size="lg"
+              v-model="state.source"
+              :options="sourceOptions"
+              placeholder="Select an option"
+              size="lg"
           />
         </UFormGroup>
         <UFormGroup
-          class="mb-3"
-          label="Type of Business"
-          name="businessType"
-          required
+            class="mb-3"
+            label="Type of Business"
+            name="businessType"
+            required
         >
           <USelectMenu
-            v-model="state.businessType"
-            :options="businessTypeOptions"
-            placeholder="Select your type of business"
-            searchable
-            searchable-placeholder="Search for business type"
-            size="lg"
+              v-model="state.businessType"
+              :options="businessTypeOptions"
+              placeholder="Select your type of business"
+              searchable
+              searchable-placeholder="Search for business type"
+              size="lg"
           />
         </UFormGroup>
       </div>
       <UFormGroup
-        class="mb-6"
-        label="Additional Information"
-        name="additionalInfo"
+          class="mb-6"
+          label="Additional Information"
+          name="additionalInfo"
       >
         <UTextarea
-          v-model="state.additionalInfo"
-          placeholder="Any additional information you'd like to provide?"
-          size="lg"
+            v-model="state.additionalInfo"
+            placeholder="Any additional information you'd like to provide?"
+            size="lg"
         />
       </UFormGroup>
       <UButton size="lg" block type="submit">Submit</UButton>
