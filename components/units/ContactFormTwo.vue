@@ -46,7 +46,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
       <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
     </template>
     <UForm :schema="schema" :state="state" @submit="submit">
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup class="mb-2" label="First Name" name="firstName" required>
           <UInput
               v-model="state.firstName"
@@ -54,7 +54,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
               size="lg"
           />
         </UFormGroup>
-        <UFormGroup class="mb-3" label="Last Name" name="lastName" required>
+        <UFormGroup class="mb-2" label="Last Name" name="lastName" required>
           <UInput
               v-model="state.lastName"
               placeholder="Enter your last name"
@@ -62,9 +62,9 @@ async function submit(event: FormSubmitEvent<Schema>) {
           />
         </UFormGroup>
       </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup
-            class="mb-3"
+            class="mb-2"
             label="Phone Number"
             name="phoneNumber"
             required
@@ -85,9 +85,9 @@ async function submit(event: FormSubmitEvent<Schema>) {
           />
         </UFormGroup>
       </div>
-      <div class="grid grid-cols-2 gap-4">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup
-            class="mb-3"
+            class="mb-2"
             label="Where did you hear about us?"
             name="source"
             required
@@ -100,7 +100,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
           />
         </UFormGroup>
         <UFormGroup
-            class="mb-3"
+            class="mb-2"
             label="Type of Business"
             name="businessType"
             required
@@ -116,7 +116,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
         </UFormGroup>
       </div>
       <UFormGroup
-          class="mb-6"
+          class="mb-2"
           label="Additional Information"
           name="additionalInfo"
       >

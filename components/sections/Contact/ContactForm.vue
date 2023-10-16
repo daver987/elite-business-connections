@@ -122,7 +122,7 @@
           </dl>
         </div>
       </div>
-      <div class="ml-8 flex flex-col justify-center items-center">
+      <div class="lg:ml-8 flex flex-col justify-center items-center mt-8">
         <ContactFormTwo />
       </div>
     </UContainer>
