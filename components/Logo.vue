@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 interface Props {
   to?: string
   size?: string
@@ -7,20 +7,20 @@ interface Props {
 }
 
 defineOptions({
-  inheritAttrs: false,
+  inheritAttrs: false
 })
 
 const props = withDefaults(defineProps<Props>(), {
   to: '/',
   size: 'md',
   altText: 'EBC Logo',
-  customClass: '',
+  customClass: ''
 })
 
 const emit = defineEmits(['logoClick'])
 
 const styleObject = reactive({
-  maxWidth: '200px',
+  maxWidth: '200px'
 })
 
 const logoSize = ref('200px')
@@ -45,18 +45,26 @@ const handleClick = () => {
 }
 
 const colorMode = useColorMode().value
+
+const calculateHeight = (width: string) => {
+  const actualWidth = parseFloat(width)
+  const actualHeight = (actualWidth * 48.6) / 200
+  return `${actualHeight}px`
+}
 </script>
 
 <template>
-  <div :style="styleObject">
-    <NuxtLink :to="to" @click="handleClick">
+  <div :style='styleObject'>
+    <NuxtLink :to='to' @click='handleClick'>
       <NuxtImg
-        :alt="altText"
+        :alt='altText'
+        :width='logoSize'
+        :height='calculateHeight(logoSize)'
         :src="
-          colorMode === 'dark'
-            ? '/images/ebc_logo_dark.png'
-            : '/images/ebc_logo_light.png'
-        "
+      colorMode === 'dark'
+      ? '/images/ebc_logo_dark.png'
+      : '/images/ebc_logo_light.png'
+      "
       />
     </NuxtLink>
   </div>

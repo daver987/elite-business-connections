@@ -59,7 +59,7 @@
           specialized training.
         </p>
         <div class="mt-10 flex items-center justify-center gap-x-6">
-          <UButton id="join-now" to="/contact" size="lg" label="Join Now" />
+          <UButton id="join-now" variant="solid" color='primary' to="/contact" size="lg" label="Join Now" />
 
           <UButton
             id="learn-more"
