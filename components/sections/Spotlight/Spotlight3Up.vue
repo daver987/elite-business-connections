@@ -12,10 +12,13 @@ const query = groq`*[ _type == "spotlight" && defined(slug.current) ] | order(_c
   author[]->{image,name}
 }`
 
-const { data: spotlightData } = await useSanityQuery<Spotlight[]>(query)
+const sanity = useSanity()
+
+const { data: spotlightData } = await useAsyncData('spotlights', () =>
+  sanity.fetch<{ spotlights: Spotlight[] }>(query)
+)
 
 console.log(spotlightData.value)
-//todo fix aspect ratio  in image
 </script>
 
 <template>
@@ -34,7 +37,7 @@ console.log(spotlightData.value)
       >
         <UCard
           class="flex flex-col items-start justify-between"
-          v-for="spotlight in spotlightData"
+          v-for="spotlight in spotlightData as Spotlight[]"
           :ui="{
             header: {
               padding: 'px-0 py-0 sm:px-0',

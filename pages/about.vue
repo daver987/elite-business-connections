@@ -1,16 +1,9 @@
 <script setup lang="ts">
-import type { Member } from '~/types/teamMembers'
-
 definePageMeta({
   layout: 'default',
   path: '/about',
   colorMode: 'dark',
 })
-
-const { data: teamMembers } = await useFetch('/api/team-members')
-const members = teamMembers.value?.members
-const socialIcons: Record<string, string> | undefined =
-  teamMembers.value?.socialIcons
 </script>
 
 <template>
@@ -106,10 +99,8 @@ const socialIcons: Record<string, string> | undefined =
 
       <CoreValues />
 
-      <MembersThreeUp
-        :members="members as Member[]"
-        :socialIcons="socialIcons"
-      />
+      <MembersThreeUp />
+
       <CtaElevate />
     </div>
   </div>

@@ -1,10 +1,67 @@
 <script setup lang="ts">
-import type { Member } from '~/types/teamMembers'
+type SocialPlatform = 'Facebook' | 'Instagram'
 
-const { members, socialIcons } = defineProps<{
-  members: Member[]
-  socialIcons?: Record<string, string>
-}>()
+type SocialLinkData = {
+  link: string
+  platform: string
+}
+
+interface MemberData {
+  role: string
+  name: string
+  avatar: string
+  socialLinks: SocialLinkData[]
+}
+
+interface SocialLink {
+  platform: SocialPlatform
+  url: string
+}
+
+interface Member {
+  name: string
+  role: string
+  imageUrl: string
+  social: SocialLink[]
+}
+
+const socialIcons: Record<SocialPlatform, string> = {
+  Facebook: 'logos:facebook',
+  Instagram: 'skill-icons:instagram',
+}
+
+const transformMemberData = (data: any[]): Member[] => {
+  return data.map((item) => {
+    const member: Member = {
+      name: item.name,
+      role: item.role,
+      imageUrl: item.avatar,
+      social: item.socialLinks.map((social: any) => {
+        const platform = social.platform.split(':')[1]
+        return {
+          platform: platform.charAt(0).toUpperCase() + platform.slice(1),
+          url: social.link,
+        }
+      }),
+    }
+    return member
+  })
+}
+
+const query = groq`*[ _type == "member"]{
+    role,
+    name,
+    "avatar": avatar.asset->url,
+    "socialLinks": socials[]
+}`
+
+const sanity = useSanity()
+
+const { data: memberData } = await useAsyncData('members', () =>
+  sanity.fetch<{ memberData: MemberData[] }>(query)
+)
+
+const transformedMemberData = transformMemberData(memberData.value)
 </script>
 
 <template>
@@ -25,7 +82,7 @@ const { members, socialIcons } = defineProps<{
       >
         <li
           class="rounded-2xl bg-gray-800 px-8 py-10"
-          v-for="member in members"
+          v-for="member in transformedMemberData"
           :key="member.name"
         >
           <NuxtImg
@@ -42,12 +99,12 @@ const { members, socialIcons } = defineProps<{
           <ul class="mt-6 flex justify-center gap-x-6" role="list">
             <li v-for="social in member.social" :key="social.platform">
               <NuxtLink
-                v-if="socialIcons![social.platform]"
+                v-if="socialIcons[social.platform]"
                 :to="social.url"
                 target="_blank"
               >
                 <span class="sr-only">{{ social.platform }}</span>
-                <Icon class="w-6 h-6" :name="socialIcons![social.platform]" />
+                <Icon class="w-6 h-6" :name="socialIcons[social.platform]" />
               </NuxtLink>
             </li>
           </ul>

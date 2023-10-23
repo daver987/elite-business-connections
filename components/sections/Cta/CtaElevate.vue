@@ -2,7 +2,11 @@
 const query = groq`*[ _type == "benefit"]{
   name
 }`
-const { data: benefits } = await useSanityQuery(query)
+const sanity = useSanity()
+
+const { data: benefits } = await useAsyncData('benefits', () =>
+  sanity.fetch<{ benefits: { name: string } }>(query)
+)
 </script>
 
 <template>
@@ -33,7 +37,7 @@ const { data: benefits } = await useSanityQuery(query)
             >
               <li
                 class="flex gap-x-3"
-                v-for="benefit in benefits"
+                v-for="benefit in benefits as { name: string }[]"
                 :key="benefit"
               >
                 <Icon

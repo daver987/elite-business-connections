@@ -1,7 +1,7 @@
 import type { PortableTextBlock, Slug, ImageAsset } from '@sanity/types'
 
 interface Author {
-  fullName: string
+  name: string
   image: string
   slug: string
 }

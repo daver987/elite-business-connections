@@ -29,7 +29,6 @@ const query = groq`*[_type == "spotlight"]{
 const { data: spotlight } = await useSanityQuery(query, {
   slug: route.params.slug,
 })
-console.log('Content:', spotlight.value)
 const { featuredImage, excerpt, title, body, authorName, avatar, _updatedAt } =
   spotlight.value[0]
 const convertedHtml = convertToHtml(body)

@@ -11,7 +11,6 @@ export default defineType({
   name: 'socialComponent',
   title: 'Social Component',
   type: 'object',
-  fieldsets: [{name: 'social', title: 'Social media handles'}],
   fields: [
     defineField({
       name: 'platform',
