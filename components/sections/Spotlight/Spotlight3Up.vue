@@ -65,7 +65,7 @@ console.log(spotlightData.value)
                 <h3
                   class="mt-3 text-lg font-semibold leading-6 text-gray-200 group-hover:text-gray-300"
                 >
-                  <NuxtLink :href="`/spotlight/${spotlight.slug.current}`">
+                  <NuxtLink :href="`/spotlights/${spotlight.slug.current}`">
                     <span class="absolute inset-0" />
                     {{ spotlight.title }}
                   </NuxtLink>

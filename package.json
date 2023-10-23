@@ -26,10 +26,6 @@
     "singleQuote": true
   },
   "devDependencies": {
-    "@formkit/icons": "^1.2.2",
-    "@formkit/nuxt": "^1.2.2",
-    "@formkit/pro": "^0.117.5",
-    "@formkit/themes": "^1.2.2",
     "@nuxt/devtools": "latest",
     "@nuxt/image": "1.0.0",
     "@nuxtjs/google-fonts": "^3.0.2",

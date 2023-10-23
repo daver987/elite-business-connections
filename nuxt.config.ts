@@ -16,7 +16,6 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-icon',
-    '@formkit/nuxt',
     '@nuxt/image',
     'nuxt-svgo',
     '@nuxt/ui',
@@ -37,9 +36,6 @@ export default defineNuxtConfig({
       },
     ],
   ],
-  formkit: {
-    autoImport: true,
-  },
   components: [
     { path: '~/components/sections', extensions: ['.vue'], pathPrefix: false },
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
