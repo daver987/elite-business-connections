@@ -15,12 +15,12 @@
     "sanity"
   ],
   "dependencies": {
-    "@sanity-typed/zod": "^1.11.0",
-    "@sanity/vision": "^3.17.0",
+    "@sanity-typed/zod": "^1.11.2",
+    "@sanity/vision": "^3.18.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
-    "sanity": "^3.17.0",
+    "sanity": "^3.18.1",
     "sanity-plugin-asset-source-openai": "^1.1.2",
     "sanity-plugin-asset-source-unsplash": "^1.1.1",
     "sanity-plugin-icon-manager": "^1.2.2",
@@ -30,9 +30,9 @@
   },
   "devDependencies": {
     "@sanity/eslint-config-studio": "^3.0.1",
-    "@types/react": "^18.2.25",
-    "@types/styled-components": "^5.1.28",
-    "eslint": "^8.50.0",
+    "@types/react": "^18.2.31",
+    "@types/styled-components": "^5.1.29",
+    "eslint": "^8.52.0",
     "prettier": "^3.0.3",
     "typescript": "^5.2.2"
   },

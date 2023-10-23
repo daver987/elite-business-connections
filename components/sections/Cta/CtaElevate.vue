@@ -1,12 +1,8 @@
 <script setup lang="ts">
-const benefits = [
-  'Expand Your Network',
-  'Generate Quality Referrals',
-  'Professional Development',
-  'Exclusive Business Insights',
-  'Build Strong Relationships',
-  'Access to Business Resources',
-]
+const query = groq`*[ _type == "benefit"]{
+  name
+}`
+const { data: benefits } = await useSanityQuery(query)
 </script>
 
 <template>
@@ -45,7 +41,7 @@ const benefits = [
                   name="heroicons:check-circle-solid"
                   aria-hidden="true"
                 />
-                {{ benefit }}
+                {{ benefit.name }}
               </li>
             </ul>
             <div class="mt-10 flex">

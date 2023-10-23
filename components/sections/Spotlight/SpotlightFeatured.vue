@@ -1,5 +1,4 @@
 <script setup>
-// import { spotlightsData } from '~/data/spotlights'
 import useUtilities from '~/utils/formatters'
 
 const featuredSpotlightArray = getRandomElements(spotlightsData, 1)
