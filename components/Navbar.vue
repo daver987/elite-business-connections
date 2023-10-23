@@ -23,7 +23,7 @@ const delayedClose = () => {
 <template>
   <UContainer class='absolute inset-x-0 top-0 z-50'>
     <nav
-      class='flex items-center justify-between border-white/10 py-3 border-b-[0.5px]'
+      class='flex items-center justify-between h-20 border-white/10 py-3 border-b-[0.5px]'
       aria-label='Global'
     >
       <div class='flex lg:flex-1'>
