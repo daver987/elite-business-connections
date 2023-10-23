@@ -51,7 +51,7 @@ const { data: benefits } = await useAsyncData('benefits', () =>
             <div class="mt-10 flex">
               <NuxtLink
                 class="text-sm font-semibold leading-6 text-primary"
-                to="/about"
+                to="/contact"
                 >Learn More About EBC
                 <span aria-hidden="true">&rarr;</span></NuxtLink
               >
