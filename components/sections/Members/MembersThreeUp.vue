@@ -30,7 +30,7 @@ const socialIcons: Record<SocialPlatform, string> = {
   Instagram: 'skill-icons:instagram',
 }
 
-const transformMemberData = (data: any[]): Member[] => {
+const transformMemberData = (data: MemberData[]): Member[] => {
   return data.map((item) => {
     const member: Member = {
       name: item.name,
@@ -48,11 +48,12 @@ const transformMemberData = (data: any[]): Member[] => {
   })
 }
 
-const query = groq`*[ _type == "member"]{
+const query = groq`*[ _type == "member"] | order(_createdAt asc){
     role,
     name,
     "avatar": avatar.asset->url,
-    "socialLinks": socials[]
+    "socialLinks": socials[],
+     _createdAt
 }`
 
 const sanity = useSanity()

@@ -66,5 +66,9 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
     domains: ['unsplash.com'],
+    sanity: {
+      projectId: '1bmrd0be',
+      dataset: 'production',
+    }
   },
 })
