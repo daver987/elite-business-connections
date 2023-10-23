@@ -17,7 +17,7 @@ const statQuery = groq`*[ _type == "stats"]{
     start
 }`
 const { data: statArray } = await useSanityQuery(statQuery)
-console.log("Stat array",statArray)
+console.log('Stat array', statArray)
 
 const statContainer: Ref<null | HTMLElement> = ref(null)
 const observer: Ref<IntersectionObserver | null> = ref(null)
