@@ -105,9 +105,6 @@
 </template>
 
 <style scoped>
-.container {
-  min-height: 100dvh;
-}
 
 #learn-more {
   text-decoration: none;
