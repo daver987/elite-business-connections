@@ -1,7 +1,23 @@
+<script setup lang="ts">
+interface Props {
+  backgroundImage: string
+  headline: string
+  content: string
+  buttonOne: {
+    label: string
+    href: string
+  }
+  buttonTwo: {
+    label: string
+    href: string
+  }
+}
+</script>
+
 <template>
-  <div class="relative isolate overflow-hidden">
+  <div class="container relative isolate overflow-hidden">
     <NuxtImg
-      class="absolute inset-0 -z-10 h-full w-full object-cover"
+      class="absolute inset-0 -z-10 h-full w-full object-left lg:object-center object-cover"
       src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2830&q=80&blend=111827&sat=-100&exp=15&blend-mode=multiply"
       alt="Cover Image"
     />
@@ -101,6 +117,10 @@
 </template>
 
 <style scoped>
+.container {
+  min-height: 100dvh;
+}
+
 #learn-more {
   text-decoration: none;
 }

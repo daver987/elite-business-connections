@@ -16,7 +16,7 @@ interface Props {
 defineProps<Props>()
 
 const options = {
-  rewind: true,
+  rewind: false,
   speed: 4000,
   perPage: 1,
   mediaQuery: 'min',

@@ -1,5 +1,5 @@
 import useUtilities from '~/utils/formatters'
-import { Spotlight } from '~/types/spotlights'
+import type { Spotlight } from '~/types/spotlight'
 
 export default defineEventHandler(async (event) => {
   const { formatDate } = useUtilities()
@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
       uri: '/spotlight',
     },
     author: {
-      fullName: 'Kinahealth',
+      name: 'Kinahealth',
       uri: '/author/kina-health',
       companyRole: 'Kinahealth',
     },

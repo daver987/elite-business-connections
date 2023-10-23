@@ -2,12 +2,12 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'testimonial',
-  title: 'Testimonial',
+  title: 'Testimonials',
   type: 'document',
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Company',
       type: 'string',
     }),
     defineField({
@@ -32,14 +32,10 @@ export default defineType({
       },
     }),
     defineField({
-      name: 'company',
-      title: 'Company',
-      type: 'string',
-    }),
-    defineField({
       name: 'quote',
       title: 'Quotation',
       type: 'text',
+      rows: 4,
       description: 'The testimonial',
     }),
   ],

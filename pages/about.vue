@@ -1,23 +1,12 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import { Icon } from '#components'
-import { Member } from '~/types/teamMembers'
+import type { Member } from '~/types/teamMembers'
 
 definePageMeta({
   layout: 'default',
   path: '/about',
   colorMode: 'dark',
 })
-
-const statQuery = groq`*[ _type == "stats"]{
-  position,
-    duration,
-    symbol,
-    end,
-    title,
-    start
-}`
-const { data: statArray } = await useSanityQuery(statQuery)
-const stats = statArray.value
 
 const { data: coreValueArray, pending } = await useFetch('/api/core-values')
 const { data: teamMembers } = await useFetch('/api/team-members')
@@ -28,16 +17,16 @@ const socialIcons: Record<string, string> | undefined =
 </script>
 
 <template>
-  <div class='bg-gray-900' v-if='!pending'>
-    <div class='relative isolate'>
+  <div class="bg-gray-900" v-if="!pending">
+    <div class="relative isolate">
       <!-- Background -->
       <div
-        class='absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl'
-        aria-hidden='true'
+        class="absolute inset-x-0 top-4 -z-10 flex transform-gpu justify-center overflow-hidden blur-3xl"
+        aria-hidden="true"
       >
         <div
-          class='aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-25'
-          style='
+          class="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#80caff] to-[#4f46e5] opacity-25"
+          style="
             clip-path: polygon(
               73.6% 51.7%,
               91.7% 11.8%,
@@ -56,17 +45,17 @@ const socialIcons: Record<string, string> | undefined =
               58.9% 0.2%,
               73.6% 51.7%
             );
-          '
+          "
         />
       </div>
 
       <!-- Header section -->
-      <div class='px-6 pt-14 lg:px-8'>
-        <div class='mx-auto max-w-2xl pt-24 text-center sm:pt-40'>
-          <h2 class='text-4xl font-bold tracking-tight text-white sm:text-6xl'>
+      <div class="px-6 pt-14 lg:px-8">
+        <div class="mx-auto max-w-2xl pt-24 text-center sm:pt-40">
+          <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
             Building Business Together
           </h2>
-          <p class='mt-6 text-lg leading-8 text-gray-300'>
+          <p class="mt-6 text-lg leading-8 text-gray-300">
             Elite Business Connections is your partner in growth, networking,
             and success. Together, we create opportunities that last.
           </p>
@@ -74,10 +63,10 @@ const socialIcons: Record<string, string> | undefined =
       </div>
 
       <!-- Content section -->
-      <UContainer class='mt-20'>
-        <div class='mx-auto max-w-2xl lg:mx-0 lg:max-w-none'>
+      <UContainer class="mt-20">
+        <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none">
           <div
-            class='grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 lg:max-w-none lg:grid-cols-2'
+            class="grid max-w-xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 lg:max-w-none lg:grid-cols-2"
           >
             <div>
               <p>
@@ -86,7 +75,7 @@ const socialIcons: Record<string, string> | undefined =
                 entrepreneurs, freelancers, and business leaders can connect and
                 share valuable insights.
               </p>
-              <p class='mt-8'>
+              <p class="mt-8">
                 Our members benefit from weekly meetings, structured networking
                 events, and the chance to learn from guest speakers from various
                 industries.
@@ -98,7 +87,7 @@ const socialIcons: Record<string, string> | undefined =
                 opportunities. We offer a community that is committed to helping
                 each other succeed.
               </p>
-              <p class='mt-8'>
+              <p class="mt-8">
                 From generating referrals to gaining business advice, our
                 members share a commitment to each other’s growth and success.
               </p>
@@ -107,53 +96,53 @@ const socialIcons: Record<string, string> | undefined =
         </div>
       </UContainer>
 
-      <Stats :stats='stats' />
+      <Stats />
 
       <!-- Image section -->
-      <UContainer class='mt-28 sm:mt-32'>
+      <UContainer class="mt-28 sm:mt-32">
         <NuxtImg
-          class='aspect-[9/4] w-full object-cover xl:rounded-3xl'
-          src='https://images.unsplash.com/photo-1573164574572-cb89e39749b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80'
-          alt='EBC Meeting'
+          class="aspect-[9/4] w-full object-cover xl:rounded-3xl"
+          src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80"
+          alt="EBC Meeting"
         />
       </UContainer>
 
       <!-- Values section -->
-      <UContainer class='mt-32'>
-        <div class='mx-auto max-w-2xl lg:mx-0'>
-          <h2 class='text-3xl font-bold tracking-tight text-white sm:text-4xl'>
+      <UContainer class="mt-32">
+        <div class="mx-auto max-w-2xl lg:mx-0">
+          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
             Core Values
           </h2>
-          <p class='mt-6 text-lg leading-8 text-gray-300'>
+          <p class="mt-6 text-lg leading-8 text-gray-300">
             Our values are the foundation upon which we build strong business
             relationships, foster growth, and create opportunities.
           </p>
         </div>
 
         <dl
-          class='mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16'
+          class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16"
         >
           <div
-            class='relative pl-9'
-            v-for='value in coreValues'
-            :key='value.name'
+            class="relative pl-9"
+            v-for="value in coreValues"
+            :key="value.name"
           >
-            <dt class='inline font-semibold text-white'>
+            <dt class="inline font-semibold text-white">
               <Icon
-                class='absolute left-1 top-1 h-5 w-5 text-primary'
-                :name='value.icon'
-                aria-hidden='true'
+                class="absolute left-1 top-1 h-5 w-5 text-primary"
+                :name="value.icon"
+                aria-hidden="true"
               />
               {{ value.name }}
             </dt>
             {{ ' ' }}
-            <dd class='inline'>{{ value.description }}</dd>
+            <dd class="inline">{{ value.description }}</dd>
           </div>
         </dl>
       </UContainer>
       <MembersThreeUp
-        :members='members as Member[]'
-        :socialIcons='socialIcons'
+        :members="members as Member[]"
+        :socialIcons="socialIcons"
       />
       <CtaElevate />
     </div>

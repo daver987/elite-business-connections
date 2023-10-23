@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Member } from '~/types/teamMembers'
+import type { Member } from '~/types/teamMembers'
 
 const { members, socialIcons } = defineProps<{
   members: Member[]

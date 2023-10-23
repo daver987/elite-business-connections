@@ -1,53 +1,55 @@
 interface MarkDef {
-  _type: string;
-  href?: string;
-  _key: string;
+  _type: string
+  href?: string
+  _key: string
 }
 
 interface Child {
-  _type: string;
-  text: string;
-  marks?: string[];
+  _type: string
+  text: string
+  marks?: string[]
 }
 
 interface BodyItem {
-  _type: string;
-  style?: string;
-  postImage?: string;
-  markDefs?: MarkDef[];
-  children?: Child[];
+  _type: string
+  style?: string
+  postImage?: string
+  markDefs?: MarkDef[]
+  children?: Child[]
 }
 
 export function convertToHtml(body: BodyItem[]): string {
-  let htmlOutput = '';
+  let htmlOutput = ''
   body.forEach((item) => {
     if (item._type === 'image') {
-      htmlOutput += `<img src="${item.postImage}" alt="image">\n`;
+      htmlOutput += `<img src="${item.postImage}" alt="image">\n`
     } else if (item._type === 'block') {
-      const style = item.style;
-      const markDefs: Record<string, MarkDef> = Object.fromEntries(item.markDefs?.map(d => [d._key, d]) || []);
+      const style = item.style
+      const markDefs: Record<string, MarkDef> = Object.fromEntries(
+        item.markDefs?.map((d) => [d._key, d]) || []
+      )
       if (style === 'h1') {
-        const text = item.children![0].text;
-        htmlOutput += `<h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">${text}</h1>\n`;
+        const text = item.children![0].text
+        htmlOutput += `<h1 class="text-4xl font-bold tracking-tight text-white sm:text-5xl">${text}</h1>\n`
       } else if (style === 'h2') {
-        const text = item.children![0].text;
-        htmlOutput += `<h2 class="text-3xl font-bold tracking-tight sm:text-4xl capitalize">${text}</h2>\n`;
+        const text = item.children![0].text
+        htmlOutput += `<h2 class="text-3xl font-bold tracking-tight sm:text-4xl capitalize">${text}</h2>\n`
       } else if (style === 'normal') {
-        let paragraph = '';
+        let paragraph = ''
         item.children!.forEach((child) => {
-          let text = child.text;
-          const marks = child.marks || [];
+          let text = child.text
+          const marks = child.marks || []
           if (marks.length > 0) {
             marks.forEach((mark) => {
-              const href = markDefs[mark].href;
-              text = `<a class="text-primary hover:text-primary" href="${href}">${text}</a>`;
-            });
+              const href = markDefs[mark].href
+              text = `<a class="text-primary hover:text-primary" href="${href}">${text}</a>`
+            })
           }
-          paragraph += `${text} `;
-        });
-        htmlOutput += `<p class="text-base leading-7 text-gray-300">${paragraph.trim()}</p>\n`;
+          paragraph += `${text} `
+        })
+        htmlOutput += `<p class="text-base leading-7 text-gray-300">${paragraph.trim()}</p>\n`
       }
     }
-  });
-  return htmlOutput;
+  })
+  return htmlOutput
 }

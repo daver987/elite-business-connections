@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   },
   modules: [
     'nuxt-icon',
+    '@formkit/nuxt',
     '@nuxt/image',
     'nuxt-svgo',
     '@nuxt/ui',
@@ -36,6 +37,9 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  formkit: {
+    autoImport: true,
+  },
   components: [
     { path: '~/components/sections', extensions: ['.vue'], pathPrefix: false },
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
@@ -66,9 +70,5 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
     domains: ['unsplash.com'],
-  },
-  runtimeConfig: {
-    CONTENT_DELIVERY_ACCESS_TOKEN: process.env.CONTENT_DELIVERY_ACCESS_TOKEN,
-    CONTENTFUL_SPACE_ID: process.env.CONTENTFUL_SPACE_ID,
   },
 })

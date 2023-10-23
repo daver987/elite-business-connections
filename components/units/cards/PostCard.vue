@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Spotlight } from '~/types/Spotlight'
+import type { Spotlight } from '~/types/spotlight'
 
 const spotlight = defineProps<Spotlight>()
 

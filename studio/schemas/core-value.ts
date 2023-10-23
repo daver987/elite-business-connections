@@ -1,8 +1,8 @@
 import {defineField, defineType} from 'sanity'
 
 export default defineType({
-  name: 'category',
-  title: 'Categories',
+  name: 'coreValues',
+  title: 'Core Values',
   type: 'document',
   fields: [
     defineField({
@@ -14,7 +14,12 @@ export default defineType({
       name: 'description',
       title: 'Description',
       type: 'text',
-      rows: 3,
+      rows: 2,
+    }),
+    defineField({
+      type: 'icon.manager',
+      name: 'icon',
+      title: 'Icon',
     }),
   ],
 })

@@ -1,4 +1,3 @@
-<script setup lang="ts"></script>
 <template>
   <div class="relative isolate bg-gray-900">
     <UContainer class="mx-auto grid grid-cols-1 lg:grid-cols-2">

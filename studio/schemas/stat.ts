@@ -2,7 +2,7 @@ import {defineField, defineType} from 'sanity'
 
 export default defineType({
   name: 'stats',
-  title: 'Stat',
+  title: 'Stats',
   type: 'document',
   fields: [
     defineField({
@@ -14,15 +14,16 @@ export default defineType({
       name: 'symbol',
       title: 'Symbol',
       type: 'string',
-      description: 'The symbol that you want before or after your stat like $ - +',
+      description: 'The symbol that you want before or after your stat like $ % - +',
       initialValue: '+',
       options: {
         list: [
-          { title: '$', value: '$' },
-          { title: '+', value: '+' },
-          { title: '-', value: '-' },
+          {title: '$', value: '$'},
+          {title: '%', value: '%'},
+          {title: '+', value: '+'},
+          {title: '-', value: '-'},
         ],
-      }
+      },
     }),
     defineField({
       name: 'position',
@@ -32,10 +33,10 @@ export default defineType({
       initialValue: 'end',
       options: {
         list: [
-          { title: 'Start', value: 'start' },
-          { title: 'End', value: 'end' },
+          {title: 'Start', value: 'start'},
+          {title: 'End', value: 'end'},
         ],
-      }
+      },
     }),
     defineField({
       name: 'duration',
@@ -47,7 +48,7 @@ export default defineType({
       name: 'start',
       title: 'Start Number',
       type: 'number',
-      description: 'The starting number'
+      description: 'The starting number',
     }),
     defineField({
       name: 'end',
