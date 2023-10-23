@@ -86,7 +86,7 @@ definePageMeta({
         </div>
       </UContainer>
 
-      <Stats />
+      <LazyStats />
 
       <!-- Image section -->
       <UContainer class="mt-28 sm:mt-32">
@@ -97,11 +97,11 @@ definePageMeta({
         />
       </UContainer>
 
-      <CoreValues />
+      <LazyCoreValues />
 
-      <MembersThreeUp />
+      <LazyMembersThreeUp />
 
-      <CtaElevate />
+      <LazyCtaElevate />
     </div>
   </div>
 </template>

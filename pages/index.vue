@@ -9,12 +9,12 @@ definePageMeta({
 <template>
   <div>
     <HeroMain />
-    <FeaturesWhyUs />
-    <Stats is-boxed />
-    <MembersThreeUp />
+    <LazyFeaturesWhyUs />
+    <LazyStats is-boxed />
+    <LazyMembersThreeUp />
     <ClientOnly>
-      <Testimonial />
+      <LazyTestimonial />
     </ClientOnly>
-    <CtaElevate />
+    <LazyCtaElevate />
   </div>
 </template>
