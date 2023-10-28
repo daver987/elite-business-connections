@@ -19,6 +19,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-svgo',
     '@nuxt/ui',
+    'nuxt-directus',
     [
       '@nuxtjs/sanity',
       {
@@ -36,6 +37,17 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  runtimeConfig: {
+    DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
+    DIRECTUS_URL: process.env.DIRECTUS_URL,
+  },
+
+  directus: {
+    url: process.env.DIRECTUS_URL,
+    token: process.env.DIRECTUS_SERVER_TOKEN,
+    devtools: true,
+  },
+
   components: [
     { path: '~/components/sections', extensions: ['.vue'], pathPrefix: false },
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
@@ -69,6 +81,6 @@ export default defineNuxtConfig({
     sanity: {
       projectId: '1bmrd0be',
       dataset: 'production',
-    }
+    },
   },
 })

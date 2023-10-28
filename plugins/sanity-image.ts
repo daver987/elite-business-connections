@@ -6,7 +6,6 @@ export default defineNuxtPlugin(() => {
     return builder.image(source).auto('format')
   }
   return {
-    provide: { urlFor }
+    provide: { urlFor },
   }
 })
-

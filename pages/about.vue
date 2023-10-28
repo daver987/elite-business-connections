@@ -4,30 +4,35 @@ definePageMeta({
   path: '/about',
   colorMode: 'dark',
 })
+
 useSeoMeta({
   title: 'About Elite Business Connections - Building Business Together',
-  description: 'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
+  description:
+    'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
   ogTitle: 'About Elite Business Connections - Building Business Together',
-  ogDescription: 'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
+  ogDescription:
+    'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
   ogImage: 'https://elitebusinessconnections.ca//images/ebc_logo_light.png',
   ogUrl: 'https://elitebusinessconnections.ca/about/',
   twitterTitle: 'About Elite Business Connections - Building Business Together',
-  twitterDescription: 'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
-  twitterImage: 'https://elitebusinessconnections.ca//images/ebc_logo_light.png',
-  twitterCard: 'summary'
+  twitterDescription:
+    'Elite Business Connections is your partner in growth, networking, and success. We offer a platform for entrepreneurs, freelancers, and business leaders to connect, share insights, and succeed together.',
+  twitterImage:
+    'https://elitebusinessconnections.ca//images/ebc_logo_light.png',
+  twitterCard: 'summary',
 })
 
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: 'en',
   },
   link: [
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
+      href: '/favicon.png',
+    },
+  ],
 })
 </script>
 
