@@ -4,6 +4,7 @@ interface Props {
   size?: string
   altText?: string
   customClass?: string
+  autoMargin?: boolean
 }
 
 defineOptions({
@@ -15,13 +16,14 @@ const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   altText: 'EBC Logo',
   customClass: '',
+  autoMargin: true,
 })
 
 const emit = defineEmits(['logoClick'])
 
 const styleObject = reactive({
   maxWidth: '200px',
-  margin: 'auto',
+  margin: props.autoMargin ? 'auto' : '',
 })
 
 const logoSize = ref('200px')
