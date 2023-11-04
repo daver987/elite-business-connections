@@ -1,129 +1,134 @@
-<template>
-  <div class="relative isolate bg-gray-900">
-    <UContainer class="mx-auto grid grid-cols-1 lg:grid-cols-2">
-      <div class="relative pb-20 pt-24 sm:pt-32 lg:static lg:py-48">
-        <div class="mx-auto max-w-xl lg:mx-0 lg:max-w-lg">
-          <div
-            class="absolute inset-y-0 left-0 -z-10 w-full overflow-hidden ring-1 ring-white/5 lg:w-1/2"
-          >
-            <svg
-              class="absolute inset-0 h-full w-full stroke-gray-700 [mask-image:radial-gradient(100%_100%_at_top_right,white,transparent)]"
-              aria-hidden="true"
-            >
-              <defs>
-                <pattern
-                  id="54f88622-e7f8-4f1d-aaf9-c2f5e46dd1f2"
-                  width="200"
-                  height="200"
-                  x="100%"
-                  y="-1"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <path d="M130 200V.5M.5 .5H200" fill="none" />
-                </pattern>
-              </defs>
-              <svg class="overflow-visible fill-gray-800/20" x="100%" y="-1">
-                <path d="M-470.5 0h201v201h-201Z" stroke-width="0" />
-              </svg>
-              <rect
-                width="100%"
-                height="100%"
-                stroke-width="0"
-                fill="url(#54f88622-e7f8-4f1d-aaf9-c2f5e46dd1f2)"
-              />
-            </svg>
-            <div
-              class="absolute -left-56 top-[calc(100%-13rem)] transform-gpu blur-3xl lg:left-[max(-14rem,calc(100%-59rem))] lg:top-[calc(50%-7rem)]"
-              aria-hidden="true"
-            >
-              <div
-                class="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-br from-[#f87171] to-[#b91c1c] opacity-20"
-                style="
-                  clip-path: polygon(
-                    74.1% 56.1%,
-                    100% 38.6%,
-                    97.5% 73.3%,
-                    85.5% 100%,
-                    80.7% 98.2%,
-                    72.5% 67.7%,
-                    60.2% 37.8%,
-                    52.4% 32.2%,
-                    47.5% 41.9%,
-                    45.2% 65.8%,
-                    27.5% 23.5%,
-                    0.1% 35.4%,
-                    17.9% 0.1%,
-                    27.6% 23.5%,
-                    76.1% 2.6%,
-                    74.1% 56.1%
-                  );
-                "
-              />
-            </div>
-          </div>
-          <h2 class="text-3xl font-bold tracking-tight text-white">
-            Connect With Elite Business Connections
-          </h2>
-          <p class="mt-6 text-lg leading-8 text-gray-300">
-            At Elite Business Connections, we're more than just a networking
-            platform. We are committed to fostering genuine relationships that
-            help accelerate your business growth. Contact us today to discover
-            the power of collective intelligence and targeted referrals. Let's
-            elevate your business to new heights, together.
-          </p>
+<script setup lang="ts">
+import { ref } from 'vue'
+import { z } from 'zod'
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import { professions } from '~/data/professions'
 
-          <dl class="mt-10 space-y-4 text-base leading-7 text-gray-300">
-            <div class="flex gap-x-4">
-              <dt class="flex-none">
-                <span class="sr-only">Address</span>
-                <Icon
-                  class="h-7 w-6 text-primary-400"
-                  name="heroicons:building-office-2"
-                  aria-hidden="true"
-                />
-              </dt>
-              <dd>Clarence Creek, ON</dd>
-            </div>
-            <div class="flex gap-x-4">
-              <dt class="flex-none">
-                <span class="sr-only">Telephone</span>
-                <Icon
-                  class="h-7 w-6 text-primary-400"
-                  name="heroicons:phone"
-                  aria-hidden="true"
-                />
-              </dt>
-              <dd>
-                <NuxtLink
-                  class="hover:text-white text-sm"
-                  href="tel:+16134541828"
-                  >+1 (613) 454-1828
-                </NuxtLink>
-              </dd>
-            </div>
-            <div class="flex gap-x-4">
-              <dt class="flex-none">
-                <span class="sr-only">Email</span>
-                <Icon
-                  class="h-7 w-6 text-primary-400"
-                  name="heroicons:envelope"
-                  aria-hidden="true"
-                />
-              </dt>
-              <dd>
-                <NuxtLink
-                  class="text-sm hover:text-white"
-                  to="mailto:info@elitebusinessconnections.com"
-                  >info@elitebusinessconnections.ca
-                </NuxtLink>
-              </dd>
-            </div>
-          </dl>
-        </div>
+const schema = z.object({
+  firstName: z.string().min(1, 'First name is required'),
+  lastName: z.string().min(1, 'Last name is required'),
+  phoneNumber: z.string().min(1, 'Phone number is required'),
+  email: z.string().email('Invalid email'),
+  source: z.string().min(1, 'Please select where you heard about us'),
+  businessType: z.object({
+    label: z.string().min(1, 'Please select your type of business'),
+    value: z.number(),
+  }),
+  additionalInfo: z.string().optional(),
+})
+
+type Schema = z.output<typeof schema>
+
+const state = reactive({
+  first_name: undefined,
+  last_name: undefined,
+  phone_number: undefined,
+  email_address: undefined,
+  source: undefined,
+  business_type: undefined,
+  additional_info: undefined,
+})
+
+const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
+const businessTypeOptions = professions()
+
+async function submit(event: FormSubmitEvent<Schema>) {
+  console.log('Form submitted:', event.data)
+}
+</script>
+
+<template>
+  <UCard
+    class="space-y-4 max-w-2xl w-full"
+    :ui="{ background: 'dark:bg-gray-950' }"
+  >
+    <template #header>
+      <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
+    </template>
+    <UForm :schema="schema" :state="state" @submit="submit">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <UFormGroup class="mb-2" label="First Name" name="firstName" required>
+          <UInput
+            v-model="state.first_name"
+            placeholder="Enter your first name"
+            size="lg"
+          />
+        </UFormGroup>
+        <UFormGroup class="mb-2" label="Last Name" name="lastName" required>
+          <UInput
+            v-model="state.last_name"
+            placeholder="Enter your last name"
+            size="lg"
+          />
+        </UFormGroup>
       </div>
-      <div class="lg:ml-8 flex flex-col justify-center items-center mt-8">
-        <ContactFormTwo />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <UFormGroup
+          class="mb-2"
+          label="Phone Number"
+          name="phoneNumber"
+          required
+        >
+          <UInput
+            v-model="state.phone_number"
+            placeholder="Enter your phone number"
+            type="tel"
+            size="lg"
+          />
+        </UFormGroup>
+        <UFormGroup class="mb-2" label="Email" name="email" required>
+          <UInput
+            v-model="state.email_address"
+            placeholder="you@example.com"
+            size="lg"
+            type="email"
+          />
+        </UFormGroup>
       </div>
-    </UContainer>
-  </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <UFormGroup
+          class="mb-2"
+          label="Where did you hear about us?"
+          name="source"
+          required
+        >
+          <USelectMenu
+            v-model="state.source"
+            :options="sourceOptions"
+            placeholder="Select an option"
+            size="lg"
+          />
+        </UFormGroup>
+        <UFormGroup
+          class="mb-2"
+          label="Type of Business"
+          name="businessType"
+          required
+        >
+          <USelectMenu
+            v-model="state.business_type"
+            :options="businessTypeOptions"
+            placeholder="Select your type of business"
+            searchable
+            searchable-placeholder="Search for business type"
+            size="lg"
+          />
+        </UFormGroup>
+      </div>
+      <div class="grid grid-cols-1">
+        <UFormGroup
+          class="mb-2"
+          label="Additional Information"
+          name="additionalInfo"
+        >
+          <UTextarea
+            v-model="state.additional_info"
+            placeholder="Any additional information you'd like to provide?"
+            size="lg"
+          />
+        </UFormGroup>
+      </div>
+      <UButton size="lg" block type="submit">Submit</UButton>
+    </UForm>
+  </UCard>
 </template>
