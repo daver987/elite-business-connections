@@ -11,7 +11,7 @@ const msg = {
   text: 'and easy to do anywhere, even with Node.js',
   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
 }
-
+const SENDGRID_TEMPLATE = "d-55354bbb9b7749d8b3b7938892330028"
 export default defineEventHandler(async (event) => {
   const apiKey = getConfig()
   sgMail.setApiKey(apiKey)

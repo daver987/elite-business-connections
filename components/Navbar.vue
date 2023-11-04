@@ -26,7 +26,7 @@ const delayedClose = () => {
       aria-label="Global"
     >
       <div class="flex lg:flex-1 items-start">
-        <Logo size="md" :autoMargin='false' />
+        <Logo size="md" :autoMargin="false" />
       </div>
       <div class="flex lg:hidden">
         <UButton
