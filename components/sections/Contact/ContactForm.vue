@@ -1,6 +1,6 @@
 <script setup lang='ts'>
 import { ref } from '#imports'
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormSubmitEvent, NotificationColor } from '@nuxt/ui/dist/runtime/types'
 import { professions } from '~/data/professions'
 import { type ContactForm, contactFormSchema } from '~/types/ContactForm'
 import { type SendgridResponse, sendgridResponseSchema } from '~/types/ContactForm'
@@ -21,7 +21,7 @@ const loading = ref(false)
 const toast = useToast()
 const dangerIcon = 'i-heroicons-no-symbol'
 
-async function showToast(color: string, title: string, description: string, icon: string) {
+async function showToast(color: NotificationColor, title: string, description: string, icon: string) {
   toast.add({
     id: 'form_submission',
     color: color,
@@ -33,13 +33,13 @@ async function showToast(color: string, title: string, description: string, icon
 }
 
 async function resetForm() {
-  state.first_name = undefined;
-  state.last_name = undefined;
-  state.phone_number = undefined;
-  state.email_address = undefined;
-  state.source = undefined;
-  state.business_type = undefined;
-  state.additional_info = undefined;
+  state.first_name = undefined
+  state.last_name = undefined
+  state.phone_number = undefined
+  state.email_address = undefined
+  state.source = undefined
+  state.business_type = undefined
+  state.additional_info = undefined
 }
 
 async function submit(event: FormSubmitEvent<ContactForm>) {
@@ -53,14 +53,14 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
 
   console.log('Form submitted:', event.data)
   console.log('Server Response', response)
+
   if (sendgridResponse[0].statusCode === 202) {
-   await showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
-   await resetForm()
+    await showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
+    await resetForm()
   } else {
-    await showToast('red-600', 'Error', 'There was an error submitting your form.', dangerIcon)
+    await showToast('red', 'Error', 'There was an error submitting your form.', dangerIcon)
   }
   loading.value = false
-  return response
 }
 </script>
 
