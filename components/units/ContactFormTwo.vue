@@ -19,7 +19,7 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>
 
-const state = ref({
+const state = reactive({
   first_name: undefined,
   last_name: undefined,
   phone_number: undefined,
@@ -49,14 +49,14 @@ async function submit(event: FormSubmitEvent<Schema>) {
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup class="mb-2" label="First Name" name="firstName" required>
           <UInput
-            v-model="state.firstName"
+            v-model="state.first_name"
             placeholder="Enter your first name"
             size="lg"
           />
         </UFormGroup>
         <UFormGroup class="mb-2" label="Last Name" name="lastName" required>
           <UInput
-            v-model="state.lastName"
+            v-model="state.last_name"
             placeholder="Enter your last name"
             size="lg"
           />
@@ -70,7 +70,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
           required
         >
           <UInput
-            v-model="state.phoneNumber"
+            v-model="state.phone_number"
             placeholder="Enter your phone number"
             type="tel"
             size="lg"
@@ -78,7 +78,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
         </UFormGroup>
         <UFormGroup class="mb-2" label="Email" name="email" required>
           <UInput
-            v-model="state.email"
+            v-model="state.email_address"
             placeholder="you@example.com"
             size="lg"
             type="email"
@@ -106,7 +106,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
           required
         >
           <USelectMenu
-            v-model="state.businessType"
+            v-model="state.business_type"
             :options="businessTypeOptions"
             placeholder="Select your type of business"
             searchable
@@ -122,7 +122,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
           name="additionalInfo"
         >
           <UTextarea
-            v-model="state.additionalInfo"
+            v-model="state.additional_info"
             placeholder="Any additional information you'd like to provide?"
             size="lg"
           />
