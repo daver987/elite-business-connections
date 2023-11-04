@@ -18,26 +18,23 @@ export type ContactForm = z.output<typeof contactFormSchema>
 
 export const sendgridResponseSchema = z.object({
   response: z.array(
-    z.union([
-      z.object({
-        statusCode: z.number(),
-        body: z.string(),
-        headers: z.object({
-          server: z.string(),
-          date: z.string(),
-          'content-length': z.string(),
-          connection: z.string(),
-          'x-message-id': z.string(),
-          'access-control-allow-origin': z.string(),
-          'access-control-allow-methods': z.string(),
-          'access-control-allow-headers': z.string(),
-          'access-control-max-age': z.string(),
-          'x-no-cors-reason': z.string(),
-          'strict-transport-security': z.string()
-        })
-      }),
-      z.string()
-    ])
+    z.object({
+      statusCode: z.number(),
+      body: z.string().optional(),
+      headers: z.object({
+        server: z.string(),
+        date: z.string(),
+        'content-length': z.string(),
+        connection: z.string(),
+        'x-message-id': z.string(),
+        'access-control-allow-origin': z.string(),
+        'access-control-allow-methods': z.string(),
+        'access-control-allow-headers': z.string(),
+        'access-control-max-age': z.string(),
+        'x-no-cors-reason': z.string(),
+        'strict-transport-security': z.string()
+      }).optional()
+    })
   )
 })
 
