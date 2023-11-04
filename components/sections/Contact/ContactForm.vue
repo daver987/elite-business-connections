@@ -4,20 +4,20 @@ import { z } from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { professions } from '~/data/professions'
 
-const schema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  phoneNumber: z.string().min(1, 'Phone number is required'),
-  email: z.string().email('Invalid email'),
+const contactFormSchema = z.object({
+  first_name: z.string().min(1, 'First name is required'),
+  last_name: z.string().min(1, 'Last name is required'),
+  phone_number: z.string().min(1, 'Phone number is required'),
+  email_address: z.string().email('Invalid email'),
   source: z.string().min(1, 'Please select where you heard about us'),
-  businessType: z.object({
+  business_type: z.object({
     label: z.string().min(1, 'Please select your type of business'),
     value: z.number(),
   }),
-  additionalInfo: z.string().optional(),
+  additional_info: z.string().optional(),
 })
 
-type Schema = z.output<typeof schema>
+type ContactForm = z.output<typeof contactFormSchema>
 
 const state = reactive({
   first_name: undefined,
@@ -32,8 +32,13 @@ const state = reactive({
 const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
 const businessTypeOptions = professions()
 
-async function submit(event: FormSubmitEvent<Schema>) {
+async function submit(event: FormSubmitEvent<ContactForm>) {
+  const data = await $fetch("/api/sendgrid",{
+    method: "POST",
+    body: event.data
+  })
   console.log('Form submitted:', event.data)
+  return data
 }
 </script>
 
@@ -45,7 +50,7 @@ async function submit(event: FormSubmitEvent<Schema>) {
     <template #header>
       <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
     </template>
-    <UForm :schema="schema" :state="state" @submit="submit">
+    <UForm :schema="contactFormSchema" :state="state" @submit="submit">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup class="mb-2" label="First Name" name="firstName" required>
           <UInput
