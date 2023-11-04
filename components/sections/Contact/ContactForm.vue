@@ -19,14 +19,6 @@ const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
 const businessTypeOptions = professions()
 const loading = ref(false)
 const toast = useToast()
-toast.add({
-  id: 'update_downloaded',
-  color: 'primary',
-  title: 'Notification',
-  description: 'This is a notification.',
-  timeout: 7000,
-  icon: 'i-heroicons-check-badge'
-})
 const dangerIcon = 'i-heroicons-no-symbol'
 
 async function showToast(color, title, description, icon) {
@@ -58,10 +50,10 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
   console.log('Form submitted:', event.data)
   console.log('Server Response', response)
   if (sendgridResponse[0].statusCode === 202) {
-    showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
-    resetForm()
+   await showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
+   await resetForm()
   } else {
-    showToast('red-600', 'Error', 'There was an error submitting your form.', dangerIcon)
+    await showToast('red-600', 'Error', 'There was an error submitting your form.', dangerIcon)
   }
   loading.value = false
   return response
@@ -76,16 +68,6 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
     <template #header>
       <h2 class='text-white text-4xl text-center'>Contact Us Today</h2>
     </template>
-    <UNotification
-      icon='i-heroicons-check-badge'
-      color='primary'
-      :id='6'
-      title='Notification'
-      description='This is a notification.'
-      :timeout='600000'
-    />
-
-
     <UForm :schema='contactFormSchema' :state='state' @submit='submit'>
       <div class='grid grid-cols-1 lg:grid-cols-2 gap-4'>
         <UFormGroup class='mb-2' label='First Name' name='firstName' required>
@@ -169,7 +151,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
           />
         </UFormGroup>
       </div>
-      <UButton size='lg' block type='submit' :loading='loading.value'>Submit</UButton>
+      <UButton size='lg' block type='submit' :loading='loading'>Submit</UButton>
     </UForm>
   </UCard>
 </template>
