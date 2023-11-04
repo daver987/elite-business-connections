@@ -21,7 +21,7 @@ const loading = ref(false)
 const toast = useToast()
 const dangerIcon = 'i-heroicons-no-symbol'
 
-async function showToast(color, title, description, icon) {
+async function showToast(color: string, title: string, description: string, icon: string) {
   toast.add({
     id: 'form_submission',
     color: color,
@@ -33,9 +33,13 @@ async function showToast(color, title, description, icon) {
 }
 
 async function resetForm() {
-  for (let key in state) {
-    state[key] = undefined
-  }
+  state.first_name = undefined;
+  state.last_name = undefined;
+  state.phone_number = undefined;
+  state.email_address = undefined;
+  state.source = undefined;
+  state.business_type = undefined;
+  state.additional_info = undefined;
 }
 
 async function submit(event: FormSubmitEvent<ContactForm>) {
