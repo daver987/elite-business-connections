@@ -1,4 +1,7 @@
-<script setup>
+<script setup lang='ts'>
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import { subscriptionSchema } from '~/types/Email'
+
 const navigation = {
   opportunities: [
     { name: 'Networking', href: '#' },
@@ -48,6 +51,15 @@ const navigation = {
   ],
 }
 const currentYear = new Date().getFullYear()
+
+
+const state = reactive({
+  email_address: undefined,
+})
+
+async function submit(event: FormSubmitEvent<{ email: string }>) {
+  // handle form submission
+}
 </script>
 
 <template>
@@ -121,25 +133,11 @@ const currentYear = new Date().getFullYear()
           <h3 class="text-base font-semibold leading-6 text-white">
             Subscribe to our newsletter
           </h3>
-          <p class="mt-2 text-sm leading-6 text-gray-300">
+          <p class="my-2  text-sm leading-6 text-gray-300">
             The latest news, articles, and resources, sent to your inbox weekly.
           </p>
-          <script setup lang="ts">
-          import { ref, reactive } from '#imports'
-          import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
-          import { emailSchema } from '~/types/Email'
 
-          const state = reactive({
-            email_address: undefined,
-          })
-
-          async function submit(event: FormSubmitEvent<{ email: string }>) {
-            // handle form submission
-          }
-          </script>
-
-          <template>
-            <UForm :schema="emailSchema" :state="state" @submit="submit">
+            <UForm :schema="subscriptionSchema" :state="state" @submit="submit">
               <UFormGroup label="Email address" name="email" required>
                 <UInput
                   v-model="state.email_address"
@@ -150,7 +148,6 @@ const currentYear = new Date().getFullYear()
               </UFormGroup>
               <UButton size="lg" block type="submit">Subscribe</UButton>
             </UForm>
-          </template>
         </div>
       </div>
       <div
