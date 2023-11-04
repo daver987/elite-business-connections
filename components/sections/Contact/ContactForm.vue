@@ -29,6 +29,23 @@ toast.add({
 })
 const dangerIcon = 'i-heroicons-no-symbol'
 
+async function showToast(color, title, description, icon) {
+  toast.add({
+    id: 'form_submission',
+    color: color,
+    title: title,
+    description: description,
+    timeout: 7000,
+    icon: icon
+  })
+}
+
+async function resetForm() {
+  for (let key in state) {
+    state[key] = undefined
+  }
+}
+
 async function submit(event: FormSubmitEvent<ContactForm>) {
   loading.value = true
   const response = await $fetch<SendgridResponse>('/api/sendgrid', {
@@ -40,8 +57,13 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
 
   console.log('Form submitted:', event.data)
   console.log('Server Response', response)
-  if (sendgridResponse[0].statusCode === 202)
-    loading.value = false
+  if (sendgridResponse[0].statusCode === 202) {
+    showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
+    resetForm()
+  } else {
+    showToast('red-600', 'Error', 'There was an error submitting your form.', dangerIcon)
+  }
+  loading.value = false
   return response
 }
 </script>
@@ -147,7 +169,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
           />
         </UFormGroup>
       </div>
-      <UButton size='lg' block type='submit'>Submit</UButton>
+      <UButton size='lg' block type='submit' :loading='loading.value'>Submit</UButton>
     </UForm>
   </UCard>
 </template>
