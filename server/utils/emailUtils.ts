@@ -5,7 +5,7 @@ import type { MailDataRequired } from '@sendgrid/helpers/classes/mail'
 export async function sendContactFormEmail(
   contactForm: ContactForm,
   apiKey: string
-): Promise<any> {
+): Promise<{ statusCode: number }> {
   try {
     const form = contactForm
     console.log('Parsed Contact Form in Send Email:', form)
@@ -32,6 +32,9 @@ export async function sendContactFormEmail(
           },
         },
       ],
+      cc: {
+        email: 'david@rodina.ca',
+      },
       from: {
         email: 'contact@elitebusinessconnections.ca',
         name: 'Elite Business Connections',
@@ -56,8 +59,9 @@ export async function sendContactFormEmail(
     }
     const response = await sgMail.send(msg)
     console.log(response)
-    return response
+    return { statusCode: response[0].statusCode }
   } catch (e) {
     console.error('Error Sending Email', e)
+    return { statusCode: 404 }
   }
 }

@@ -10,9 +10,10 @@ export default defineEventHandler(async (event) => {
   const apiKey = getConfig()
 
   try {
-    const response = await sendContactFormEmail(body, apiKey)
+    const statusCode = await sendContactFormEmail(body, apiKey)
     console.log('Email sent')
-    return { response }
+
+    return statusCode
   } catch (error) {
     console.error(error)
     return { error }
