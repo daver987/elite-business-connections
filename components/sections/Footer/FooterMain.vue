@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { subscriptionSchema } from '~/types/Email'
 
@@ -51,7 +51,6 @@ const navigation = {
   ],
 }
 const currentYear = new Date().getFullYear()
-
 
 const state = reactive({
   email_address: undefined,
@@ -133,21 +132,21 @@ async function submit(event: FormSubmitEvent<{ email: string }>) {
           <h3 class="text-base font-semibold leading-6 text-white">
             Subscribe to our newsletter
           </h3>
-          <p class="my-2  text-sm leading-6 text-gray-300">
+          <p class="my-2 text-sm leading-6 text-gray-300">
             The latest news, articles, and resources, sent to your inbox weekly.
           </p>
 
-            <UForm :schema="subscriptionSchema" :state="state" @submit="submit">
-              <UFormGroup label="Email address" name="email" required>
-                <UInput
-                  v-model="state.email_address"
-                  placeholder="Enter your email"
-                  size="lg"
-                  type="email"
-                />
-              </UFormGroup>
-              <UButton size="lg" block type="submit">Subscribe</UButton>
-            </UForm>
+          <UForm :schema="subscriptionSchema" :state="state" @submit="submit">
+            <UFormGroup label="Email address" name="email" required>
+              <UInput
+                v-model="state.email_address"
+                placeholder="Enter your email"
+                size="lg"
+                type="email"
+              />
+            </UFormGroup>
+            <UButton size="lg" block type="submit">Subscribe</UButton>
+          </UForm>
         </div>
       </div>
       <div

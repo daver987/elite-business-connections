@@ -70,7 +70,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
       )
       loading.value = false
       await resetForm()
-    }, 5000)
+    }, 3500)
   } else {
     console.error('Error parsing server response:', response.statusCode)
     await showToast(
