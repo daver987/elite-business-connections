@@ -51,22 +51,21 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
   console.log('Form submitted:', event.data)
 
   console.log('Server Response', response)
-  try {
-    const sendgridResponse = sendgridResponseSchema.parse(response)
+  const { success, data, error } = sendgridResponseSchema.safeParse(response)
 
-    if (sendgridResponse.response[0].statusCode === 202) {
+  if (success) {
+    if (data.response[0].statusCode === 202) {
       await showToast('primary', 'Success', 'Your form has been submitted successfully.', 'i-heroicons-check-badge')
-      setTimeout(() => {
-        resetForm()
-      }, 5000)
+      await resetForm()
     } else {
       await showToast('red', 'Error', 'There was an error submitting your form.', dangerIcon)
     }
-  } catch (error) {
+  } else {
+    console.error('Error parsing server response:', error)
     await showToast('red', 'Error', 'There was an error submitting your form.', dangerIcon)
-  } finally {
-    loading.value = false
   }
+
+  loading.value = false
 }
 </script>
 
