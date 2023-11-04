@@ -1,17 +1,16 @@
-import sgMail from '@sendgrid/mail'
+import { contactFormSchema } from '~/types/ContactForm'
+import { sendContactFormEmail } from '~/server/utils/emailUtils'
 
 const getConfig = () => {
   return useRuntimeConfig().SENDGRID_API_KEY
 }
 
 export default defineEventHandler(async (event) => {
-  const body = await readBody(event)
+  const body = await readValidatedBody(event, contactFormSchema.parse)
   const apiKey = getConfig()
-  sgMail.setApiKey(apiKey)
-
 
   try {
-    const response = await sgMail.send(msg)
+    const response = await sendContactFormEmail(body, apiKey)
     console.log('Email sent')
     return { response }
   } catch (error) {
