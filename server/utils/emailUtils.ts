@@ -1,14 +1,12 @@
 import sgMail from '@sendgrid/mail'
 
-export async function sendQuoteEmail(
-  newQuote: QuoteFormReturn,
-  apiKey: string,
-  shortLink: string
+export async function sendContactFormEmail(
+  contactForm: ContactForm,
+  apiKey: string
 ): Promise<void> {
   try {
-    const quote = newQuote
-    console.log('Parsed Quote in Send Email:', quote)
-    console.log('Email Short link:', shortLink)
+    const form = contactForm
+    console.log('Parsed Contact Form in Send Email:', form)
     if (!apiKey) {
       throw new Error('SendGrid API key not provided')
     }
@@ -19,36 +17,16 @@ export async function sendQuoteEmail(
         {
           to: [
             {
-              email: quote.user.email_address
+              email: form.email
             }
           ],
           dynamic_template_data: {
-            first_name: quote.user.first_name,
-            last_name: quote.user.last_name,
-            email_address: quote.user.email_address,
-            phone_number: quote.user.phone_number,
-            total_price: quote.quote_total,
-            vehicle_label: quote.vehicle.label,
-            service_label: quote.service.label,
-            return_service_label: quote.is_round_trip
-              ? quote.service.label
-              : '',
-            is_round_trip: quote.is_round_trip,
-            pickup_date: quote.trips[0].pickup_date,
-            pickup_time: quote.trips[0].pickup_time,
-            return_date: quote.is_round_trip ? quote.trips[1].pickup_date : '',
-            return_time: quote.is_round_trip ? quote.trips[1].pickup_time : '',
-            quote_number: quote.quote_number.toString(),
-            origin_full_name: quote.trips[0].locations[0].full_name,
-            destination_full_name: quote.trips[0].locations[1].full_name,
-            return_origin_full_name: quote.is_round_trip
-              ? quote.trips[1].locations[0].full_name
-              : '',
-            return_destination_full_name: quote.is_round_trip
-              ? quote.trips[1].locations[1].full_name
-              : '',
-            vehicle_image: quote.vehicle.vehicle_image,
-            short_link: shortLink
+            first_name: form.firstName,
+            last_name: form.lastName,
+            email_address: form.email,
+            phone_number: form.phone,
+            heard_about: form.heardAbout,
+            business_type: form.businessType
           }
         }
       ],
