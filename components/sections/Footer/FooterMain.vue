@@ -1,7 +1,9 @@
 <script setup lang='ts'>
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import { ref } from '#imports'
+import type { FormSubmitEvent, NotificationColor } from '@nuxt/ui/dist/runtime/types'
 import { subscriptionSchema } from '~/types/Subscription'
 import type { FooterNavigation } from '~/types/Navigation'
+import { useToast } from '@nuxt/ui/dist/runtime/composables'
 
 const {
   data: navigation
@@ -13,8 +15,62 @@ const state = reactive({
   email_address: undefined
 })
 
+const loading = ref(false)
+const toast = useToast()
+const dangerIcon = 'i-heroicons-no-symbol'
+
+async function showToast(
+  color: NotificationColor,
+  title: string,
+  description: string,
+  icon: string
+) {
+  toast.add({
+    id: 'form_submission',
+    color: color,
+    title: title,
+    description: description,
+    timeout: 7000,
+    icon: icon
+  })
+}
+
+async function resetForm() {
+  state.email_address = undefined
+}
+
+type SendgridResponse = {
+  statusCode: number
+}
+
 async function submit(event: FormSubmitEvent<{ email: string }>) {
-  // handle form submission
+  loading.value = true
+  const response = await $fetch<SendgridResponse>('/api/sendgrid', {
+    method: 'POST',
+    body: event.data
+  })
+
+  if (response.statusCode === 202) {
+    setTimeout(async () => {
+      await showToast(
+        'primary',
+        'Success',
+        'Your form has been submitted successfully.',
+        'i-heroicons-check-badge'
+      )
+      loading.value = false
+      await resetForm()
+    }, 3500)
+  } else {
+    console.error('Error parsing server response:', response.statusCode)
+    await showToast(
+      'red',
+      'Error',
+      'There was an error submitting your form.',
+      dangerIcon
+    )
+    loading.value = false
+  }
 }
 </script>
 
@@ -102,7 +158,7 @@ async function submit(event: FormSubmitEvent<{ email: string }>) {
                 type='email'
               />
             </UFormGroup>
-            <UButton size='lg' block type='submit'>Subscribe</UButton>
+            <UButton size='lg' block type='submit' :loading='loading'>Subscribe</UButton>
           </UForm>
         </div>
       </div>
