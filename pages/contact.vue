@@ -166,6 +166,5 @@ useHead({
         </div>
       </UContainer>
     </div>
-    <!--    <ContactForm />-->
   </div>
 </template>

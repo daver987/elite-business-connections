@@ -62,7 +62,7 @@ const { data: memberData } = await useAsyncData('members', () =>
   sanity.fetch<{ memberData: MemberData[] }>(query)
 )
 
-const transformedMemberData = transformMemberData(memberData.value)
+const transformedMemberData = transformMemberData(memberData.value as unknown as MemberData[])
 </script>
 
 <template>

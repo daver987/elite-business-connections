@@ -4,7 +4,7 @@ import { Icon } from '#components'
 interface CoreValues {
   title: string
   description: string
-  iconName: sting
+  iconName: string
   iconCollection: string
 }
 
@@ -28,7 +28,7 @@ const { data: coreValuesSanity } = await useAsyncData('coreValues', () =>
 )
 
 const transformedCoreValues: TransformedCoreValues[] =
-  coreValuesSanity.value.map((value) => {
+  coreValuesSanity.value?.map((value) => {
     return {
       title: value.title,
       description: value.description,

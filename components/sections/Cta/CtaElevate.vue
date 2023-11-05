@@ -1,11 +1,17 @@
 <script setup lang="ts">
+interface Benefits {
+  name: string
+}
+
+
+
 const query = groq`*[ _type == "benefit"]{
   name
 }`
 const sanity = useSanity()
 
 const { data: benefits } = await useAsyncData('benefits', () =>
-  sanity.fetch<{ benefits: { name: string } }>(query)
+  sanity.fetch<{ benefits: Benefits }>(query)
 )
 </script>
 
@@ -37,8 +43,8 @@ const { data: benefits } = await useAsyncData('benefits', () =>
             >
               <li
                 class="flex gap-x-3"
-                v-for="benefit in benefits as { name: string }[]"
-                :key="benefit"
+                v-for="benefit in benefits"
+                :key="benefit.name"
               >
                 <Icon
                   class="h-7 w-5 flex-none text-primary"

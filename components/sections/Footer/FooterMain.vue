@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
-import { subscriptionSchema } from '~/types/Email'
+import { subscriptionSchema } from '~/types/Subscription'
 
 const navigation = {
   opportunities: [
