@@ -12,11 +12,6 @@ definePageMeta({
 const { createUser } = useDirectusAuth();
 const router = useRouter();
 
-
-
-
-
-const alert: Ref<(SubmitEvent & { data: Register }) | null | undefined> = ref()
 const loading = ref(false)
 const toast = useToast()
 
