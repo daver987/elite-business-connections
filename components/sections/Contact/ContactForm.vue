@@ -63,7 +63,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
   if (response.statusCode === 202) {
     setTimeout(async () => {
       await showToast(
-        'primary',
+        'green',
         'Success',
         'Your form has been submitted successfully.',
         'i-heroicons-check-badge'
