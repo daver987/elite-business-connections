@@ -17,9 +17,9 @@ const toast = useToast()
 
 
 const state = reactive({
-  email: undefined,
-  password: undefined,
-  confirm: undefined,
+  email: "",
+  password: "",
+  confirm: "",
 })
 
 const resetState = () => {
