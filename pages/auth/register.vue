@@ -33,12 +33,35 @@ const resetState = () => {
   state.confirm = undefined
 }
 
-const onSubmit = async (event: FormSubmitEvent<Register>) => {
+async function onSubmit(event: FormSubmitEvent<Register>) {
   loading.value = true
   try {
-    const newUser = await createUser({ email: "", password: "" });
-  } catch (e) {}
-};
+    const newUser = await createUser({ email: state.email, password: state.password });
+    if (newUser) {
+      toast.add({
+        id: 'registration',
+        color: 'green',
+        title: 'Success',
+        description: 'Registration successful.',
+        timeout: 7000,
+        icon: 'i-heroicons-check-badge',
+      })
+      resetState()
+    }
+  } catch (e) {
+    console.error('Error during registration:', e)
+    toast.add({
+      id: 'registration_error',
+      color: 'red',
+      title: 'Error',
+      description: 'There was an error during registration.',
+      timeout: 7000,
+      icon: 'i-heroicons-no-symbol',
+    })
+  } finally {
+    loading.value = false
+  }
+}
 
 
 </script>
