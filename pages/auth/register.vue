@@ -9,9 +9,17 @@ definePageMeta({
   colorMode: 'dark',
 })
 
+const { createUser } = useDirectusAuth();
+const router = useRouter();
+
+
+
+
+
 const alert: Ref<(SubmitEvent & { data: Register }) | null | undefined> = ref()
 const loading = ref(false)
-const showAlert = ref(false)
+const toast = useToast()
+
 
 const state = reactive({
   email: undefined,
@@ -25,31 +33,20 @@ const resetState = () => {
   state.confirm = undefined
 }
 
-async function onSubmit(event: FormSubmitEvent<Register>) {
+const onSubmit = async (event: FormSubmitEvent<Register>) => {
   loading.value = true
-  setTimeout(() => {
-    alert.value = event
-    console.log(event.data)
-    loading.value = false
-    showAlert.value = true
-    resetState()
-  }, 5000)
-}
+  try {
+    const newUser = await createUser({ email: "", password: "" });
+  } catch (e) {}
+};
+
+
 </script>
 
 <template>
   <div
     class="flex h-[100dvh] min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
   >
-    <UAlert
-      v-if="showAlert"
-      :actions="[
-        { variant: 'solid', color: 'primary', label: 'Action 1' },
-        { variant: 'outline', color: 'primary', label: 'Action 2' },
-      ]"
-      title="Heads up!"
-      :description="JSON.stringify(alert)"
-    />
     <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
       <Logo />
       <h2
