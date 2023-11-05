@@ -3,8 +3,6 @@ interface Benefits {
   name: string
 }
 
-
-
 const query = groq`*[ _type == "benefit"]{
   name
 }`
