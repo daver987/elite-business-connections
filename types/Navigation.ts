@@ -7,6 +7,6 @@ export type FooterNavigation = {
 }
 
 export interface HeaderNavigation {
-  name: string;
+  name: string
   href: string
 }

@@ -15,7 +15,7 @@ definePageMeta({
     >
       <div>
         <span class="sr-only">Elite Business Connections</span>
-        <Logo size="lg" />
+        <Logo size="lg" :auto-margin="false" />
       </div>
     </UContainer>
     <UContainer

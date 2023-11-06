@@ -37,9 +37,9 @@ async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
     setTimeout(async () => {
       await showToast(
         'submit_subscription',
-        'primary',
+        'green',
         'Success',
-        'Your form has been submitted successfully.',
+        'Your request has successfully been submitted',
         'i-heroicons-check-badge'
       )
       loading.value = false
@@ -134,8 +134,18 @@ async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
             The latest news, articles, and resources, sent to your inbox weekly.
           </p>
 
-          <UForm :schema='subscriptionSchema' :state='state' @submit='onSubmit' @keydown.enter='handleKeydownSubmit(onSubmit)'>
-          <UFormGroup label="Email address" name="email" required>
+          <UForm
+            :schema="subscriptionSchema"
+            :state="state"
+            @submit="onSubmit"
+            @keydown.enter="handleKeydownSubmit(onSubmit)"
+          >
+            <UFormGroup
+              class="my-4"
+              label="Email address"
+              name="email"
+              required
+            >
               <UInput
                 v-model="state.email_address"
                 placeholder="Enter your email"

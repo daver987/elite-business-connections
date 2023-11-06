@@ -1,23 +1,14 @@
-<script lang='ts' setup>
+<script lang="ts" setup>
 import type { HeaderNavigation } from '~/types/Navigation'
 
 const { data: navigationLinks } = await useFetch<HeaderNavigation[]>(
-  '/api/navigation?navType=header',
-  {
-    transform: (data: HeaderNavigation[]) => {
-      if(data && data.length) {
-        return data
-      } else {
-        return []
-      }
-    }
-  }
+  '/api/navigation?navType=header'
 )
 </script>
 
 <template>
   <div>
-    <Navbar :navLinks='navigationLinks' />
+    <Navbar :navLinks="navigationLinks" />
     <slot />
     <FooterMain />
   </div>

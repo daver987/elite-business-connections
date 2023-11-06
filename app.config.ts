@@ -4,15 +4,20 @@ export default defineAppConfig({
     gray: 'cool',
     button: {
       variant: {
-        solid: 'shadow-sm my-2 text-white dark:text-white-900 bg-{color}-500 hover:bg-{color}-600 dark:hover:text-white disabled:bg-{color}-500 dark:bg-{color}-400 dark:hover:bg-{color}-500 dark:disabled:bg-{color}-400 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-{color}-500 dark:focus-visible:outline-{color}-400',
+        'color': {
+          'white': {
+            'solid': 'shadow-sm ring-1 ring-inset ring-gray-300 dark:ring-gray-700 text-gray-900 dark:text-white bg-primary-500 hover:bg-primary-600 disabled:bg-white dark:disabled:bg-gray-900 focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+            'ghost': 'text-gray-900 dark:text-white hover:bg-white dark:hover:bg-gray-900 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400',
+          },
+        },
+      },
+      formGroup: {
+        help: 'text-xs',
+        'container': 'mt-1 mb-3 relative',
+      },
+      notifications: {
+        position: 'top-0 bottom-auto',
       },
     },
-    formGroup: {
-      help: 'text-xs',
-      "container": "mt-1 mb-3 relative",
-    },
-    notifications: {
-      position: 'top-0 bottom-auto'
-    }
   },
 })

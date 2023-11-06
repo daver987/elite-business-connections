@@ -61,8 +61,8 @@
         <div class="mt-10 flex items-center justify-center gap-x-6">
           <UButton
             id="join-now"
-            variant="solid"
             color="primary"
+            variant="solid"
             to="/contact"
             size="lg"
             label="Join Now"

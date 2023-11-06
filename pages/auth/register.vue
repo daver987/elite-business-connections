@@ -92,7 +92,12 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-4">
-      <UForm :schema='registerSchema' :state='state' @submit='onSubmit' @keydown.enter='handleKeydownSubmit(onSubmit)'>
+      <UForm
+        :schema="registerSchema"
+        :state="state"
+        @submit="onSubmit"
+        @keydown.enter="handleKeydownSubmit(onSubmit)"
+      >
         <UFormGroup required label="First Name" name="first_name">
           <UInput
             v-model="state.first_name"
@@ -140,13 +145,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
             type="password"
           />
         </UFormGroup>
-        <UButton
-          :loading="loading"
-          block
-          type='submit'
-        >
-          Join Now
-        </UButton>
+        <UButton :loading="loading" block type="submit"> Join Now </UButton>
       </UForm>
 
       <p class="mt-10 text-center text-sm text-gray-400">
