@@ -1,11 +1,11 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import type { HeaderNavigation } from '~/types/Navigation'
-
 
 const isOpen = ref(false)
 
-const props = defineProps<HeaderNavigation>()
-
+defineProps<{
+  navLinks: HeaderNavigation[] | null;
+}>()
 
 
 const delayedClose = () => {
@@ -16,77 +16,77 @@ const delayedClose = () => {
 </script>
 
 <template>
-  <UContainer class="absolute inset-x-0 top-0 z-50">
+  <UContainer class='absolute inset-x-0 top-0 z-50'>
     <nav
-      class="flex w-full items-center justify-between h-20 border-white/10 py-3 border-b-[0.5px]"
-      aria-label="Global"
+      class='flex w-full items-center justify-between h-20 border-white/10 py-3 border-b-[0.5px]'
+      aria-label='Global'
     >
-      <div class="flex lg:flex-1 items-start">
-        <Logo size="md" :autoMargin="false" />
+      <div class='flex lg:flex-1 items-start'>
+        <Logo size='md' :autoMargin='false' />
       </div>
-      <div class="flex lg:hidden">
+      <div class='flex lg:hidden'>
         <UButton
-          icon="i-heroicons-bars-3"
-          size="md"
+          icon='i-heroicons-bars-3'
+          size='md'
           square
-          variant="ghost"
-          color="gray"
-          :padded="false"
-          @click="isOpen = true"
+          variant='ghost'
+          color='gray'
+          :padded='false'
+          @click='isOpen = true'
         />
       </div>
-      <div class="hidden lg:flex lg:gap-x-12">
+      <div class='hidden lg:flex lg:gap-x-12'>
         <NuxtLink
-          class="text-sm font-semibold leading-6"
-          v-for="item in props"
-          exact-active-class="link-active"
-          :key="item.name"
-          :to="item.href"
-          >{{ item.name }}
+          class='text-sm font-semibold leading-6'
+          v-for='item in navLinks'
+          exact-active-class='link-active'
+          :key='item.name'
+          :to='item.href'
+        >{{ item.name }}
         </NuxtLink>
       </div>
-      <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
+      <div class='hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4'>
         <NuxtLink
-          class="text-sm font-semibold leading-6"
-          to="/under-construction"
-          >Access Membership <span aria-hidden="true">&rarr;</span>
+          class='text-sm font-semibold leading-6'
+          to='/under-construction'
+        >Access Membership <span aria-hidden='true'>&rarr;</span>
         </NuxtLink>
       </div>
     </nav>
   </UContainer>
-  <USlideover v-model="isOpen">
+  <USlideover v-model='isOpen'>
     <UCard>
       <template #header>
-        <div class="flex items-center justify-between">
-          <Logo size="md" />
+        <div class='flex items-center justify-between'>
+          <Logo size='md' />
           <UButton
-            icon="i-heroicons-x-mark"
-            size="lg"
-            :padded="false"
+            icon='i-heroicons-x-mark'
+            size='lg'
+            :padded='false'
             square
-            color="gray"
-            variant="ghost"
-            @click="isOpen = false"
+            color='gray'
+            variant='ghost'
+            @click='isOpen = false'
           />
         </div>
       </template>
       <template #default>
-        <div class="space-y-2 py-6 flex flex-col">
+        <div class='space-y-2 py-6 flex flex-col'>
           <NuxtLink
-            class="link-style"
-            v-for="item in navLinks"
-            exact-active-class="link-active"
-            :key="item.name"
-            :to="item.href"
-            @click.native="delayedClose"
+            class='link-style'
+            v-for='item in navLinks'
+            exact-active-class='link-active'
+            :key='item.name'
+            :to='item.href'
+            @click.native='delayedClose'
           >
             {{ item.name }}
           </NuxtLink>
         </div>
       </template>
       <template #footer>
-        <div class="py-6">
-          <NuxtLink to="/under-construction"> Access Membership</NuxtLink>
+        <div class='py-6'>
+          <NuxtLink to='/under-construction'> Access Membership</NuxtLink>
         </div>
       </template>
     </UCard>
