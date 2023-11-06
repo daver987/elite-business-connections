@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from '#imports'
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
-import { showToast } from '~/utils/showToast'
+import { showToast, handleKeydownSubmit } from '~/utils'
 import { professions } from '~/data/professions'
 import { type ContactForm, contactFormSchema } from '~/types/ContactForm'
 
@@ -75,7 +75,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
     <template #header>
       <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
     </template>
-    <UForm :schema="contactFormSchema" :state="state" @submit="submit">
+    <UForm :schema="contactFormSchema" :state="state" @submit="submit" @keydown.enter="handleKeydownSubmit(submit)">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup class="mb-2" label="First Name" name="firstName" required>
           <UInput
