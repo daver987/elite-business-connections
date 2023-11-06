@@ -36,7 +36,12 @@ export default defineEventHandler(async (event) => {
     })
     console.log('Registration result', result)
     // You can perform additional logic with result if needed
-    return result
+    // Return only the status code if the registration is successful
+    if (result.data && result.data.id) {
+      return {statusCode: 202}
+    } else {
+      throw new Error('Registration failed')
+    }
 
   } catch (error) {
     // Handle any errors
