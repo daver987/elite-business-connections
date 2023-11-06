@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '#ui/types'
-import type { Ref } from 'vue'
 import { type Register, registerSchema } from '~/types/Register'
+
 
 definePageMeta({
   title: 'Register',
@@ -9,8 +9,7 @@ definePageMeta({
   colorMode: 'dark',
 })
 
-const { createUser } = useDirectusAuth();
-const router = useRouter();
+
 
 const loading = ref(false)
 const toast = useToast()
@@ -23,22 +22,26 @@ const state = reactive({
 })
 
 const resetState = () => {
-  state.email = undefined
-  state.password = undefined
-  state.confirm = undefined
+  state.email = ''
+  state.password = ''
+  state.confirm = ''
 }
 
 async function onSubmit(event: FormSubmitEvent<Register>) {
   loading.value = true
+  const data = event.data
+  console.log("Data",data)
   try {
-    const newUser = await createUser({ email: state.email, password: state.password });
-    if (newUser) {
+    const data = await $fetch("/api/register",{
+      method: "POST",
+      body:{first_name, last_name, email, password});
+    if (!newUser) {
       toast.add({
         id: 'registration',
         color: 'green',
         title: 'Success',
         description: 'Registration successful.',
-        timeout: 7000,
+        timeout: 3500,
         icon: 'i-heroicons-check-badge',
       })
       resetState()
@@ -50,7 +53,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
       color: 'red',
       title: 'Error',
       description: 'There was an error during registration.',
-      timeout: 7000,
+      timeout: 3500,
       icon: 'i-heroicons-no-symbol',
     })
   } finally {

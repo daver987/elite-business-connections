@@ -45,7 +45,7 @@ export default defineNuxtConfig({
 
   directus: {
     url: process.env.DIRECTUS_URL,
-    token: process.env.DIRECTUS_SERVER_TOKEN,
+    token: "KS7JZ8GFJxFQcexxDrU4Esp3ta3-43Pq",
     devtools: true,
   },
 
