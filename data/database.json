@@ -1,0 +1,3555 @@
+{
+  "version": 1,
+  "directus": "14.0.2",
+  "vendor": "postgres",
+  "collections": [
+    {
+      "collection": "contacts",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": null,
+        "archive_value": "archived",
+        "collapse": "open",
+        "collection": "contacts",
+        "color": "#6644FF",
+        "display_template": "{{first_name}} {{last_name}} <{{email_address}}>",
+        "group": null,
+        "hidden": false,
+        "icon": "emoji_people",
+        "item_duplication_fields": null,
+        "note": "Contacts are the people at the different organizations you work with.",
+        "preview_url": null,
+        "singleton": false,
+        "sort": 2,
+        "sort_field": null,
+        "translations": null,
+        "unarchive_value": "draft",
+        "versioning": false
+      },
+      "schema": {
+        "name": "contacts"
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": null,
+        "archive_value": null,
+        "collapse": "open",
+        "collection": "contacts_organizations",
+        "color": null,
+        "display_template": null,
+        "group": "organizations",
+        "hidden": true,
+        "icon": "import_export",
+        "item_duplication_fields": null,
+        "note": null,
+        "preview_url": null,
+        "singleton": false,
+        "sort": 1,
+        "sort_field": null,
+        "translations": null,
+        "unarchive_value": null,
+        "versioning": false
+      },
+      "schema": {
+        "name": "contacts_organizations"
+      }
+    },
+    {
+      "collection": "member_events",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": "status",
+        "archive_value": "archived",
+        "collapse": "open",
+        "collection": "member_events",
+        "color": "#FFA439",
+        "display_template": " {{status}}  {{title}} on {{start_datetime}}",
+        "group": null,
+        "hidden": false,
+        "icon": "event",
+        "item_duplication_fields": null,
+        "note": "Membership events",
+        "preview_url": null,
+        "singleton": false,
+        "sort": 1,
+        "sort_field": "sort",
+        "translations": null,
+        "unarchive_value": "draft",
+        "versioning": false
+      },
+      "schema": {
+        "name": "member_events"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": null,
+        "archive_value": "archived",
+        "collapse": "open",
+        "collection": "organization_addresses",
+        "color": null,
+        "display_template": "{{name}} - {{street_address}}, {{address_locality}}, {{address_region}}, {{postal_code}} ",
+        "group": "organizations",
+        "hidden": true,
+        "icon": null,
+        "item_duplication_fields": null,
+        "note": null,
+        "preview_url": null,
+        "singleton": false,
+        "sort": 2,
+        "sort_field": "sort",
+        "translations": null,
+        "unarchive_value": "draft",
+        "versioning": false
+      },
+      "schema": {
+        "name": "organization_addresses"
+      }
+    },
+    {
+      "collection": "organizations",
+      "meta": {
+        "accountability": "all",
+        "archive_app_filter": true,
+        "archive_field": "status",
+        "archive_value": "archived",
+        "collapse": "open",
+        "collection": "organizations",
+        "color": "#2ECDA7",
+        "display_template": null,
+        "group": null,
+        "hidden": false,
+        "icon": "add_business",
+        "item_duplication_fields": null,
+        "note": "Organizations are your clients and customers.",
+        "preview_url": null,
+        "singleton": false,
+        "sort": 3,
+        "sort_field": null,
+        "translations": null,
+        "unarchive_value": "draft",
+        "versioning": false
+      },
+      "schema": {
+        "name": "organizations"
+      }
+    }
+  ],
+  "fields": [
+    {
+      "collection": "contacts",
+      "field": "contact_notes",
+      "type": "text",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "contact_notes",
+        "group": null,
+        "hidden": false,
+        "interface": "input-rich-text-html",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 16,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "contact_notes",
+        "table": "contacts",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "contact_owner",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "field": "contact_owner",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown-m2o",
+        "note": "The member who owns this contact",
+        "options": {
+          "enableCreate": false,
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 14,
+        "special": [
+          "m2o",
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "contact_owner",
+        "table": "contacts",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "contact_type",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "contact_type",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "The classification of the contact",
+        "options": {
+          "choices": [
+            {
+              "text": "General Contact",
+              "value": "general_contact"
+            },
+            {
+              "text": "Referral Candidate",
+              "value": "referral_candidate"
+            },
+            {
+              "text": "Membership Prospect",
+              "value": "membership_prospect"
+            },
+            {
+              "text": "Business Referral ",
+              "value": "business_referral"
+            },
+            {
+              "text": "Inactive/Past Contact",
+              "value": "inactive"
+            }
+          ],
+          "placeholder": "Select contact type"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 15,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "contact_type",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_created",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 3,
+        "special": [
+          "date-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_created",
+        "table": "contacts",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 5,
+        "special": [
+          "date-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_updated",
+        "table": "contacts",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "divider-zpdh1n",
+      "type": "alias",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "divider-zpdh1n",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-divider",
+        "note": null,
+        "options": {
+          "color": "#6644FF",
+          "icon": "check_indeterminate_small",
+          "inlineTitle": true,
+          "title": "Contact Details"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 11,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "email_address",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "formatted-value",
+        "display_options": {
+          "color": "#3399FF",
+          "format": true,
+          "icon": "mark_email_unread"
+        },
+        "field": "email_address",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "iconLeft": "alternate_email",
+          "placeholder": "Enter email address"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": {
+          "_and": [
+            {
+              "email_address": {
+                "_regex": "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/"
+              }
+            }
+          ]
+        },
+        "validation_message": "Please enter a valid email address",
+        "width": "half"
+      },
+      "schema": {
+        "name": "email_address",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "first_name",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "first_name",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "Enter first name"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 6,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "first_name",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 1,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "contacts",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "is_visitor",
+      "type": "boolean",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "is_visitor",
+        "group": null,
+        "hidden": true,
+        "interface": "boolean",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 17,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "is_visitor",
+        "table": "contacts",
+        "data_type": "boolean",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "job_title",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "job_title",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "Enter the title or role of the contact"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 13,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "job_title",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "last_name",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "last_name",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "Enter last name"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 7,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "last_name",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "meta_links",
+      "type": "alias",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "meta_links",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-links",
+        "note": "Click to open a dialer or your email application.",
+        "options": {
+          "links": [
+            {
+              "label": "Phone",
+              "icon": "phone_enabled",
+              "type": "primary",
+              "url": "tel:{{phone_number}}"
+            },
+            {
+              "label": "Email",
+              "icon": "mark_email_unread",
+              "type": "primary",
+              "url": "mailto:{{email_address}}"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 10,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "organizations",
+      "type": "alias",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": {
+          "template": "{{organizations_id.name}}"
+        },
+        "field": "organizations",
+        "group": null,
+        "hidden": false,
+        "interface": "list-m2m",
+        "note": null,
+        "options": {
+          "template": "{{contacts_id.organizations.organizations_id.name}}"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 12,
+        "special": [
+          "m2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "phone_number",
+      "type": "string",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "formatted-value",
+        "display_options": {
+          "color": "#6644FF",
+          "format": true,
+          "icon": "phone_enabled",
+          "prefix": "+1"
+        },
+        "field": "phone_number",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": "Enter the phone number in this format, 416 123 4567",
+        "options": {
+          "iconLeft": "phone_enabled",
+          "placeholder": "Enter phone number"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": {
+          "_and": [
+            {
+              "phone_number": {
+                "_regex": "/^\\d{3} \\d{3} \\d{4}$/"
+              }
+            }
+          ]
+        },
+        "validation_message": "Please enter the phone number in the correct format",
+        "width": "half"
+      },
+      "schema": {
+        "name": "phone_number",
+        "table": "contacts",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "user_created",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_created",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 2,
+        "special": [
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_created",
+        "table": "contacts",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "user_updated",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 4,
+        "special": [
+          "user-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_updated",
+        "table": "contacts",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "field": "contacts_id",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts_organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "contacts_id",
+        "group": null,
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "contacts_id",
+        "table": "contacts_organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "contacts",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "field": "id",
+      "type": "integer",
+      "meta": {
+        "collection": "contacts_organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 1,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "contacts_organizations",
+        "data_type": "integer",
+        "default_value": "nextval('contacts_organizations_id_seq'::regclass)",
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": true,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "field": "organizations_id",
+      "type": "uuid",
+      "meta": {
+        "collection": "contacts_organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "organizations_id",
+        "group": null,
+        "hidden": true,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "organizations_id",
+        "table": "contacts_organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "organizations",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "company_name",
+      "type": "string",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "company_name",
+        "group": null,
+        "hidden": false,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "company_name",
+        "table": "directus_users",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "divider-g4oiu3",
+      "type": "alias",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "divider-g4oiu3",
+        "group": null,
+        "hidden": false,
+        "interface": "presentation-divider",
+        "note": null,
+        "options": {
+          "color": "#6644FF",
+          "icon": "add_business",
+          "inlineTitle": true,
+          "title": "Business Information"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 1,
+        "special": [
+          "alias",
+          "no-data"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "logo",
+      "type": "uuid",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": "image",
+        "display_options": {
+          "circle": true
+        },
+        "field": "logo",
+        "group": null,
+        "hidden": false,
+        "interface": "file-image",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 4,
+        "special": [
+          "file"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "logo",
+        "table": "directus_users",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "long_bio",
+      "type": "text",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "long_bio",
+        "group": null,
+        "hidden": false,
+        "interface": "input-rich-text-html",
+        "note": null,
+        "options": {
+          "toolbar": [
+            "aligncenter",
+            "alignjustify",
+            "alignleft",
+            "alignnone",
+            "alignright",
+            "blockquote",
+            "bold",
+            "bullist",
+            "code",
+            "copy",
+            "customImage",
+            "customLink",
+            "customMedia",
+            "cut",
+            "fontfamily",
+            "fontsize",
+            "fullscreen",
+            "h1",
+            "h2",
+            "h3",
+            "hr",
+            "italic",
+            "numlist",
+            "paste",
+            "redo",
+            "remove",
+            "removeformat",
+            "selectall",
+            "underline",
+            "undo",
+            "unlink"
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 6,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "long_bio",
+        "table": "directus_users",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "short_bio",
+      "type": "text",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "short_bio",
+        "group": null,
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": null,
+        "options": {
+          "placeholder": "Write a short bio"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 5,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "short_bio",
+        "table": "directus_users",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "website",
+      "type": "string",
+      "meta": {
+        "collection": "directus_users",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "website",
+        "group": null,
+        "hidden": false,
+        "interface": null,
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "website",
+        "table": "directus_users",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "category",
+      "type": "string",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "labels",
+        "display_options": null,
+        "field": "category",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "The category for the event",
+        "options": {
+          "allowOther": true,
+          "choices": [
+            {
+              "text": "Networking",
+              "value": "Networking"
+            },
+            {
+              "text": "Educational",
+              "value": "Educational"
+            },
+            {
+              "text": "Workshops & Training",
+              "value": "Workshops & Training"
+            },
+            {
+              "text": "Conferences & Trade Shows",
+              "value": "Conferences & Trade Shows"
+            },
+            {
+              "text": "Webinars & Virtual",
+              "value": "Webinars & Virtual"
+            },
+            {
+              "text": "Community Event",
+              "value": "Community Event"
+            },
+            {
+              "text": "Awards & Recognition",
+              "value": "Awards & Recognition"
+            },
+            {
+              "text": "Product Launch",
+              "value": "Product Launch"
+            },
+            {
+              "text": "Team Building",
+              "value": "Team Building"
+            }
+          ],
+          "placeholder": "Select event category"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 8,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "category",
+        "table": "member_events",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_created",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 4,
+        "special": [
+          "date-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_created",
+        "table": "member_events",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 6,
+        "special": [
+          "date-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_updated",
+        "table": "member_events",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "description",
+      "type": "text",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "formatted-value",
+        "display_options": {
+          "format": true
+        },
+        "field": "description",
+        "group": null,
+        "hidden": false,
+        "interface": "input-multiline",
+        "note": "A brief description of the event",
+        "options": {
+          "clear": true,
+          "placeholder": "Enter event description"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 14,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "fill"
+      },
+      "schema": {
+        "name": "description",
+        "table": "member_events",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "end_time",
+      "type": "time",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "end_time",
+        "group": null,
+        "hidden": false,
+        "interface": "datetime",
+        "note": null,
+        "options": {
+          "use24": false
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "end_time",
+        "table": "member_events",
+        "data_type": "time without time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "event_host",
+      "type": "json",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "event_host",
+        "group": null,
+        "hidden": false,
+        "interface": "collection-item-dropdown",
+        "note": "Select the hosting member",
+        "options": {
+          "selectedCollection": "directus_users",
+          "template": "{{first_name}}{{last_name}}"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 11,
+        "special": [
+          "cast-json"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "event_host",
+        "table": "member_events",
+        "data_type": "json",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 1,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "member_events",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort",
+        "table": "member_events",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "start_datetime",
+      "type": "dateTime",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": null,
+        "field": "start_datetime",
+        "group": null,
+        "hidden": false,
+        "interface": "datetime",
+        "note": "The starting date and time of the event",
+        "options": {
+          "use24": false
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": {
+          "_and": [
+            {
+              "start_datetime": {
+                "_gte": "$NOW"
+              }
+            }
+          ]
+        },
+        "validation_message": "Please enter a valid date",
+        "width": "half"
+      },
+      "schema": {
+        "name": "start_datetime",
+        "table": "member_events",
+        "data_type": "timestamp without time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "labels",
+        "display_options": {
+          "choices": [
+            {
+              "text": "Scheduled",
+              "value": "scheduled",
+              "foreground": "#FFFFFF",
+              "background": "#2ECDA7"
+            },
+            {
+              "text": "In Progress",
+              "value": "in_progress",
+              "foreground": "#18222F",
+              "background": "#3399FF"
+            },
+            {
+              "text": "Complete",
+              "value": "complete",
+              "foreground": "#FFFFFF",
+              "background": "#6644FF"
+            },
+            {
+              "text": "Cancelled",
+              "value": "cancelled",
+              "foreground": "#FFFFFF",
+              "background": "#E35169"
+            }
+          ],
+          "showAsDot": true
+        },
+        "field": "status",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": "The status of the event",
+        "options": {
+          "choices": [
+            {
+              "text": "Scheduled",
+              "value": "scheduled"
+            },
+            {
+              "text": "In Progress",
+              "value": "in_progress"
+            },
+            {
+              "text": "Complete",
+              "value": "Complete"
+            },
+            {
+              "text": "Cancelled",
+              "value": "cancelled"
+            }
+          ],
+          "icon": "edit_calendar",
+          "placeholder": "Select event status"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 13,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "status",
+        "table": "member_events",
+        "data_type": "character varying",
+        "default_value": "Scheduled",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "title",
+      "type": "string",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "title",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "Enter event title"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 7,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "title",
+        "table": "member_events",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "user_created",
+      "type": "uuid",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_created",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 3,
+        "special": [
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_created",
+        "table": "member_events",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "user_updated",
+      "type": "uuid",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 5,
+        "special": [
+          "user-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_updated",
+        "table": "member_events",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "venue",
+      "type": "string",
+      "meta": {
+        "collection": "member_events",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "venue",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "placeholder": "Enter event venue"
+        },
+        "readonly": false,
+        "required": true,
+        "sort": 12,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "venue",
+        "table": "member_events",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "address_country",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "address_country",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": {
+          "iconLeft": "emoji_flags",
+          "placeholder": "Two digit country code (ISO 3166-1)",
+          "trim": true
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 14,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "address_country",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": "CA",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "address_locality",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "address_locality",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 11,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "address_locality",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "address_region",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "address_region",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 12,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "address_region",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_created",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 5,
+        "special": [
+          "date-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_created",
+        "table": "organization_addresses",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 7,
+        "special": [
+          "date-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_updated",
+        "table": "organization_addresses",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 1,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "organization_addresses",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "is_primary_billing",
+      "type": "boolean",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "is_primary_billing",
+        "group": null,
+        "hidden": false,
+        "interface": "boolean",
+        "note": "Is this the primary billing address?",
+        "options": {
+          "label": "Primary Billing Address"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 15,
+        "special": [
+          "cast-boolean"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "is_primary_billing",
+        "table": "organization_addresses",
+        "data_type": "boolean",
+        "default_value": false,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "name",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "name",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 9,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "name",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "organization",
+      "type": "uuid",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "organization",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 8,
+        "special": [
+          "m2o"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "organization",
+        "table": "organization_addresses",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "organizations",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "postal_code",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "postal_code",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 13,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "postal_code",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "sort",
+      "type": "integer",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "sort",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 3,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "sort",
+        "table": "organization_addresses",
+        "data_type": "integer",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": 32,
+        "numeric_scale": 0,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "street_address",
+      "type": "string",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "street_address",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 10,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "street_address",
+        "table": "organization_addresses",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "user_created",
+      "type": "uuid",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_created",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 4,
+        "special": [
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_created",
+        "table": "organization_addresses",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "user_updated",
+      "type": "uuid",
+      "meta": {
+        "collection": "organization_addresses",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 6,
+        "special": [
+          "user-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_updated",
+        "table": "organization_addresses",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "addresses",
+      "type": "alias",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "related-values",
+        "display_options": null,
+        "field": "addresses",
+        "group": null,
+        "hidden": false,
+        "interface": "list-o2m",
+        "note": null,
+        "options": {
+          "template": "{{name}} - {{street_address}} {{address_locality}}, {{address_region}} {{postal_code}}"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 10,
+        "special": [
+          "o2m"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "date_created",
+      "type": "timestamp",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_created",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 4,
+        "special": [
+          "date-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_created",
+        "table": "organizations",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "date_updated",
+      "type": "timestamp",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "datetime",
+        "display_options": {
+          "relative": true
+        },
+        "field": "date_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "datetime",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 6,
+        "special": [
+          "date-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "date_updated",
+        "table": "organizations",
+        "data_type": "timestamp with time zone",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "id",
+      "type": "uuid",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "id",
+        "group": null,
+        "hidden": true,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": true,
+        "required": false,
+        "sort": 1,
+        "special": [
+          "uuid"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "id",
+        "table": "organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": true,
+        "is_primary_key": true,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "name",
+      "type": "string",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "name",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 7,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "name",
+        "table": "organizations",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "organization_notes",
+      "type": "text",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "organization_notes",
+        "group": null,
+        "hidden": false,
+        "interface": "input-rich-text-html",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 12,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "organization_notes",
+        "table": "organizations",
+        "data_type": "text",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "owner",
+      "type": "uuid",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "owner",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown-m2o",
+        "note": "The member who owns the contact",
+        "options": {
+          "template": "{{avatar}} {{first_name}} {{last_name}}"
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 8,
+        "special": [
+          "m2o"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "owner",
+        "table": "organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "status",
+      "type": "string",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "labels",
+        "display_options": {
+          "choices": [
+            {
+              "text": "$t:published",
+              "value": "published",
+              "foreground": "#FFFFFF",
+              "background": "var(--primary)"
+            },
+            {
+              "text": "$t:draft",
+              "value": "draft",
+              "foreground": "#18222F",
+              "background": "#D3DAE4"
+            },
+            {
+              "text": "$t:archived",
+              "value": "archived",
+              "foreground": "#FFFFFF",
+              "background": "var(--warning)"
+            }
+          ],
+          "showAsDot": true
+        },
+        "field": "status",
+        "group": null,
+        "hidden": false,
+        "interface": "select-dropdown",
+        "note": null,
+        "options": {
+          "choices": [
+            {
+              "text": "$t:published",
+              "value": "published"
+            },
+            {
+              "text": "$t:draft",
+              "value": "draft"
+            },
+            {
+              "text": "$t:archived",
+              "value": "archived"
+            }
+          ]
+        },
+        "readonly": false,
+        "required": false,
+        "sort": 2,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "status",
+        "table": "organizations",
+        "data_type": "character varying",
+        "default_value": "draft",
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": false,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "user_created",
+      "type": "uuid",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_created",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 3,
+        "special": [
+          "user-created"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_created",
+        "table": "organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "user_updated",
+      "type": "uuid",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": "user",
+        "display_options": null,
+        "field": "user_updated",
+        "group": null,
+        "hidden": true,
+        "interface": "select-dropdown-m2o",
+        "note": null,
+        "options": {
+          "template": "{{avatar.$thumbnail}} {{first_name}} {{last_name}}"
+        },
+        "readonly": true,
+        "required": false,
+        "sort": 5,
+        "special": [
+          "user-updated"
+        ],
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "half"
+      },
+      "schema": {
+        "name": "user_updated",
+        "table": "organizations",
+        "data_type": "uuid",
+        "default_value": null,
+        "max_length": null,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "website",
+      "type": "string",
+      "meta": {
+        "collection": "organizations",
+        "conditions": null,
+        "display": null,
+        "display_options": null,
+        "field": "website",
+        "group": null,
+        "hidden": false,
+        "interface": "input",
+        "note": null,
+        "options": null,
+        "readonly": false,
+        "required": false,
+        "sort": 11,
+        "special": null,
+        "translations": null,
+        "validation": null,
+        "validation_message": null,
+        "width": "full"
+      },
+      "schema": {
+        "name": "website",
+        "table": "organizations",
+        "data_type": "character varying",
+        "default_value": null,
+        "max_length": 255,
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "is_nullable": true,
+        "is_unique": false,
+        "is_primary_key": false,
+        "is_generated": false,
+        "generation_expression": null,
+        "has_auto_increment": false,
+        "foreign_key_table": null,
+        "foreign_key_column": null
+      }
+    }
+  ],
+  "relations": [
+    {
+      "collection": "contacts",
+      "field": "contact_owner",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "contacts",
+        "many_field": "contact_owner",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "contacts",
+        "column": "contact_owner",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "contacts_contact_owner_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "user_created",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "contacts",
+        "many_field": "user_created",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "contacts",
+        "column": "user_created",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "contacts_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "contacts",
+      "field": "user_updated",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "contacts",
+        "many_field": "user_updated",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "contacts",
+        "column": "user_updated",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "contacts_user_updated_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "field": "contacts_id",
+      "related_collection": "contacts",
+      "meta": {
+        "junction_field": "organizations_id",
+        "many_collection": "contacts_organizations",
+        "many_field": "contacts_id",
+        "one_allowed_collections": null,
+        "one_collection": "contacts",
+        "one_collection_field": null,
+        "one_deselect_action": "delete",
+        "one_field": "organizations",
+        "sort_field": null
+      },
+      "schema": {
+        "table": "contacts_organizations",
+        "column": "contacts_id",
+        "foreign_key_table": "contacts",
+        "foreign_key_column": "id",
+        "constraint_name": "contacts_organizations_contacts_id_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "contacts_organizations",
+      "field": "organizations_id",
+      "related_collection": "organizations",
+      "meta": {
+        "junction_field": "contacts_id",
+        "many_collection": "contacts_organizations",
+        "many_field": "organizations_id",
+        "one_allowed_collections": null,
+        "one_collection": "organizations",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "contacts_organizations",
+        "column": "organizations_id",
+        "foreign_key_table": "organizations",
+        "foreign_key_column": "id",
+        "constraint_name": "contacts_organizations_organizations_id_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "directus_settings",
+      "field": "public_favicon",
+      "related_collection": "directus_files",
+      "meta": null,
+      "schema": {
+        "table": "directus_settings",
+        "column": "public_favicon",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "directus_settings_public_favicon_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "directus_users",
+      "field": "logo",
+      "related_collection": "directus_files",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "directus_users",
+        "many_field": "logo",
+        "one_allowed_collections": null,
+        "one_collection": "directus_files",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "directus_users",
+        "column": "logo",
+        "foreign_key_table": "directus_files",
+        "foreign_key_column": "id",
+        "constraint_name": "directus_users_logo_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "user_created",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "member_events",
+        "many_field": "user_created",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "member_events",
+        "column": "user_created",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "member_events_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "member_events",
+      "field": "user_updated",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "member_events",
+        "many_field": "user_updated",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "member_events",
+        "column": "user_updated",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "member_events_user_updated_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "organization",
+      "related_collection": "organizations",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organization_addresses",
+        "many_field": "organization",
+        "one_allowed_collections": null,
+        "one_collection": "organizations",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": "addresses",
+        "sort_field": "sort"
+      },
+      "schema": {
+        "table": "organization_addresses",
+        "column": "organization",
+        "foreign_key_table": "organizations",
+        "foreign_key_column": "id",
+        "constraint_name": "organization_addresses_organization_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "CASCADE"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "user_created",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organization_addresses",
+        "many_field": "user_created",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "organization_addresses",
+        "column": "user_created",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "organization_addresses_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "organization_addresses",
+      "field": "user_updated",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organization_addresses",
+        "many_field": "user_updated",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "organization_addresses",
+        "column": "user_updated",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "organization_addresses_user_updated_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "owner",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organizations",
+        "many_field": "owner",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "organizations",
+        "column": "owner",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "organizations_owner_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "SET NULL"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "user_created",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organizations",
+        "many_field": "user_created",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "organizations",
+        "column": "user_created",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "organizations_user_created_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    },
+    {
+      "collection": "organizations",
+      "field": "user_updated",
+      "related_collection": "directus_users",
+      "meta": {
+        "junction_field": null,
+        "many_collection": "organizations",
+        "many_field": "user_updated",
+        "one_allowed_collections": null,
+        "one_collection": "directus_users",
+        "one_collection_field": null,
+        "one_deselect_action": "nullify",
+        "one_field": null,
+        "sort_field": null
+      },
+      "schema": {
+        "table": "organizations",
+        "column": "user_updated",
+        "foreign_key_table": "directus_users",
+        "foreign_key_column": "id",
+        "constraint_name": "organizations_user_updated_foreign",
+        "on_update": "NO ACTION",
+        "on_delete": "NO ACTION"
+      }
+    }
+  ]
+}

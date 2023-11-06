@@ -83,14 +83,14 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       @keydown.enter="handleKeydownSubmit(onSubmit)"
     >
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <UFormGroup class="mb-2" label="First Name" name="firstName" required>
+        <UFormGroup class='my-2' label="First Name" name="firstName" required>
           <UInput
             v-model="state.first_name"
             placeholder="Enter your first name"
             size="lg"
           />
         </UFormGroup>
-        <UFormGroup class="mb-2" label="Last Name" name="lastName" required>
+        <UFormGroup class='my-2' label="Last Name" name="lastName" required>
           <UInput
             v-model="state.last_name"
             placeholder="Enter your last name"
@@ -100,7 +100,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup
-          class="mb-2"
+          class='my-2'
           label="Phone Number"
           name="phoneNumber"
           required
@@ -112,7 +112,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
             size="lg"
           />
         </UFormGroup>
-        <UFormGroup class="mb-2" label="Email" name="email" required>
+        <UFormGroup class='my-2' label="Email" name="email" required>
           <UInput
             v-model="state.email_address"
             placeholder="you@example.com"
@@ -123,7 +123,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <UFormGroup
-          class="mb-2"
+          class='my-2'
           label="Where did you hear about us?"
           name="source"
           required
@@ -136,7 +136,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
           />
         </UFormGroup>
         <UFormGroup
-          class="mb-2"
+          class='my-2'
           label="Type of Business"
           name="businessType"
           required
@@ -153,7 +153,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       </div>
       <div class="grid grid-cols-1">
         <UFormGroup
-          class="mb-2"
+          class='my-2'
           label="Additional Information"
           name="additionalInfo"
         >
@@ -164,7 +164,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
           />
         </UFormGroup>
       </div>
-      <UButton size="lg" block type="submit" :loading="loading">Submit</UButton>
+      <UButton class='mt-2' size="lg" block type="submit" :loading="loading">Submit</UButton>
     </UForm>
   </UCard>
 </template>
