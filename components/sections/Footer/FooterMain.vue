@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from '#imports'
 import { showToast } from '~/utils/showToast'
+import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
 import { subscriptionSchema } from '~/types/Subscription'
 import type { FooterNavigation } from '~/types/Navigation'
@@ -9,7 +10,7 @@ const loading = ref(false)
 const dangerIcon = 'i-heroicons-no-symbol'
 const currentYear = new Date().getFullYear()
 
-const { data: navigation } = useFetch<FooterNavigation>(
+const { data: navigation } = await useFetch<FooterNavigation>(
   '/api/navigation?navType=footer'
 )
 
@@ -25,7 +26,7 @@ type StatusCodeResponse = {
   statusCode: number
 }
 
-async function submit(event: FormSubmitEvent<{ email: string }>) {
+async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
   loading.value = true
   const response = await $fetch<StatusCodeResponse>('/api/subscribe', {
     method: 'POST',
@@ -133,8 +134,8 @@ async function submit(event: FormSubmitEvent<{ email: string }>) {
             The latest news, articles, and resources, sent to your inbox weekly.
           </p>
 
-          <UForm :schema="subscriptionSchema" :state="state" @submit="submit">
-            <UFormGroup label="Email address" name="email" required>
+          <UForm :schema='subscriptionSchema' :state='state' @submit='onSubmit' @keydown.enter='handleKeydownSubmit(onSubmit)'>
+          <UFormGroup label="Email address" name="email" required>
               <UInput
                 v-model="state.email_address"
                 placeholder="Enter your email"

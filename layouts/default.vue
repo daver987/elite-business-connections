@@ -1,14 +1,21 @@
-<script lang="ts" setup>
+<script lang='ts' setup>
 import type { HeaderNavigation } from '~/types/Navigation'
 
-const { data: navigationLinks } = useFetch<HeaderNavigation>(
-  '/api/navigation?navType=header'
+const { data: navigationLinks } = await useFetch<HeaderNavigation[]>(
+  '/api/navigation?navType=header',
+  {
+    transform: (data: HeaderNavigation[]) => {
+      if(data.length) {
+        return data
+      }
+    }
+  }
 )
 </script>
 
 <template>
   <div>
-    <Navbar :navLinks="navigationLinks as unknown as HeaderNavigation[]" />
+    <Navbar :navLinks='navigationLinks' />
     <slot />
     <FooterMain />
   </div>
