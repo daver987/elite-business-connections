@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from '#imports'
-import type {
-  FormSubmitEvent,
-  NotificationColor,
-} from '@nuxt/ui/dist/runtime/types'
+import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import { showToast } from '~/utils/showToast'
 import { professions } from '~/data/professions'
 import { type ContactForm, contactFormSchema } from '~/types/ContactForm'
+
+const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
+const businessTypeOptions = professions()
+const loading = ref(false)
+const dangerIcon = 'i-heroicons-no-symbol'
 
 const state = reactive({
   first_name: undefined,
@@ -17,28 +20,6 @@ const state = reactive({
   additional_info: undefined,
 })
 
-const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
-const businessTypeOptions = professions()
-const loading = ref(false)
-const toast = useToast()
-const dangerIcon = 'i-heroicons-no-symbol'
-
-async function showToast(
-  color: NotificationColor,
-  title: string,
-  description: string,
-  icon: string
-) {
-  toast.add({
-    id: 'form_submission',
-    color: color,
-    title: title,
-    description: description,
-    timeout: 7000,
-    icon: icon,
-  })
-}
-
 async function resetForm() {
   state.first_name = undefined
   state.last_name = undefined
@@ -49,13 +30,13 @@ async function resetForm() {
   state.additional_info = undefined
 }
 
-type SendgridResponse = {
+type StatusCodeResponse = {
   statusCode: number
 }
 
 async function submit(event: FormSubmitEvent<ContactForm>) {
   loading.value = true
-  const response = await $fetch<SendgridResponse>('/api/contact', {
+  const response = await $fetch<StatusCodeResponse>('/api/contact', {
     method: 'POST',
     body: event.data,
   })
@@ -63,6 +44,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
   if (response.statusCode === 202) {
     setTimeout(async () => {
       await showToast(
+        'submit_contact',
         'green',
         'Success',
         'Your form has been submitted successfully.',
@@ -74,6 +56,7 @@ async function submit(event: FormSubmitEvent<ContactForm>) {
   } else {
     console.error('Error parsing server response:', response.statusCode)
     await showToast(
+      'contact_error',
       'red',
       'Error',
       'There was an error submitting your form.',

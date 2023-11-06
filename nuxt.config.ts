@@ -1,4 +1,3 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: {
     enabled: true,
@@ -19,7 +18,6 @@ export default defineNuxtConfig({
     '@nuxt/image',
     'nuxt-svgo',
     '@nuxt/ui',
-    'nuxt-directus',
     [
       '@nuxtjs/sanity',
       {
@@ -41,12 +39,6 @@ export default defineNuxtConfig({
     DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
     DIRECTUS_URL: process.env.DIRECTUS_URL,
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
-  },
-
-  directus: {
-    url: process.env.DIRECTUS_URL,
-    token: 'KS7JZ8GFJxFQcexxDrU4Esp3ta3-43Pq',
-    devtools: true,
   },
 
   components: [
