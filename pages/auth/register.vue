@@ -26,10 +26,14 @@ const resetState = () => {
   state.last_name = ''
 }
 
+type StatusCodeResponse = {
+  statusCode: number
+}
+
 async function onSubmit(event: FormSubmitEvent<Register>) {
   loading.value = true
   try {
-    const response = await $fetch('/api/register', {
+    const response = await $fetch<StatusCodeResponse>('/api/register', {
       method: 'POST',
       body: event.data
     })
@@ -39,11 +43,12 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
           id: 'registration',
           color: 'green',
           title: 'Success',
-          description: 'Registration successful.',
+          description: 'Registration successful. Please check your email for the next steps.',
           timeout: 3500,
           icon: 'i-heroicons-check-badge'
         })
         loading.value = false
+        await navigateTo('/')
         resetState()
       }, 3500)
     } else {
@@ -72,7 +77,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
   }
 }
 
-
+//Todo, add proper types for error handling
 </script>
 
 <template>
@@ -91,10 +96,16 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
     <div class='mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-4'>
       <UForm :schema='registerSchema' :state='state' @submit='onSubmit'>
         <UFormGroup required label='First Name' name='first_name'>
-          <UInput v-model='state.first_name' placeholder='Enter your first name' />
+          <UInput
+            v-model='state.first_name'
+            placeholder='Enter your first name'
+          />
         </UFormGroup>
         <UFormGroup required label='Last Name' name='last_name'>
-          <UInput v-model='state.last_name' placeholder='Enter your last name' />
+          <UInput
+            v-model='state.last_name'
+            placeholder='Enter your last name'
+          />
         </UFormGroup>
         <UFormGroup required label='Email Address' name='email'>
           <UInput v-model='state.email' placeholder='Enter email address...' />

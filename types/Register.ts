@@ -33,3 +33,41 @@ export const registerSchema = z
   })
 
 export type Register = z.output<typeof registerSchema>
+
+export interface RegisterResponse {
+  data: Data
+}
+
+export interface Data {
+  id: string
+  first_name?: string
+  last_name?: string
+  email?: string
+  password?: string
+  location?: null
+  title?: null
+  description?: null
+  tags?: null
+  avatar?: null
+  language?: null
+  tfa_secret?: null
+  status?: string
+  role?: string
+  token?: null
+  last_access?: null
+  last_page?: null
+  provider?: string
+  external_identifier?: null
+  auth_data?: null
+  email_notifications?: boolean
+  company_name?: null
+  website?: null
+  logo?: null
+  short_bio?: null
+  long_bio?: null
+  appearance?: null
+  theme_dark?: null
+  theme_light?: null
+  theme_light_overrides?: null
+  theme_dark_overrides?: null
+}
