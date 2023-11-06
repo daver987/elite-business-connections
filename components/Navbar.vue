@@ -1,16 +1,12 @@
 <script setup lang="ts">
-interface NavLink {
-  name: string
-  href: string
-}
+import type { HeaderNavigation } from '~/types/Navigation'
 
-interface NavLinks {
-  navLinks: NavLink[]
-}
 
 const isOpen = ref(false)
 
-defineProps<NavLinks>()
+const props = defineProps<HeaderNavigation>()
+
+
 
 const delayedClose = () => {
   setTimeout(() => {
@@ -42,7 +38,7 @@ const delayedClose = () => {
       <div class="hidden lg:flex lg:gap-x-12">
         <NuxtLink
           class="text-sm font-semibold leading-6"
-          v-for="item in navLinks"
+          v-for="item in props"
           exact-active-class="link-active"
           :key="item.name"
           :to="item.href"

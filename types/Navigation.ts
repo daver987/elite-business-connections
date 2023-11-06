@@ -6,4 +6,7 @@ export type FooterNavigation = {
   social: { name: string; href: string; icon: string }[]
 }
 
-export type HeaderNavigation = { name: string; href: string }
+export interface HeaderNavigation {
+  name: string;
+  href: string
+}
