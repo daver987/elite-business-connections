@@ -1,54 +1,53 @@
-<script setup lang="ts">
+<script setup lang='ts'>
 import type { FormSubmitEvent } from '#ui/types'
 import { type Register, registerSchema } from '~/types/Register'
-
 
 definePageMeta({
   title: 'Register',
   layout: 'empty',
-  colorMode: 'dark',
+  colorMode: 'dark'
 })
-
-
 
 const loading = ref(false)
 const toast = useToast()
-
-
 const state = reactive({
-  first_name: "",
-  last_name: "",
-  email: "",
-  password: "",
-  confirm: "",
+  first_name: '',
+  last_name: '',
+  email: '',
+  password: '',
+  confirm: ''
 })
 
 const resetState = () => {
   state.email = ''
   state.password = ''
   state.confirm = ''
+  state.first_name = ''
+  state.last_name = ''
 }
 
 async function onSubmit(event: FormSubmitEvent<Register>) {
   loading.value = true
   const data = event.data
-  console.log("Data",data)
+  console.log('Data', data)
   try {
-    const data = await $fetch("/api/register",{
-      method: "POST",
-      body:{first_name, last_name, email, password});
-    if (!newUser) {
+    const response = await $fetch('/api/register', {
+      method: 'POST',
+      body: event.data
+    })
+    if (response.statusCode === 202)
       toast.add({
         id: 'registration',
         color: 'green',
         title: 'Success',
         description: 'Registration successful.',
         timeout: 3500,
-        icon: 'i-heroicons-check-badge',
+        icon: 'i-heroicons-check-badge'
       })
       resetState()
     }
-  } catch (e) {
+  } catch
+    (e) {
     console.error('Error during registration:', e)
     toast.add({
       id: 'registration_error',
@@ -56,7 +55,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
       title: 'Error',
       description: 'There was an error during registration.',
       timeout: 3500,
-      icon: 'i-heroicons-no-symbol',
+      icon: 'i-heroicons-no-symbol'
     })
   } finally {
     loading.value = false
@@ -68,64 +67,64 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
 
 <template>
   <div
-    class="flex h-[100dvh] min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8"
+    class='flex h-[100dvh] min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8'
   >
-    <div class="sm:mx-auto sm:w-full sm:max-w-md text-center">
+    <div class='sm:mx-auto sm:w-full sm:max-w-md text-center'>
       <Logo />
       <h2
-        class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white"
+        class='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-white'
       >
         Join Elite Business Connections
       </h2>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-4">
-      <UForm :schema="registerSchema" :state="state" @submit="onSubmit">
-        <UFormGroup required label="Email Address" name="email">
-          <UInput v-model="state.email" placeholder="Enter email address..." />
+    <div class='mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-4'>
+      <UForm :schema='registerSchema' :state='state' @submit='onSubmit'>
+        <UFormGroup required label='Email Address' name='email'>
+          <UInput v-model='state.email' placeholder='Enter email address...' />
         </UFormGroup>
 
-        <UFormGroup label="Password" name="password" required>
+        <UFormGroup label='Password' name='password' required>
           <template #label>
             <span>Password</span>
             <UTooltip
-              text="Min 8 chars, 1 uppercase, 1 num/symbol."
+              text='Min 8 chars, 1 uppercase, 1 num/symbol.'
               :popper="{ placement: 'right' }"
             >
               <UButton
-                icon="i-heroicons-information-circle"
-                size="2xs"
-                color="primary"
+                icon='i-heroicons-information-circle'
+                size='2xs'
+                color='primary'
                 square
-                variant="link"
+                variant='link'
               />
             </UTooltip>
           </template>
           <UInput
-            v-model="state.password"
-            placeholder="Enter a password"
-            type="password"
+            v-model='state.password'
+            placeholder='Enter a password'
+            type='password'
             required
           >
           </UInput>
         </UFormGroup>
-        <UFormGroup required label="Confirm Password" name="confirm">
+        <UFormGroup required label='Confirm Password' name='confirm'>
           <UInput
-            v-model="state.confirm"
-            placeholder="Confirm your password"
-            type="password"
+            v-model='state.confirm'
+            placeholder='Confirm your password'
+            type='password'
           />
         </UFormGroup>
-        <UButton :loading="loading" block type="submit"> Join Now</UButton>
+        <UButton :loading='loading' block type='submit'> Join Now</UButton>
       </UForm>
 
-      <p class="mt-10 text-center text-sm text-gray-400">
+      <p class='mt-10 text-center text-sm text-gray-400'>
         Already a member?
         {{ ' ' }}
         <NuxtLink
-          class="font-semibold leading-6 text-primary-400 hover:text-primary-300"
-          to="https://members.elitebusinessconnections.ca"
-          >Login here
+          class='font-semibold leading-6 text-primary-400 hover:text-primary-300'
+          to='https://members.elitebusinessconnections.ca'
+        >Login here
         </NuxtLink>
       </p>
     </div>
