@@ -80,6 +80,12 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
 
     <div class='mt-10 sm:mx-auto sm:w-full sm:max-w-sm space-y-4'>
       <UForm :schema='registerSchema' :state='state' @submit='onSubmit'>
+        <UFormGroup required label='First Name' name='first_name'>
+          <UInput v-model='state.first_name' placeholder='Enter your first name' />
+        </UFormGroup>
+        <UFormGroup required label='Last Name' name='last_name'>
+          <UInput v-model='state.last_name' placeholder='Enter your last name' />
+        </UFormGroup>
         <UFormGroup required label='Email Address' name='email'>
           <UInput v-model='state.email' placeholder='Enter email address...' />
         </UFormGroup>
