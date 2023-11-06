@@ -1,50 +1,45 @@
 import { contactFormSchema } from '~/types/ContactForm'
 import { sendContactFormEmail } from '~/server/utils/emailUtils'
 
-const getConfig = () => {
- const sendgridApiKey = useRuntimeConfig().SENDGRID_API_KEY
-  const bearerToken = useRuntimeConfig().DIRECTUS_SERVER_TOKEN
-  return
-}
+import { NextApiRequest, NextApiResponse } from 'next'
+import { contactFormSchema } from '~/types/ContactForm'
+import { sendContactFormEmail } from '~/server/utils/emailUtils'
 
-var myHeaders = new Headers();
-myHeaders.append("Content-Type", "application/json");
-myHeaders.append("Accept", "application/json");
-myHeaders.append("Authorization", "Bearer *****");
+async function createContactInDirectus(contactData: any) {
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+  myHeaders.append("Accept", "application/json");
+  myHeaders.append("Authorization", `Bearer ${process.env.DIRECTUS_SERVER_TOKEN}`);
 
-var raw = JSON.stringify([
-  {
-    "first_name": "<string>",
-    "last_name": "<string>",
-    "email_address": "<string>",
-    "phone_number": "<string>",
-    "notes": "<string>"
-  }
-]);
-
-var requestOptions = {
-  method: 'POST',
-  headers: myHeaders,
-  body: raw,
-  redirect: 'follow'
-};
-
-fetch("https://members.elitebusinessconnections.ca/items/contacts", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
-
-export default defineEventHandler(async (event) => {
-  const body = await readValidatedBody(event, contactFormSchema.parse)
-  const apiKey = getConfig()
+  const requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: JSON.stringify([contactData]),
+    redirect: 'follow'
+  };
 
   try {
-    const statusCode = await sendContactFormEmail(body, apiKey)
+    const response = await fetch("https://members.elitebusinessconnections.ca/items/contacts", requestOptions)
+    const result = await response.text()
+    console.log(result)
+  } catch (error) {
+    console.log('error', error);
+  }
+}
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const body = await readValidatedBody(req, contactFormSchema.parse)
+  const sendgridApiKey = process.env.SENDGRID_API_KEY
+
+  try {
+    const statusCode = await sendContactFormEmail(body, sendgridApiKey)
     console.log('Email sent')
 
-    return statusCode
+    await createContactInDirectus(body)
+
+    res.status(200).json({ status: 'success' })
   } catch (error) {
     console.error(error)
-    return { error }
+    res.status(500).json({ error: 'An error occurred while processing your request.' })
   }
-})
+}
