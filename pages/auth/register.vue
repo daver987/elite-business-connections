@@ -16,6 +16,8 @@ const toast = useToast()
 
 
 const state = reactive({
+  first_name: "",
+  last_name: "",
   email: "",
   password: "",
   confirm: "",
