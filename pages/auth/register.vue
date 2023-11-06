@@ -28,26 +28,37 @@ const resetState = () => {
 
 async function onSubmit(event: FormSubmitEvent<Register>) {
   loading.value = true
-  const data = event.data
-  console.log('Data', data)
   try {
     const response = await $fetch('/api/register', {
       method: 'POST',
       body: event.data
     })
-    if (response.statusCode === 202)
+    if (response.statusCode === 202) {
+      setTimeout(async () => {
+        toast.add({
+          id: 'registration',
+          color: 'green',
+          title: 'Success',
+          description: 'Registration successful.',
+          timeout: 3500,
+          icon: 'i-heroicons-check-badge'
+        })
+        loading.value = false
+        resetState()
+      }, 3500)
+    } else {
+      console.error('Error during registration:', response.statusCode)
       toast.add({
-        id: 'registration',
-        color: 'green',
-        title: 'Success',
-        description: 'Registration successful.',
+        id: 'registration_error',
+        color: 'red',
+        title: 'Error',
+        description: 'There was an error during registration.',
         timeout: 3500,
-        icon: 'i-heroicons-check-badge'
+        icon: 'i-heroicons-no-symbol'
       })
-      resetState()
+      loading.value = false
     }
-  } catch
-    (e) {
+  } catch (e) {
     console.error('Error during registration:', e)
     toast.add({
       id: 'registration_error',
@@ -57,7 +68,6 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
       timeout: 3500,
       icon: 'i-heroicons-no-symbol'
     })
-  } finally {
     loading.value = false
   }
 }
