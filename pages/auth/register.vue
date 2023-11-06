@@ -2,6 +2,7 @@
 import type { FormSubmitEvent } from '#ui/types'
 import { type Register, registerSchema } from '~/types/Register'
 import { showToast } from '~/utils/showToast'
+import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 
 definePageMeta({
   title: 'Register',
@@ -63,7 +64,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
     }
   } catch (e) {
     console.error('Error during registration:', e)
-    showToast(
+    await showToast(
       'registration_error',
       'red',
       'Error',
@@ -139,7 +140,13 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
             type="password"
           />
         </UFormGroup>
-        <UButton :loading="loading" block type="submit"> Join Now</UButton>
+        <UButton
+          :loading="loading"
+          block
+          type="submit"
+        >
+          Join Now
+        </UButton>
       </UForm>
 
       <p class="mt-10 text-center text-sm text-gray-400">
