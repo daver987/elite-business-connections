@@ -34,7 +34,7 @@ export async function sendContactFormEmail(
         },
       ],
       cc: {
-        email: 'david@rodina.ca',
+        email: 'memberships@elitebusinessconnections.ca',
       },
       from: {
         email: 'contact@elitebusinessconnections.ca',
@@ -90,7 +90,7 @@ export async function sendSubscriptionEmail(
         },
       ],
       cc: {
-        email: 'david@rodina.ca',
+        email: 'memberships@elitebusinessconnections.ca',
       },
       from: {
         email: 'newsletter@elitebusinessconnections.ca',
