@@ -1,8 +1,8 @@
 export const handleKeydownSubmit = (
   event: KeyboardEvent,
-  submitFunction: Function
+  submitFunction: Function,
 ) => {
-  if (event.key === 'Enter' || event.keyCode === 13) {
+  if (event.key === 'Enter') {
     event.preventDefault()
     submitFunction(event)
   }
