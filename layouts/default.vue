@@ -5,8 +5,10 @@ const { data: navigationLinks } = await useFetch<HeaderNavigation[]>(
   '/api/navigation?navType=header',
   {
     transform: (data: HeaderNavigation[]) => {
-      if(data.length) {
+      if(data && data.length) {
         return data
+      } else {
+        return []
       }
     }
   }
