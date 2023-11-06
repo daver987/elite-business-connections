@@ -1,6 +1,5 @@
+import { ref } from 'vue'
 import type { NotificationColor } from '#ui/types'
-
-const toast = useToast()
 
 export async function showToast(
   id: string,
@@ -9,7 +8,8 @@ export async function showToast(
   description: string,
   icon: string
 ) {
-  toast.add({
+  const toast = ref(useToast())
+  toast.value.add({
     id: id,
     color: color,
     title: title,
