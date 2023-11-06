@@ -122,7 +122,7 @@ useHead({
                     aria-hidden="true"
                   />
                 </dt>
-                <dd>Clarence Creek, ON</dd>
+                <dd>Rockland, ON</dd>
               </div>
               <div class="flex gap-x-4">
                 <dt class="flex-none">
