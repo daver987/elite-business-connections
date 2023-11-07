@@ -135,6 +135,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
             placeholder="Enter a password"
             type="password"
             required
+            autocomplete="new-password"
           >
           </UInput>
         </UFormGroup>
@@ -148,6 +149,7 @@ async function onSubmit(event: FormSubmitEvent<Register>) {
             v-model="state.confirm"
             placeholder="Confirm your password"
             type="password"
+            autocomplete="new-password"
           />
         </UFormGroup>
         <UButton :loading="loading" block type="submit"> Join Now</UButton>

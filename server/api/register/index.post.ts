@@ -1,6 +1,6 @@
 import type { Register, RegisterResponse } from '~/types/Register'
 
-const getConfig = () => {
+async function getConfig(): Promise<{ role: string; token: string }> {
   const config = useRuntimeConfig()
   return {
     token: config.DIRECTUS_SERVER_TOKEN,
@@ -11,7 +11,7 @@ const getConfig = () => {
 export default defineEventHandler(async (event) => {
   const { first_name, last_name, email, password } =
     await readBody<Register>(event)
-  const { token, role } = getConfig()
+  const { token, role } = await getConfig()
 
   const headers = {
     'Content-Type': 'application/json',
