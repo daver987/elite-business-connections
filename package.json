@@ -26,7 +26,6 @@
     "singleQuote": true
   },
   "devDependencies": {
-    "@directus/sdk": "^13.0.0",
     "@formkit/auto-animate": "^0.8.0",
     "@nuxt/devtools": "latest",
     "@nuxt/image": "1.0.0",

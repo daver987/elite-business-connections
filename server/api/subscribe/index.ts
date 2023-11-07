@@ -1,7 +1,7 @@
 import { subscriptionSchema } from '~/types/Subscription'
 import { sendSubscriptionEmail } from '~/server/utils/emailUtils'
 
-const getConfig = () => {
+const getConfig = (): string => {
   return useRuntimeConfig().SENDGRID_API_KEY
 }
 

@@ -9,8 +9,11 @@ export const contactFormSchema = z.object({
       invalid_type_error: 'Invalid phone number format must be 555 555 1234',
     })
     .min(10)
-    .regex(/^\d{3} \d{3} \d{4}$/)
-    .trim(),
+    .trim()
+    .transform((val) => {
+      const digits = val.replace(/\D/g, '')
+      return digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3')
+    }),
   email_address: z
     .string({ required_error: 'An email address is required' })
     .email('Please enter a valid email address')
@@ -29,7 +32,7 @@ export const contactFormSchema = z.object({
 export type ContactForm = z.output<typeof contactFormSchema>
 
 export type Contact = {
-  user_created: string
+  is_contact_form_lead: boolean
   first_name: string
   last_name: string
   email_address: string

@@ -33,9 +33,6 @@ export async function sendContactFormEmail(
           },
         },
       ],
-      cc: {
-        email: 'memberships@elitebusinessconnections.ca',
-      },
       from: {
         email: 'contact@elitebusinessconnections.ca',
         name: 'Elite Business Connections',
@@ -89,9 +86,6 @@ export async function sendSubscriptionEmail(
           ],
         },
       ],
-      cc: {
-        email: 'memberships@elitebusinessconnections.ca',
-      },
       from: {
         email: 'newsletter@elitebusinessconnections.ca',
         name: 'Elite Business Connections',

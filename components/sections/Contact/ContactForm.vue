@@ -99,6 +99,14 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
         </UFormGroup>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <UFormGroup class="my-2" label="Email" name="email_address" required>
+          <UInput
+            v-model="state.email_address"
+            placeholder="you@example.com"
+            size="lg"
+            type="email"
+          />
+        </UFormGroup>
         <UFormGroup
           class="my-2"
           label="Phone Number"
@@ -110,14 +118,6 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
             placeholder="555 555 1234"
             type="tel"
             size="lg"
-          />
-        </UFormGroup>
-        <UFormGroup class="my-2" label="Email" name="email_address" required>
-          <UInput
-            v-model="state.email_address"
-            placeholder="you@example.com"
-            size="lg"
-            type="email"
           />
         </UFormGroup>
       </div>

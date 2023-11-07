@@ -13,9 +13,6 @@ dependencies:
     version: 1.8.1
 
 devDependencies:
-  '@directus/sdk':
-    specifier: ^13.0.0
-    version: 13.0.1
   '@formkit/auto-animate':
     specifier: ^0.8.0
     version: 0.8.1
@@ -458,11 +455,6 @@ packages:
     dependencies:
       postcss-selector-parser: 6.0.13
     dev: false
-
-  /@directus/sdk@13.0.1:
-    resolution: {integrity: sha512-zKus2H2AC6NkYwYH1OTfTePHrCt4HxWC41JvQYiAT8j227bmE1adMQ/aAPqLwTIDeaDpR+BDJNNOFfq+3btVSg==}
-    engines: {node: '>=18.0.0'}
-    dev: true
 
   /@egoist/tailwindcss-icons@1.4.0(tailwindcss@3.3.5):
     resolution: {integrity: sha512-ERM7F8culmN3CADiqxnvVN4GnCDVaexbn+UG/w6NiRnI85JX/St9Ru1d+/1R80JHYBx4frdLQl9h01b0TwAZ+Q==}
@@ -1624,6 +1616,7 @@ packages:
     dependencies:
       is-glob: 4.0.3
       micromatch: 4.0.5
+      napi-wasm: 1.1.0
     dev: true
     bundledDependencies:
       - napi-wasm
@@ -5201,6 +5194,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /napi-wasm@1.1.0:
+    resolution: {integrity: sha512-lHwIAJbmLSjF9VDRm9GoVOy9AGp3aIvkjv+Kvz9h16QR3uSVYH78PNQUnT2U4X53mhlnV2M7wrhibQ3GHicDmg==}
+    dev: true
 
   /negotiator@0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
