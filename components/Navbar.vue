@@ -85,7 +85,11 @@ const delayedClose = () => {
       </template>
       <template #footer>
         <div class="py-6">
-          <NuxtLink to="/under-construction"> Access Membership</NuxtLink>
+          <NuxtLink
+            to="https://members.elitebusinessconnections.ca/admin/login"
+          >
+            Access Membership</NuxtLink
+          >
         </div>
       </template>
     </UCard>
