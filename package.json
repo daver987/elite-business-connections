@@ -26,31 +26,32 @@
     "singleQuote": true
   },
   "devDependencies": {
-    "@formkit/auto-animate": "^0.8.0",
+    "@formkit/auto-animate": "^0.8.1",
     "@nuxt/devtools": "latest",
     "@nuxt/image": "1.0.0",
     "@nuxtjs/google-fonts": "^3.0.2",
     "@portabletext/vue": "^1.0.6",
-    "@sanity/client": "^6.7.0",
+    "@sanity/client": "^6.7.1",
     "@sanity/image-url": "^1.0.2",
-    "@sanity/types": "^3.18.1",
+    "@sanity/types": "^3.19.1",
     "@sendgrid/mail": "^7.7.0",
     "@splidejs/vue-splide": "^0.6.12",
     "@tailwindcss/typography": "^0.5.10",
-    "@types/ws": "^8.5.8",
+    "@types/ws": "^8.5.9",
+    "chalk": "^5.3.0",
     "nuxt": "^3.8.1",
-    "nuxt-icon": "^0.5.0",
+    "nuxt-icon": "^0.6.5",
     "nuxt-svgo": "^3.5.6",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-tailwindcss": "^0.5.6",
     "typescript": "^5.2.2",
-    "vue": "^3.3.6",
+    "vue": "^3.3.8",
     "vue-router": "^4.2.5",
     "zod": "^3.22.4"
   },
   "dependencies": {
-    "@nuxt/ui": "^2.9.0",
+    "@nuxt/ui": "^2.10.0",
     "@nuxtjs/sanity": "^1.8.1"
   }
 }

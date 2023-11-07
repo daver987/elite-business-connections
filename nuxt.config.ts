@@ -46,6 +46,9 @@ export default defineNuxtConfig({
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
     '~/components',
   ],
+  nitro: {
+    preset: process.env.NITRO_PRESET,
+  },
   css: ['~/assets/css/main.css', '@splidejs/vue-splide/css'],
   build: {
     transpile: ['@splidejs/vue-splide', '@sendgrid/mail'],
