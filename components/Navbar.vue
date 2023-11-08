@@ -47,7 +47,7 @@ const delayedClose = () => {
       <div class="hidden lg:flex lg:flex-1 lg:justify-end lg:gap-4">
         <NuxtLink
           class="text-sm font-semibold leading-6"
-          to="/under-construction"
+          to="https://members.elitebusinessconnections.ca/admin/login"
           >Access Membership <span aria-hidden="true">&rarr;</span>
         </NuxtLink>
       </div>
