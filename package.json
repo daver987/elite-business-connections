@@ -3,7 +3,7 @@
   "author": "David Robertson",
   "description": "The front facing website for Elite Business Connections",
   "homepage": "https://elitebusinessconnections.ca",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "private": true,
   "type": "module",
   "scripts": {
