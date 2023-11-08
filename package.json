@@ -13,7 +13,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "prettier --check .",
-    "lint:fix": "prettier --write ."
+    "lint:fix": "prettier --write .",
+    "release": "pnpm run lint:fix && changelogen --release && git push --follow-tags"
   },
   "prettier": {
     "plugins": [

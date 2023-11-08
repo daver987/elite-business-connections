@@ -35,6 +35,9 @@ export default defineNuxtConfig({
       },
     ],
   ],
+  nitro: {
+    preset: process.env.NITRO_PRESET,
+  },
   runtimeConfig: {
     DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
     DIRECTUS_URL: process.env.DIRECTUS_URL,
@@ -46,9 +49,6 @@ export default defineNuxtConfig({
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
     '~/components',
   ],
-  nitro: {
-    preset: process.env.NITRO_PRESET,
-  },
   css: ['~/assets/css/main.css', '@splidejs/vue-splide/css'],
   build: {
     transpile: ['@splidejs/vue-splide', '@sendgrid/mail'],
