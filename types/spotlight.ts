@@ -1,9 +1,29 @@
-import type { PortableTextBlock, Slug, ImageAsset } from '@sanity/types'
+import type { Slug, ImageAsset } from '@sanity/types'
 
-interface Author {
+export interface Author {
   name: string
   image: string
   slug: string
+}
+
+export interface MarkDef {
+  _type: string
+  href?: string
+  _key: string
+}
+
+export interface Child {
+  _type: string
+  text: string
+  marks?: string[]
+}
+
+export interface BodyItem {
+  _type: string
+  style?: string
+  postImage?: string
+  markDefs?: MarkDef[]
+  children?: Child[]
 }
 
 export interface Spotlight {
@@ -15,6 +35,8 @@ export interface Spotlight {
   title?: string
   slug: Slug
   excerpt: string
-  mainImage?: ImageAsset
-  body: PortableTextBlock[]
+  featuredImage: string
+  body: BodyItem[]
+  authorName: string[]
+  avatar: string[]
 }

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { convertToHtml } from '~/utils/convertToHtml'
 import useUtilities from '~/utils/formatters'
+import type { Spotlight } from '~/types/'
 
 definePageMeta({
   colorMode: 'dark',
@@ -40,7 +41,7 @@ const { formatDate } = useUtilities()
 
 const route = useRoute()
 
-const query = groq`*[_type == "spotlight"]{
+const query = groq`*[_type == "spotlight" && slug.current == $slug]{
   ...,
   body[]{
     ...,
@@ -56,11 +57,13 @@ const query = groq`*[_type == "spotlight"]{
     "avatar": author[]->image.asset->url
 }`
 
-const { data: spotlight } = await useSanityQuery(query, {
+const { data } = await useSanityQuery<Spotlight[]>(query, {
   slug: route.params.slug,
 })
+const spotlight = toValue(data) as Spotlight[]
 const { featuredImage, excerpt, title, body, authorName, avatar, _updatedAt } =
-  spotlight.value[0]
+  spotlight[0] as Spotlight
+
 const convertedHtml = convertToHtml(body)
 </script>
 
@@ -68,7 +71,7 @@ const convertedHtml = convertToHtml(body)
   <div>
     <HeaderSpotlight
       :excerpt="excerpt"
-      :title="title"
+      :title="title as string"
       :featuredImage="featuredImage"
     />
     <section class="post">

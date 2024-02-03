@@ -1,22 +1,4 @@
-interface MarkDef {
-  _type: string
-  href?: string
-  _key: string
-}
-
-interface Child {
-  _type: string
-  text: string
-  marks?: string[]
-}
-
-interface BodyItem {
-  _type: string
-  style?: string
-  postImage?: string
-  markDefs?: MarkDef[]
-  children?: Child[]
-}
+import type { BodyItem, MarkDef } from '~/types'
 
 export function convertToHtml(body: BodyItem[]): string {
   let htmlOutput = ''
@@ -41,8 +23,11 @@ export function convertToHtml(body: BodyItem[]): string {
           const marks = child.marks || []
           if (marks.length > 0) {
             marks.forEach((mark) => {
-              const href = markDefs[mark].href
-              text = `<a class="text-primary hover:text-primary" href="${href}">${text}</a>`
+              // Type guard for href
+              if (markDefs[mark] && markDefs[mark].href) {
+                const href = markDefs[mark].href
+                text = `<a class="text-primary hover:text-primary" href="${href}">${text}</a>`
+              }
             })
           }
           paragraph += `${text} `
