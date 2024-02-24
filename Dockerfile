@@ -1,31 +1,32 @@
-# Use Node 20 as the base image
-FROM node:20-slim
+# Use Node.js version 20 as the base image
+FROM node:20
 
-# Set the working directory in the container
+# Create app directory and set it as the working directory
 WORKDIR /app
 
-# Switch to root to enable corepack
+# Switch to the root user to perform system-level operations
 USER root
+
+# Enable Corepack to support Yarn/PNPM out of the box with Node.js
 RUN corepack enable
 
-# Switch back to node user
+# Change ownership of the /app directory to the 'node' user
+RUN chown -R node:node /app
+
+# Switch to 'node' user before copying files and installing dependencies
 USER node
 
-# Copy package.json and pnpm-lock.yaml (or package-lock.json if you use npm) to leverage Docker caching
+# Copy package.json and pnpm-lock.yaml or other relevant files
 COPY --chown=node:node package.json pnpm-lock.yaml ./
 
-# Install dependencies as node user
+# Install app dependencies using PNPM
 RUN pnpm install
 
-# Copy the Nuxt 3 application source code into the container
+# Copy the rest of the application code with appropriate ownership
 COPY --chown=node:node . .
 
-# Build the Nuxt 3 application as node user
+# Build the app
 RUN pnpm run build
 
-# Expose the port Nuxt 3 runs on
-EXPOSE 3000
-
-# Set the command to run your app using Node
+# The command to run the app
 CMD ["node", ".output/server/index.mjs"]
-
