@@ -27,7 +27,7 @@ const delayedClose = () => {
         <UButton
           icon="i-heroicons-bars-3"
           size="md"
-          square
+          :square="true"
           variant="ghost"
           color="gray"
           :padded="false"
@@ -62,7 +62,7 @@ const delayedClose = () => {
             icon="i-heroicons-x-mark"
             size="lg"
             :padded="false"
-            square
+            :square="true"
             color="gray"
             variant="ghost"
             @click="isOpen = false"

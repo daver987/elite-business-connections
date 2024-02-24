@@ -1,7 +1,6 @@
 export default defineNuxtConfig({
   devtools: {
     enabled: true,
-
     timeline: {
       enabled: true,
     },
@@ -55,7 +54,6 @@ export default defineNuxtConfig({
   },
   vue: {
     propsDestructure: true,
-    defineModel: true,
   },
   tailwindcss: {
     viewer: false,
