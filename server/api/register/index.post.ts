@@ -39,15 +39,12 @@ export default defineEventHandler(async (event) => {
       throw new Error('Registration failed: Data is undefined or lacks ID')
     }
   } catch (error: unknown) {
-    // Narrow down the type to Error using an assertion
     if (error instanceof Error) {
       console.error(chalk.red('Error during user registration:'), error.message)
-      // Log the error response if it exists and if error is of type AxiosError
       if ('response' in error) {
         console.error(chalk.red('Error response:'), error.response)
       }
     } else {
-      // Handle cases where the caught error is not an instance of Error
       console.error(chalk.red('An unexpected error occurred:'), error)
     }
     return { error: 'Failed to register user.' }

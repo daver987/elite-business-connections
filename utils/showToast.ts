@@ -1,4 +1,4 @@
-import { ref } from 'vue'
+import { ref } from '#imports'
 import type { NotificationColor } from '#ui/types'
 
 export async function showToast(
