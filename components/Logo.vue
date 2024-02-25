@@ -19,6 +19,20 @@ const props = withDefaults(defineProps<Props>(), {
   autoMargin: true,
 })
 
+const sanity = useSanity()
+
+const query = groq`*[ _type == "brand"]{
+  "logo": logoDark.asset->url,
+}`
+
+const { data: logo } = await useAsyncData<{
+  logos: Array<{ logo: string }>
+} | null>('logo', () => sanity.fetch<{ logos: Array<{ logo: string }> }>(query))
+const logoUrl = ref<string>('')
+if (logo.value && logo.value.logos.length > 0) {
+  logoUrl.value = logo.value.logos[0].logo
+}
+
 const emit = defineEmits(['logoClick'])
 
 const styleObject = reactive({
@@ -63,11 +77,7 @@ const calculateHeight = (width: string) => {
         :alt="altText"
         :width="logoSize"
         :height="calculateHeight(logoSize)"
-        :src="
-          colorMode === 'dark'
-            ? '/images/ebc_logo_dark.png'
-            : '/images/ebc_logo_light.png'
-        "
+        :src="logoUrl"
       />
     </NuxtLink>
   </div>

@@ -11,6 +11,9 @@ dependencies:
   '@nuxtjs/sanity':
     specifier: ^1.8.3
     version: 1.8.3
+  vue-splide:
+    specifier: link:@types/@splidejs/vue-splide
+    version: link:@types/@splidejs/vue-splide
 
 devDependencies:
   '@formkit/auto-animate':

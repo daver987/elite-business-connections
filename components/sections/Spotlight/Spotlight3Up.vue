@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Spotlight } from '~/types/spotlight'
+import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
+import type { Spotlight } from '~/types'
 
 const query = groq`*[ _type == "spotlight" && defined(slug.current) ] | order(_createdAt desc){
   excerpt,
@@ -15,7 +16,7 @@ const query = groq`*[ _type == "spotlight" && defined(slug.current) ] | order(_c
 const sanity = useSanity()
 
 const { data: spotlightData } = await useAsyncData('spotlights', () =>
-  sanity.fetch<{ spotlights: Spotlight[] }>(query)
+  sanity.fetch<{ spotlights: Spotlight }>(query)
 )
 
 console.log(spotlightData.value)
@@ -37,7 +38,7 @@ console.log(spotlightData.value)
       >
         <UCard
           class="flex flex-col items-start justify-between"
-          v-for="spotlight in spotlightData as Spotlight[]"
+          v-for="spotlight in spotlightData"
           :ui="{
             header: {
               padding: 'px-0 py-0 sm:px-0',
@@ -49,7 +50,12 @@ console.log(spotlightData.value)
             <div class="relative w-full">
               <NuxtImg
                 class="w-full bg-gray-100 object-cover"
-                :src="$urlFor(spotlight.mainImage).width(800).height(450).url()"
+                :src="
+                  $urlFor(spotlight.mainImage as ImageUrlBuilder)
+                    .width(800)
+                    .height(450)
+                    .url()
+                "
                 alt="Featured Image"
               />
               <div
@@ -81,7 +87,7 @@ console.log(spotlightData.value)
                 <NuxtImg
                   class="h-10 w-10 rounded-full bg-gray-100"
                   :src="
-                    $urlFor(spotlight.author[0].image)
+                    $urlFor(spotlight.author[0].image as ImageUrlBuilder)
                       .width(50)
                       .height(50)
                       .url()
@@ -105,3 +111,4 @@ console.log(spotlightData.value)
     </div>
   </div>
 </template>
+~/types/Spotlight

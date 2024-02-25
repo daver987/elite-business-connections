@@ -15,7 +15,7 @@ async function getConfig(): Promise<{
   }
 }
 
-function mapToContactArray(data: ContactForm[]): Contact[] {
+function mapToContactArray(data: Array<ContactForm>): Array<Contact> {
   return data.map((item) => ({
     contact_type: 'form_submission',
     is_contact_form_lead: true,
@@ -35,13 +35,11 @@ function mapToContactArray(data: ContactForm[]): Contact[] {
 export default defineEventHandler(async (event) => {
   const body = await readValidatedBody(event, contactFormSchema.parse)
   const { sendgridApiKey, bearerToken } = await getConfig()
-  const contactArray: Contact[] = mapToContactArray([body])
+  const contactArray: Array<Contact> = mapToContactArray([body])
 
   try {
     const statusCode = await sendContactFormEmail(body, sendgridApiKey)
-    console.log('Email sent')
     const contact = await createContact(bearerToken, contactArray)
-    console.log('contact', contact)
 
     return statusCode
   } catch (error) {

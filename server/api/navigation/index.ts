@@ -52,17 +52,13 @@ export default defineEventHandler((event) => {
     ],
   }
 
-  const headerNavigation: HeaderNavigation[] = [
+  const headerNavigation: Array<HeaderNavigation> = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
     { name: 'Spotlights', href: '/spotlights' },
     { name: 'Contact', href: '/contact' },
   ]
 
-  const navType = query.navType
-  if (navType === 'footer') {
-    return footerNavigation
-  } else {
-    return headerNavigation
-  }
+  const { navType } = query
+  return navType === 'footer' ? footerNavigation : headerNavigation
 })

@@ -3,7 +3,7 @@ services:
   nuxtapp:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       NODE_ENV: production
       NITRO_PRESET: digital-ocean

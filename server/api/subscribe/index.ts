@@ -10,10 +10,7 @@ export default defineEventHandler(async (event) => {
   const apiKey = getConfig()
 
   try {
-    const statusCode = await sendSubscriptionEmail(body, apiKey)
-    console.log('Subscription Email sent')
-
-    return statusCode
+    return await sendSubscriptionEmail(body, apiKey)
   } catch (error) {
     console.error(error)
     return { error }

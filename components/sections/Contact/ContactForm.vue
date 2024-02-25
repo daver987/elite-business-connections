@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from '#imports'
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormSubmitEvent } from '#ui/types'
 import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 import { showToast } from '~/utils/showToast'
 import { professions } from '~/data/professions'

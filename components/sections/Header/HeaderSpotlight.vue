@@ -1,12 +1,21 @@
 <script setup lang="ts">
-const { data: linkArray } = await useFetch('/api/navigation')
-const navigationLinks = linkArray.value?.navigation!
+import type { FooterNavigation, HeaderNavigation } from '~/types'
 
 interface Props {
   featuredImage: string
   title: string
   excerpt: string
 }
+
+const { data: linkArray } = await useFetch<
+  FooterNavigation | HeaderNavigation[]
+>('/api/navigation')
+
+const navigationLinks = linkArray.value
+  ? 'navigation' in linkArray.value
+    ? linkArray.value.navigation
+    : []
+  : []
 
 defineProps<Props>()
 </script>
@@ -75,7 +84,7 @@ defineProps<Props>()
       />
     </div>
     <UContainer>
-      <Navbar :navLinks="navigationLinks" />
+      <Navbar :navLinks="navigationLinks as Array<HeaderNavigation>" />
       <div class="mx-auto max-w-2xl lg:mx-0">
         <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
           {{ title }}

@@ -32,12 +32,10 @@ export default defineEventHandler(async (event) => {
         body: requestBody,
       }
     )
-    console.log(chalk.green('Registration result:'), result)
-    if (result.data && result.data.id) {
+    if (result.data?.id) {
       return { statusCode: 202 }
-    } else {
-      throw new Error('Registration failed: Data is undefined or lacks ID')
     }
+    throw new Error('Registration failed: Data is undefined or lacks ID')
   } catch (error: unknown) {
     if (error instanceof Error) {
       console.error(chalk.red('Error during user registration:'), error.message)

@@ -2,7 +2,7 @@
 import { ref } from '#imports'
 import { showToast } from '~/utils/showToast'
 import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
-import type { FormSubmitEvent } from '@nuxt/ui/dist/runtime/types'
+import type { FormSubmitEvent } from '#ui/types'
 import { subscriptionSchema } from '~/types/Subscription'
 import type { FooterNavigation } from '~/types/Navigation'
 

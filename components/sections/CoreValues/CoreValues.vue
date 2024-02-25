@@ -24,17 +24,16 @@ const query = groq`*[ _type == "coreValues"]{
 const sanity = useSanity()
 
 const { data: coreValuesSanity } = await useAsyncData('coreValues', () =>
-  sanity.fetch<{ coreValues: CoreValues[] }>(query)
+  sanity.fetch<{ coreValues: Array<CoreValues> }>(query)
 )
-
-const transformedCoreValues: TransformedCoreValues[] =
-  coreValuesSanity.value?.map((value) => {
+const transformedCoreValues: Array<TransformedCoreValues> =
+  coreValuesSanity.value?.coreValues.map((value: CoreValues) => {
     return {
       title: value.title,
       description: value.description,
       icon: `${value.iconCollection}:${value.iconName}`,
     }
-  })
+  }) ?? []
 </script>
 
 <template>

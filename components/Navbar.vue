@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import type { HeaderNavigation } from '~/types/Navigation'
+import type { HeaderNavigation } from '~/types'
 
 const isOpen = ref(false)
 
 defineProps<{
-  navLinks: HeaderNavigation[] | null
+  navLinks: Array<HeaderNavigation> | null
 }>()
 
 const delayedClose = () => {

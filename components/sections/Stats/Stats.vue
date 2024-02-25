@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Stat } from '~/types/stats'
+import type { Stat } from '~/types'
 import type { Ref } from 'vue'
 
 interface Props {
@@ -16,18 +16,20 @@ const statQuery = groq`*[ _type == "stats"]{
     title,
     start
 }`
-const { data: statArray } = await useSanityQuery(statQuery)
-console.log('Stat array', statArray)
+const { data: statArray } = await useSanityQuery<Array<Stat>>(statQuery)
 
 const statContainer: Ref<null | HTMLElement> = ref(null)
 const observer: Ref<IntersectionObserver | null> = ref(null)
-const currentValues: Ref<number[]> = ref([])
-const timers: { [key: number]: any } = {}
-let isAnimated = new Array(statArray.value.length).fill(false)
+const currentValues: Ref<Array<number>> = ref([])
+const timers: Record<number, ReturnType<typeof setInterval>> = {}
 
-const animateValue = (stat: Stat, index: number) => {
-  const steps = Math.floor(stat.duration / 10)
-  const increment = (stat.end - stat.start) / steps
+const isAnimated: Array<boolean> = statArray.value
+  ? new Array(statArray.value.length).fill(false)
+  : []
+
+const animateValue = (stat: Stat, index: number): void => {
+  const steps: number = Math.floor(stat.duration / 10)
+  const increment: number = (stat.end - stat.start) / steps
   let current = stat.start
 
   timers[index] = setInterval(() => {
@@ -44,10 +46,10 @@ const animateValue = (stat: Stat, index: number) => {
   }, 10)
 }
 
-const onIntersect = (entries: IntersectionObserverEntry[]) => {
+const onIntersect = (entries: Array<IntersectionObserverEntry>) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
-      statArray.value.forEach((stat, index) => {
+      statArray.value?.forEach((stat, index) => {
         if (!isAnimated[index]) {
           animateValue(stat, index)
           isAnimated[index] = true
@@ -61,7 +63,7 @@ const onIntersect = (entries: IntersectionObserverEntry[]) => {
 }
 
 onMounted(() => {
-  currentValues.value = new Array(statArray.value.length).fill(0)
+  currentValues.value = new Array(statArray.value?.length).fill(0)
   observer.value = new IntersectionObserver(onIntersect, {
     rootMargin: '0px',
     threshold: 0.1,
@@ -99,7 +101,7 @@ onUnmounted(() => {
               class="order-first text-3xl font-semibold tracking-tight text-white"
             >
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray.indexOf(stat)]
+              >{{ currentValues[statArray?.indexOf(stat) ?? 0] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
               <span v-else>+</span>
             </dd>
@@ -119,7 +121,7 @@ onUnmounted(() => {
             </dt>
             <dd class="text-3xl font-semibold tracking-tight text-white">
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray.indexOf(stat)]
+              >{{ currentValues[statArray?.indexOf(stat) ?? 0] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
               <span v-else>+</span>
             </dd>
