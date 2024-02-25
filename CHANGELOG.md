@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.0.1
+
+[compare changes](https://github.com/daver987/elite-business-connections/compare/v0.9.8...v1.0.1)
+
 ## v0.9.8
 
 [compare changes](https://github.com/daver987/elite-business-connections/compare/v0.9.7...v0.9.8)
