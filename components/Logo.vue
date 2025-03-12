@@ -50,7 +50,7 @@ const handleClick = () => {
 const colorMode = useColorMode().value
 
 const calculateHeight = (width: string) => {
-  const actualWidth = parseFloat(width)
+  const actualWidth = Number.parseFloat(width)
   const actualHeight = (actualWidth * 48.6) / 200
   return `${actualHeight}px`
 }
@@ -59,7 +59,7 @@ const calculateHeight = (width: string) => {
 <template>
   <div :style="styleObject">
     <NuxtLink :to="to" @click="handleClick">
-      <SanityImage
+      <!-- <SanityImage
         asset-id="image-17bc6da44ce445316923eff894ccc8073bc542ca-5995x1457-png"
         auto="format"
       >
@@ -71,7 +71,7 @@ const calculateHeight = (width: string) => {
             :src="src"
           />
         </template>
-      </SanityImage>
+      </SanityImage> -->
     </NuxtLink>
   </div>
 </template>

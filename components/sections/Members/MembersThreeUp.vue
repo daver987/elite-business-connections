@@ -48,23 +48,23 @@ const transformMemberData = (data: MemberData[]): Member[] => {
   })
 }
 
-const query = groq`*[ _type == "member"] | order(_createdAt asc){
-    role,
-    name,
-    "avatar": avatar.asset->url,
-    "socialLinks": socials[],
-     _createdAt
-}`
+// const query = groq`*[ _type == "member"] | order(_createdAt asc){
+//     role,
+//     name,
+//     "avatar": avatar.asset->url,
+//     "socialLinks": socials[],
+//      _createdAt
+// }`
 
-const sanity = useSanity()
+// const sanity = useSanity()
 
-const { data: memberData } = await useAsyncData('members', () =>
-  sanity.fetch<{ memberData: MemberData[] }>(query)
-)
+// const { data: memberData } = await useAsyncData('members', () =>
+//   sanity.fetch<{ memberData: MemberData[] }>(query)
+// )
 
-const transformedMemberData = transformMemberData(
-  memberData.value as unknown as MemberData[]
-)
+// const transformedMemberData = transformMemberData(
+//   memberData.value as unknown as MemberData[]
+// )
 </script>
 
 <template>
@@ -83,7 +83,7 @@ const transformedMemberData = transformMemberData(
         class="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3 lg:gap-8"
         role="list"
       >
-        <li
+        <!-- <li
           class="rounded-2xl bg-gray-800 px-8 py-10"
           v-for="member in transformedMemberData"
           :key="member.name"
@@ -111,7 +111,7 @@ const transformedMemberData = transformMemberData(
               </NuxtLink>
             </li>
           </ul>
-        </li>
+        </li> -->
       </ul>
     </UContainer>
   </section>

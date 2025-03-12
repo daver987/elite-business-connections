@@ -5,6 +5,7 @@ export default defineNuxtConfig({
       enabled: true,
     },
   },
+
   app: {
     pageTransition: { name: 'page', mode: 'out-in' },
     layoutTransition: {
@@ -12,23 +13,19 @@ export default defineNuxtConfig({
       mode: 'out-in',
     },
   },
+
   modules: [
-    'nuxt-icon',
     '@nuxt/image',
     'nuxt-svgo',
     '@nuxt/ui',
-    [
-      '@nuxtjs/google-fonts',
-      {
-        families: {
-          Inter: true,
-        },
-      },
-    ],
+    '@nuxt/fonts',
+    '@nuxt/icon',
   ],
+
   nitro: {
     preset: process.env.NITRO_PRESET,
   },
+
   runtimeConfig: {
     DATABASE_URL: process.env.DATABASE_URL,
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
@@ -39,16 +36,23 @@ export default defineNuxtConfig({
     { path: '~/components/units', extensions: ['.vue'], pathPrefix: false },
     '~/components',
   ],
+
   css: ['~/assets/css/main.css', '@splidejs/vue-splide/css'],
+
   build: {
     transpile: ['@splidejs/vue-splide', '@sendgrid/mail'],
   },
+
   vue: {
     propsDestructure: true,
   },
-  tailwindcss: {
-    viewer: false,
+
+  experimental: {
+    viewTransition: true,
+    clientNodeCompat: true,
+    asyncContext: true,
   },
+
   image: {
     densities: [1, 2],
     format: ['avif', 'webp', 'jpeg', 'png'],
@@ -64,4 +68,21 @@ export default defineNuxtConfig({
     },
     domains: ['unsplash.com'],
   },
+
+  vite: {
+    optimizeDeps: {
+      exclude: ['@prisma/client'],
+    },
+    resolve: {
+      alias: {
+        '.prisma/client/index-browser':
+          './node_modules/.prisma/client/index-browser.js',
+      },
+    },
+    ssr: {
+      external: ['@prisma/client'],
+    },
+  },
+
+  compatibilityDate: '2025-03-12',
 })

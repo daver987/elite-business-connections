@@ -3,14 +3,14 @@ interface Benefits {
   name: string
 }
 
-const query = groq`*[ _type == "benefit"]{
-  name
-}`
-const sanity = useSanity()
+// const query = groq`*[ _type == "benefit"]{
+//   name
+// }`
+// const sanity = useSanity()
 
-const { data: benefits } = await useAsyncData('benefits', () =>
-  sanity.fetch<{ benefits: Benefits }>(query)
-)
+// const { data: benefits } = await useAsyncData('benefits', () =>
+//   sanity.fetch<{ benefits: Benefits }>(query)
+// )
 </script>
 
 <template>
@@ -39,7 +39,7 @@ const { data: benefits } = await useAsyncData('benefits', () =>
               class="mt-10 grid grid-cols-1 gap-x-8 gap-y-3 text-base leading-7 text-white sm:grid-cols-2"
               role="list"
             >
-              <li
+              <!-- <li
                 class="flex gap-x-3"
                 v-for="benefit in benefits"
                 :key="benefit.name"
@@ -50,7 +50,7 @@ const { data: benefits } = await useAsyncData('benefits', () =>
                   aria-hidden="true"
                 />
                 {{ benefit.name }}
-              </li>
+              </li> -->
             </ul>
             <div class="mt-10 flex">
               <NuxtLink

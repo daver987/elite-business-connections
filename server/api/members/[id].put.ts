@@ -4,6 +4,6 @@ export default defineEventHandler(async (event) => {
   // Update member by ID
   return {
     message: `Update member with ID: ${id}`,
-    data: body
+    data: body,
   }
 })
