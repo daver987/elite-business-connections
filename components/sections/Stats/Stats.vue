@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { Stat } from '~/types'
 import type { Ref } from 'vue'
+import { statsData, type Stat } from '~/data/statsData'
 
 interface Props {
   isBoxed?: boolean
@@ -8,24 +8,15 @@ interface Props {
 
 defineProps<Props>()
 
-const statQuery = groq`*[ _type == "stats"]{
-  position,
-    duration,
-    symbol,
-    end,
-    title,
-    start
-}`
-const { data: statArray } = await useSanityQuery<Array<Stat>>(statQuery)
+// Use mock data instead of Sanity query
+const statArray = ref(statsData)
 
 const statContainer: Ref<null | HTMLElement> = ref(null)
 const observer: Ref<IntersectionObserver | null> = ref(null)
 const currentValues: Ref<Array<number>> = ref([])
 const timers: Record<number, ReturnType<typeof setInterval>> = {}
 
-const isAnimated: Array<boolean> = statArray.value
-  ? new Array(statArray.value.length).fill(false)
-  : []
+const isAnimated: Array<boolean> = new Array(statArray.value.length).fill(false)
 
 const animateValue = (stat: Stat, index: number): void => {
   const steps: number = Math.floor(stat.duration / 10)
@@ -47,23 +38,23 @@ const animateValue = (stat: Stat, index: number): void => {
 }
 
 const onIntersect = (entries: Array<IntersectionObserverEntry>) => {
-  entries.forEach((entry) => {
+  for (const entry of entries) {
     if (entry.isIntersecting) {
-      statArray.value?.forEach((stat, index) => {
+      for (const [index, stat] of statArray.value.entries()) {
         if (!isAnimated[index]) {
           animateValue(stat, index)
           isAnimated[index] = true
         }
-      })
+      }
       if (observer.value) {
         observer.value.disconnect()
       }
     }
-  })
+  }
 }
 
 onMounted(() => {
-  currentValues.value = new Array(statArray.value?.length).fill(0)
+  currentValues.value = new Array(statArray.value.length).fill(0)
   observer.value = new IntersectionObserver(onIntersect, {
     rootMargin: '0px',
     threshold: 0.1,
@@ -92,7 +83,7 @@ onUnmounted(() => {
           <div
             class="flex flex-col bg-white/5 p-8"
             v-for="stat in statArray"
-            :key="stat._id"
+            :key="stat.id"
           >
             <dt class="text-sm font-semibold leading-6 text-gray-300">
               {{ stat.title }}
@@ -101,9 +92,8 @@ onUnmounted(() => {
               class="order-first text-3xl font-semibold tracking-tight text-white"
             >
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray?.indexOf(stat) ?? 0] ?? 0
+              >{{ currentValues[statArray.indexOf(stat)] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
-              <span v-else>+</span>
             </dd>
           </div>
         </dl>
@@ -114,16 +104,15 @@ onUnmounted(() => {
           <div
             class="flex flex-col-reverse gap-y-3 border-l border-white/20 pl-6"
             v-for="stat in statArray"
-            :key="stat._id"
+            :key="stat.id"
           >
             <dt class="text-base leading-7 text-gray-300">
               {{ stat.title }}
             </dt>
             <dd class="text-3xl font-semibold tracking-tight text-white">
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray?.indexOf(stat) ?? 0] ?? 0
+              >{{ currentValues[statArray.indexOf(stat)] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
-              <span v-else>+</span>
             </dd>
           </div>
         </dl>

@@ -4,6 +4,6 @@ export default defineEventHandler(async (event) => {
   // Update referral status
   return {
     message: `Update referral with ID: ${id}`,
-    data: body
+    data: body,
   }
 })

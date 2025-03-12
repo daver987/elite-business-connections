@@ -5,17 +5,20 @@
 [compare changes](https://github.com/daver987/elite-business-connections/compare/v1.0.1...v1.1.0)
 
 ### Added
+
 - Scaffolded basic structure for portal and admin pages
 - Added Prisma ORM with SQLite database configuration
 - Created API route boilerplate for members, referrals, and posts
 - Set up TypeScript types for all data models
 
 ### Changed
+
 - Upgraded dependencies to latest versions
 - Removed Directus and Sanity dependencies
 - Updated configuration files for the new architecture
 
 ### Removed
+
 - Directus API integration
 - Old CMS-related functionality
 

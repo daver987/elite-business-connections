@@ -3,6 +3,6 @@ export default defineEventHandler(async (event) => {
   // Create new referral
   return {
     message: 'Create new referral',
-    data: body
+    data: body,
   }
 })

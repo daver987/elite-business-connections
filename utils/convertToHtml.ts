@@ -1,4 +1,23 @@
-import type { BodyItem, MarkDef } from '~/types'
+// Define types locally to remove dependency on Sanity types
+export interface MarkDef {
+  _type: string
+  href?: string
+  _key: string
+}
+
+export interface Child {
+  _type: string
+  text: string
+  marks?: Array<string>
+}
+
+export interface BodyItem {
+  _type: string
+  style?: string
+  postImage?: string
+  markDefs?: Array<MarkDef>
+  children?: Array<Child>
+}
 
 export function convertToHtml(body: BodyItem[]): string {
   let htmlOutput = ''
@@ -8,7 +27,7 @@ export function convertToHtml(body: BodyItem[]): string {
     } else if (item._type === 'block') {
       const style = item.style
       const markDefs: Record<string, MarkDef> = Object.fromEntries(
-        item.markDefs?.map((d) => [d._key, d]) || []
+        item.markDefs?.map((d: MarkDef) => [d._key, d]) || []
       )
       if (style === 'h1') {
         const text = item.children![0].text
@@ -18,11 +37,11 @@ export function convertToHtml(body: BodyItem[]): string {
         htmlOutput += `<h2 class="text-3xl font-bold tracking-tight sm:text-4xl capitalize">${text}</h2>\n`
       } else if (style === 'normal') {
         let paragraph = ''
-        item.children!.forEach((child) => {
+        item.children!.forEach((child: Child) => {
           let text = child.text
           const marks = child.marks || []
           if (marks.length > 0) {
-            marks.forEach((mark) => {
+            marks.forEach((mark: string) => {
               // Type guard for href
               if (markDefs[mark] && markDefs[mark].href) {
                 const href = markDefs[mark].href
