@@ -23,6 +23,7 @@
 ## Tech Stack
 
 - Nuxt 3 with TypeScript
+- Nuxt UI for UI Components
 - Tailwind CSS for styling
-- Sanity for content management
+- Custom CMS
 - SendGrid for email functionality
