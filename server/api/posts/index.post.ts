@@ -3,6 +3,6 @@ export default defineEventHandler(async (event) => {
   // Create new blog post
   return {
     message: 'Create new post',
-    data: body
+    data: body,
   }
 })

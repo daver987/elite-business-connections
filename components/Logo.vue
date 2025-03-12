@@ -50,7 +50,7 @@ const handleClick = () => {
 const colorMode = useColorMode().value
 
 const calculateHeight = (width: string) => {
-  const actualWidth = parseFloat(width)
+  const actualWidth = Number.parseFloat(width)
   const actualHeight = (actualWidth * 48.6) / 200
   return `${actualHeight}px`
 }

@@ -4,6 +4,6 @@ export default defineEventHandler(async (event) => {
   // Update blog post
   return {
     message: `Update post with ID: ${id}`,
-    data: body
+    data: body,
   }
 })

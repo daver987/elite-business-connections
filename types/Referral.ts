@@ -1,6 +1,11 @@
 import type { User } from './User'
 
-export type ReferralStatus = 'NEW' | 'CONTACTED' | 'IN_PROGRESS' | 'CLOSED' | 'LOST'
+export type ReferralStatus =
+  | 'NEW'
+  | 'CONTACTED'
+  | 'IN_PROGRESS'
+  | 'CLOSED'
+  | 'LOST'
 
 export interface Referral {
   id: string

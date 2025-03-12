@@ -1,6 +1,6 @@
 import { contactFormSchema } from '~/types/ContactForm'
 import { sendContactFormEmail } from '~/server/utils/emailUtils'
-import { createContact } from '../../utils/directus-helpers'
+// import { createContact } from '../../utils/directus-helpers'
 import type { Contact, ContactForm } from '~/types/ContactForm'
 
 async function getConfig(): Promise<{
@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
 
   try {
     const statusCode = await sendContactFormEmail(body, sendgridApiKey)
-    const contact = await createContact(bearerToken, contactArray)
+    // const contact = await createContact(bearerToken, contactArray)
 
     return statusCode
   } catch (error) {

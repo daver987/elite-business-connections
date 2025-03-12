@@ -3,6 +3,6 @@ export default defineEventHandler(async (event) => {
   // Log closed business
   return {
     message: 'Log closed business',
-    data: body
+    data: body,
   }
 })
