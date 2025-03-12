@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String         @id @default(uuid())
+  email          String         @unique
+  name           String
+  role           Role           @default(MEMBER)
+  profileImage   String?
+  phone          String?
+  company        String?
+  title          String?
+  bio            String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  givenReferrals Referral[]     @relation("ReferralGiver")
+  receivedReferrals Referral[]  @relation("ReferralReceiver")
+  closedBusiness ClosedBusiness[]
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model Referral {
+  id          String         @id @default(uuid())
+  giver       User           @relation("ReferralGiver", fields: [giverId], references: [id])
+  giverId     String
+  receiver    User           @relation("ReferralReceiver", fields: [receiverId], references: [id])
+  receiverId  String
+  contactName String
+  contactEmail String?
+  contactPhone String?
+  notes       String?
+  status      ReferralStatus @default(NEW)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+  closedBusiness ClosedBusiness?
+}
+
+enum ReferralStatus {
+  NEW
+  CONTACTED
+  IN_PROGRESS
+  CLOSED
+  LOST
+}
+
+model ClosedBusiness {
+  id          String    @id @default(uuid())
+  referral    Referral  @relation(fields: [referralId], references: [id])
+  referralId  String    @unique
+  member      User      @relation(fields: [memberId], references: [id])
+  memberId    String
+  amount      Float
+  notes       String?
+  closedDate  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Post {
+  id          String    @id @default(uuid())
+  title       String
+  slug        String    @unique
+  content     String    @db.Text
+  excerpt     String?
+  featuredImage String?
+  published   Boolean   @default(false)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Media {
+  id          String    @id @default(uuid())
+  filename    String
+  filepath    String
+  mimetype    String
+  size        Int
+  createdAt   DateTime  @default(now())
+}

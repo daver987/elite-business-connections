@@ -18,14 +18,6 @@ export default defineNuxtConfig({
     'nuxt-svgo',
     '@nuxt/ui',
     [
-      '@nuxtjs/sanity',
-      {
-        projectId: '1bmrd0be',
-        dataset: 'production',
-        apiVersion: '2023-10-04',
-      },
-    ],
-    [
       '@nuxtjs/google-fonts',
       {
         families: {
@@ -38,8 +30,7 @@ export default defineNuxtConfig({
     preset: process.env.NITRO_PRESET,
   },
   runtimeConfig: {
-    DIRECTUS_SERVER_TOKEN: process.env.DIRECTUS_SERVER_TOKEN,
-    DIRECTUS_URL: process.env.DIRECTUS_URL,
+    DATABASE_URL: process.env.DATABASE_URL,
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
   },
 
@@ -72,9 +63,5 @@ export default defineNuxtConfig({
       '2xl': 1536,
     },
     domains: ['unsplash.com'],
-    sanity: {
-      projectId: '1bmrd0be',
-      dataset: 'production',
-    },
   },
 })
