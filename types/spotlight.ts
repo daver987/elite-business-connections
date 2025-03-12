@@ -1,9 +1,7 @@
-import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
-import type { Slug } from '@sanity/types'
-
+// Remove Sanity dependencies and use generic types
 export interface Author {
   name: string
-  image: ImageUrlBuilder
+  image: string
   slug: string
 }
 
@@ -34,10 +32,12 @@ export interface Spotlight {
   _updatedAt: string
   author: Array<Author>
   title?: string
-  slug: Slug
+  slug: {
+    current: string
+  }
   excerpt: string
   featuredImage: string
-  mainImage?: ImageUrlBuilder | null
+  mainImage?: string | null
   body: Array<BodyItem>
   authorName: Array<string>
   avatar: Array<string>

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { membersData, socialIcons as mockSocialIcons } from '~/data/membersData'
+
 type SocialPlatform = 'Facebook' | 'Instagram'
 
 type SocialLinkData = {
@@ -48,22 +50,17 @@ const transformMemberData = (data: MemberData[]): Member[] => {
   })
 }
 
-const query = groq`*[ _type == "member"] | order(_createdAt asc){
-    role,
-    name,
-    "avatar": avatar.asset->url,
-    "socialLinks": socials[],
-     _createdAt
-}`
-
-const sanity = useSanity()
-
-const { data: memberData } = await useAsyncData('members', () =>
-  sanity.fetch<{ memberData: MemberData[] }>(query)
-)
-
+// Transform the mock data to match the expected format
 const transformedMemberData = transformMemberData(
-  memberData.value as unknown as MemberData[]
+  membersData.map((member) => ({
+    name: member.name,
+    role: member.role,
+    avatar: member.imageUrl,
+    socialLinks: member.social.map((social) => ({
+      platform: `platform:${social.platform.toLowerCase()}`,
+      link: social.url,
+    })),
+  })) as unknown as MemberData[]
 )
 </script>
 
