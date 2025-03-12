@@ -1,25 +1,15 @@
 <script setup lang="ts">
-import type { ImageUrlBuilder } from '@sanity/image-url/lib/types/builder'
-import type { Spotlight } from '~/types'
+import { ref } from 'vue'
+import { useCms } from '~/composables/useCms'
+import type { SpotlightItem } from '~/data/spotlightsData'
 
-const query = groq`*[ _type == "spotlight" && defined(slug.current) ] | order(_createdAt desc){
-  excerpt,
-  _createdAt,
-  _updatedAt,
-  _id,
-  mainImage,
-  slug,
-  title,
-  author[]->{image,name}
-}`
+const { spotlight, urlFor } = useCms()
+const spotlightData = ref<SpotlightItem[]>([])
 
-const sanity = useSanity()
-
-const { data: spotlightData } = await useAsyncData('spotlights', () =>
-  sanity.fetch<{ spotlights: Spotlight }>(query)
-)
-
-console.log(spotlightData.value)
+// Fetch spotlight data
+spotlight.fetch().then((data) => {
+  spotlightData.value = data
+})
 </script>
 
 <template>
@@ -50,12 +40,7 @@ console.log(spotlightData.value)
             <div class="relative w-full">
               <NuxtImg
                 class="w-full bg-gray-100 object-cover"
-                :src="
-                  $urlFor(spotlight.mainImage as ImageUrlBuilder)
-                    .width(800)
-                    .height(450)
-                    .url()
-                "
+                :src="urlFor(spotlight.imageUrl).width(800).height(450).url()"
                 alt="Featured Image"
               />
               <div
@@ -66,15 +51,15 @@ console.log(spotlightData.value)
           <template #default>
             <div class="max-w-xl">
               <div class="mt-8 flex items-center gap-x-4 text-xs">
-                <time class="text-gray-400" :datetime="spotlight._updatedAt">
-                  {{ new Date(spotlight._updatedAt).toLocaleDateString() }}
+                <time class="text-gray-400" :datetime="spotlight.datetime">
+                  {{ new Date(spotlight.datetime).toLocaleDateString() }}
                 </time>
               </div>
               <div class="group relative">
                 <h3
                   class="mt-3 text-lg font-semibold leading-6 text-gray-200 group-hover:text-gray-300"
                 >
-                  <NuxtLink :href="`/spotlights/${spotlight.slug.current}`">
+                  <NuxtLink :href="`/spotlights/${spotlight.id}`">
                     <span class="absolute inset-0" />
                     {{ spotlight.title }}
                   </NuxtLink>
@@ -87,21 +72,20 @@ console.log(spotlightData.value)
                 <NuxtImg
                   class="h-10 w-10 rounded-full bg-gray-100"
                   :src="
-                    $urlFor(spotlight.author[0].image as ImageUrlBuilder)
-                      .width(50)
-                      .height(50)
-                      .url()
+                    urlFor(spotlight.author.avatar).width(50).height(50).url()
                   "
                   alt=""
                 />
                 <div class="text-sm leading-6">
                   <p class="font-semibold text-gray-400">
-                    <NuxtLink to="#">
+                    <NuxtLink :to="spotlight.author.uri">
                       <span class="absolute inset-0" />
-                      {{ spotlight.author[0].name }}
+                      {{ spotlight.author.fullName }}
                     </NuxtLink>
                   </p>
-                  <p class="text-gray-400">Writer</p>
+                  <p class="text-gray-400">
+                    {{ spotlight.author.companyRole }}
+                  </p>
                 </div>
               </div>
             </div>

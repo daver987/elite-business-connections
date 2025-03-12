@@ -54,24 +54,20 @@ const calculateHeight = (width: string) => {
   const actualHeight = (actualWidth * 48.6) / 200
   return `${actualHeight}px`
 }
+
+// Add static logo URL for CMS migration
+const logoUrl = '/images/ebc_logo_light.png'
 </script>
 
 <template>
   <div :style="styleObject">
     <NuxtLink :to="to" @click="handleClick">
-      <!-- <SanityImage
-        asset-id="image-17bc6da44ce445316923eff894ccc8073bc542ca-5995x1457-png"
-        auto="format"
-      >
-        <template #default="{ src }">
-          <NuxtImg
-            :alt="altText"
-            :width="logoSize"
-            :height="calculateHeight(logoSize)"
-            :src="src"
-          />
-        </template>
-      </SanityImage> -->
+      <NuxtImg
+        :alt="altText"
+        :width="logoSize"
+        :height="calculateHeight(logoSize)"
+        :src="logoUrl"
+      />
     </NuxtLink>
   </div>
 </template>
