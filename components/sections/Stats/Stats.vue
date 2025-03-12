@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { statsData, Stat } from '~/data/statsData'
+import { statsData, type Stat } from '~/data/statsData'
 
 interface Props {
   isBoxed?: boolean
@@ -38,19 +38,19 @@ const animateValue = (stat: Stat, index: number): void => {
 }
 
 const onIntersect = (entries: Array<IntersectionObserverEntry>) => {
-  entries.forEach((entry) => {
+  for (const entry of entries) {
     if (entry.isIntersecting) {
-      statArray.value.forEach((stat, index) => {
+      for (const [index, stat] of statArray.value.entries()) {
         if (!isAnimated[index]) {
           animateValue(stat, index)
           isAnimated[index] = true
         }
-      })
+      }
       if (observer.value) {
         observer.value.disconnect()
       }
     }
-  })
+  }
 }
 
 onMounted(() => {
@@ -92,7 +92,7 @@ onUnmounted(() => {
               class="order-first text-3xl font-semibold tracking-tight text-white"
             >
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray.value.indexOf(stat)] ?? 0
+              >{{ currentValues[statArray.indexOf(stat)] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
             </dd>
           </div>
@@ -111,7 +111,7 @@ onUnmounted(() => {
             </dt>
             <dd class="text-3xl font-semibold tracking-tight text-white">
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span
-              >{{ currentValues[statArray.value.indexOf(stat)] ?? 0
+              >{{ currentValues[statArray.indexOf(stat)] ?? 0
               }}<span v-if="stat.position === 'end'">{{ stat.symbol }}</span>
             </dd>
           </div>

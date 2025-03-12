@@ -14,27 +14,27 @@ interface TransformedCoreValues {
   icon: string
 }
 
-const query = groq`*[ _type == "coreValues"]{
-    "iconName": icon.metadata.iconName,
-    "iconCollection": icon.metadata.collectionId,
-    description,
-    title
-}`
+// const query = groq`*[ _type == "coreValues"]{
+//     "iconName": icon.metadata.iconName,
+//     "iconCollection": icon.metadata.collectionId,
+//     description,
+//     title
+// }`
 
-const sanity = useSanity()
+// const sanity = useSanity()
 
-const { data: coreValues } = await useAsyncData<CoreValues[]>(
-  'coreValues',
-  () => sanity.fetch(query)
-)
-const transformedCoreValues: Array<TransformedCoreValues> =
-  coreValues.value?.map((value: CoreValues) => {
-    return {
-      title: value.title,
-      description: value.description,
-      icon: `${value.iconCollection}:${value.iconName}`,
-    }
-  }) ?? []
+// const { data: coreValues } = await useAsyncData<CoreValues[]>(
+//   'coreValues',
+//   () => sanity.fetch(query)
+// )
+// const transformedCoreValues: Array<TransformedCoreValues> =
+//   coreValues.value?.map((value: CoreValues) => {
+//     return {
+//       title: value.title,
+//       description: value.description,
+//       icon: `${value.iconCollection}:${value.iconName}`,
+//     }
+//   }) ?? []
 </script>
 
 <template>
@@ -52,7 +52,7 @@ const transformedCoreValues: Array<TransformedCoreValues> =
     <dl
       class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16"
     >
-      <div
+      <!-- <div
         class="relative pl-9"
         v-for="value in transformedCoreValues"
         :key="value.title"
@@ -67,7 +67,7 @@ const transformedCoreValues: Array<TransformedCoreValues> =
         </dt>
         {{ ' ' }}
         <dd class="inline">{{ value.description }}</dd>
-      </div>
+      </div> -->
     </dl>
   </UContainer>
 </template>
