@@ -10,24 +10,24 @@ export default defineEventHandler(async (event) => {
   try {
     // Parse multipart form data
     const formData = await readMultipartFormData(event)
-    
+
     if (!formData || formData.length === 0) {
       throw createError({
         statusCode: 400,
         message: 'No files uploaded',
       })
     }
-    
+
     // Get uploaded files
-    const files = formData.filter(part => part.name === 'files')
-    
+    const files = formData.filter((part) => part.name === 'files')
+
     if (files.length === 0) {
       throw createError({
         statusCode: 400,
         message: 'No files found in the request',
       })
     }
-    
+
     // Process each file
     const results = await Promise.all(
       files.map(async (file) => {
@@ -35,17 +35,17 @@ export default defineEventHandler(async (event) => {
           // Generate unique file ID and name
           const fileId = randomUUID()
           const originalFilename = file.filename || `file-${fileId}`
-          
+
           // Create storage directory if it doesn't exist
           const uploadDir = join(process.cwd(), 'public', 'uploads')
           if (!existsSync(uploadDir)) {
             await mkdir(uploadDir, { recursive: true })
           }
-          
+
           // Save file to disk
           const storagePath = join(uploadDir, `${fileId}-${originalFilename}`)
           await writeFile(storagePath, file.data)
-          
+
           // Create database record
           const media = await prisma.media.create({
             data: {
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
               size: file.data.length,
             },
           })
-          
+
           return media
         } catch (err) {
           console.error('Error processing file:', err)
@@ -67,7 +67,7 @@ export default defineEventHandler(async (event) => {
         }
       })
     )
-    
+
     return {
       success: true,
       message: `${results.length} files uploaded successfully`,

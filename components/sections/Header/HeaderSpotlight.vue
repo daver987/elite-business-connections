@@ -7,9 +7,9 @@ interface Props {
   excerpt: string
 }
 
-const { data: linkArray } = await useFetch<
-  FooterNavigation | HeaderNavigation[]
->('/api/navigation')
+const { data: linkArray } = useFetch<FooterNavigation | HeaderNavigation[]>(
+  '/api/navigation'
+)
 
 const navigationLinks = linkArray.value
   ? 'navigation' in linkArray.value

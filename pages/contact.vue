@@ -136,7 +136,7 @@ useHead({
                 <dd>
                   <NuxtLink
                     class="hover:text-white text-sm"
-                    href="tel:+16134541828"
+                    to="tel:+16134541828"
                     >+1 (613) 454-1828
                   </NuxtLink>
                 </dd>
@@ -154,7 +154,8 @@ useHead({
                   <NuxtLink
                     class="text-sm hover:text-white"
                     to="mailto:info@elitebusinessconnections.com"
-                    >info@elitebusinessconnections.ca
+                  >
+                    info@elitebusinessconnections.ca
                   </NuxtLink>
                 </dd>
               </div>

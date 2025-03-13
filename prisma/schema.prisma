@@ -8,20 +8,22 @@ datasource db {
 }
 
 model User {
-  id             String         @id @default(uuid())
-  email          String         @unique
-  name           String
-  role           Role           @default(MEMBER)
-  profileImage   String?
-  phone          String?
-  company        String?
-  title          String?
-  bio            String?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
-  givenReferrals Referral[]     @relation("ReferralGiver")
-  receivedReferrals Referral[]  @relation("ReferralReceiver")
-  closedBusiness ClosedBusiness[]
+  id                String           @id @default(uuid()) @map("id")
+  email             String           @unique @map("email")
+  name              String           @map("name")
+  role              Role             @default(MEMBER) @map("role")
+  profileImage      String?          @map("profile_image")
+  phone             String?          @map("phone")
+  company           String?          @map("company")
+  title             String?          @map("title")
+  bio               String?          @map("bio")
+  createdAt         DateTime         @default(now()) @map("created_at")
+  updatedAt         DateTime         @updatedAt @map("updated_at")
+  givenReferrals    Referral[]       @relation("ReferralGiver")
+  receivedReferrals Referral[]       @relation("ReferralReceiver")
+  closedBusiness    ClosedBusiness[]
+
+  @@map("users")
 }
 
 enum Role {
@@ -30,19 +32,21 @@ enum Role {
 }
 
 model Referral {
-  id          String         @id @default(uuid())
-  giver       User           @relation("ReferralGiver", fields: [giverId], references: [id])
-  giverId     String
-  receiver    User           @relation("ReferralReceiver", fields: [receiverId], references: [id])
-  receiverId  String
-  contactName String
-  contactEmail String?
-  contactPhone String?
-  notes       String?
-  status      ReferralStatus @default(NEW)
-  createdAt   DateTime       @default(now())
-  updatedAt   DateTime       @updatedAt
+  id             String          @id @default(uuid()) @map("id")
+  giver          User            @relation("ReferralGiver", fields: [giverId], references: [id])
+  giverId        String          @map("giver_id")
+  receiver       User            @relation("ReferralReceiver", fields: [receiverId], references: [id])
+  receiverId     String          @map("receiver_id")
+  contactName    String          @map("contact_name")
+  contactEmail   String?         @map("contact_email")
+  contactPhone   String?         @map("contact_phone")
+  notes          String?         @map("notes")
+  status         ReferralStatus  @default(NEW) @map("status")
+  createdAt      DateTime        @default(now()) @map("created_at")
+  updatedAt      DateTime        @updatedAt @map("updated_at")
   closedBusiness ClosedBusiness?
+
+  @@map("referrals")
 }
 
 enum ReferralStatus {
@@ -54,35 +58,59 @@ enum ReferralStatus {
 }
 
 model ClosedBusiness {
-  id          String    @id @default(uuid())
-  referral    Referral  @relation(fields: [referralId], references: [id])
-  referralId  String    @unique
-  member      User      @relation(fields: [memberId], references: [id])
-  memberId    String
-  amount      Float
-  notes       String?
-  closedDate  DateTime  @default(now())
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id         String   @id @default(uuid()) @map("id")
+  referral   Referral @relation(fields: [referralId], references: [id])
+  referralId String   @unique @map("referral_id")
+  member     User     @relation(fields: [memberId], references: [id])
+  memberId   String   @map("member_id")
+  amount     Float    @map("amount")
+  notes      String?  @map("notes")
+  closedDate DateTime @default(now()) @map("closed_date")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  @@map("closed_business")
 }
 
 model Post {
-  id          String    @id @default(uuid())
-  title       String
-  slug        String    @unique
-  content     String    @db.Text
-  excerpt     String?
-  featuredImage String?
-  published   Boolean   @default(false)
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  id            String   @id @default(uuid()) @map("id")
+  title         String   @map("title")
+  slug          String   @unique @map("slug")
+  content       String   @map("content") @db.Text
+  excerpt       String?  @map("excerpt")
+  featuredImage String?  @map("featured_image")
+  published     Boolean  @default(false) @map("published")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("posts")
 }
 
 model Media {
-  id          String    @id @default(uuid())
-  filename    String
-  filepath    String
-  mimetype    String
-  size        Int
-  createdAt   DateTime  @default(now())
+  id        String   @id @default(uuid()) @map("id")
+  filename  String   @map("filename")
+  filepath  String   @map("filepath")
+  mimetype  String   @map("mimetype")
+  size      Int      @map("size")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("media")
+}
+
+model Contact {
+  id                String   @id @default(uuid()) @map("id")
+  firstName         String   @map("first_name")
+  lastName          String   @map("last_name")
+  email             String   @map("email")
+  phone             String   @map("phone")
+  source            String   @map("source")
+  businessType      String   @map("business_type")
+  businessTypeId    Int      @map("business_type_id")
+  additionalInfo    String?  @map("additional_info")
+  needsFollowup     Boolean  @default(true) @map("needs_followup")
+  isContactFormLead Boolean  @default(true) @map("is_contact_form_lead")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  @@map("contacts")
 }

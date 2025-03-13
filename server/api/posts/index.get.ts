@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
     const search = (query.search as string) || ''
     const status = (query.status as string) || ''
     const sort = (query.sort as string) || 'createdAt:desc'
-    
+
     // Parse sort parameter
     const [sortField, sortOrder] = sort.split(':')
     const orderBy = {
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
 
     // Build filter conditions
     const where: any = {}
-    
+
     // Apply search filter if provided
     if (search) {
       where.OR = [
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
         { excerpt: { contains: search, mode: 'insensitive' } },
       ]
     }
-    
+
     // Apply status filter if provided
     if (status === 'published') {
       where.published = true
@@ -40,10 +40,10 @@ export default defineEventHandler(async (event) => {
 
     // Calculate pagination
     const skip = (page - 1) * limit
-    
+
     // Get total count
     const total = await prisma.post.count({ where })
-    
+
     // Fetch posts with pagination and filtering
     const posts = await prisma.post.findMany({
       where,
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
       skip,
       take: limit,
     })
-    
+
     return {
       data: posts,
       total,
@@ -61,7 +61,7 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error: any) {
     console.error('Error fetching posts:', error)
-    
+
     // Until Prisma is properly set up, return mock data
     const mockPosts: Post[] = Array.from({ length: 10 }, (_, i) => ({
       id: `post-${i + 1}`,
@@ -70,10 +70,10 @@ export default defineEventHandler(async (event) => {
       content: 'This is sample content.',
       excerpt: 'This is a sample excerpt.',
       published: i % 2 === 0,
-      createdAt: new Date(Date.now() - (i * 86400000)),
-      updatedAt: new Date(Date.now() - (i * 43200000)),
+      createdAt: new Date(Date.now() - i * 86400000),
+      updatedAt: new Date(Date.now() - i * 43200000),
     }))
-    
+
     return {
       data: mockPosts,
       total: 25,

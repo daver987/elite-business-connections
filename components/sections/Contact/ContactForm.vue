@@ -1,16 +1,48 @@
 <script setup lang="ts">
 import { ref } from '#imports'
+import { z } from 'zod'
 import type { FormSubmitEvent } from '#ui/types'
 import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 import { showToast } from '~/utils/showToast'
 import { professions } from '~/data/professions'
-import { type ContactForm, contactFormSchema } from '~/types/ContactForm'
 
 const sourceOptions = ref(['Google', 'Friend', 'Social Media', 'Other'])
 const businessTypeOptions = professions()
 const loading = ref(false)
 const dangerIcon = 'i-heroicons-no-symbol'
 
+// Define schema directly in the component
+const schema = z.object({
+  first_name: z.string().min(1, 'First name is required').trim(),
+  last_name: z.string().min(1, 'Last name is required').trim(),
+  phone_number: z
+    .string({
+      required_error: 'Phone number is required',
+      invalid_type_error: 'Invalid phone number format must be 555 555 1234',
+    })
+    .min(10)
+    .trim()
+    .transform((val) => {
+      const digits = val.replace(/\D/g, '')
+      return digits.replace(/(\d{3})(\d{3})(\d{4})/, '$1 $2 $3')
+    }),
+  email_address: z
+    .string({ required_error: 'An email address is required' })
+    .email('Please enter a valid email address')
+    .trim()
+    .toLowerCase(),
+  source: z.string().min(1, 'Please select where you heard about us'),
+  business_type: z.object({
+    label: z.string().min(1, 'Please select your type of business'),
+    value: z.number(),
+  }),
+  additional_info: z.string().optional(),
+})
+
+// Define type from schema
+type Schema = z.output<typeof schema>
+
+// Initial form state
 const state = reactive({
   first_name: undefined,
   last_name: undefined,
@@ -31,19 +63,21 @@ async function resetForm() {
   state.additional_info = undefined
 }
 
-type StatusCodeResponse = {
+type ApiResponse = {
   statusCode: number
+  message?: string
+  error?: string
 }
 
-async function onSubmit(event: FormSubmitEvent<ContactForm>) {
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true
-  const response = await $fetch<StatusCodeResponse>('/api/contact', {
-    method: 'POST',
-    body: event.data,
-  })
+  try {
+    const response = await $fetch<ApiResponse>('/api/contact', {
+      method: 'POST',
+      body: event.data,
+    })
 
-  if (response.statusCode === 202) {
-    setTimeout(async () => {
+    if (response.statusCode === 202) {
       await showToast(
         'submit_contact',
         'green',
@@ -53,9 +87,19 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       )
       loading.value = false
       await resetForm()
-    }, 3500)
-  } else {
-    console.error('Error parsing server response:', response.statusCode)
+    } else {
+      console.error('Error submitting form:', response.error || 'Unknown error')
+      await showToast(
+        'contact_error',
+        'red',
+        'Error',
+        'There was an error submitting your form.',
+        dangerIcon
+      )
+      loading.value = false
+    }
+  } catch (error) {
+    console.error('Exception during form submission:', error)
     await showToast(
       'contact_error',
       'red',
@@ -77,7 +121,7 @@ async function onSubmit(event: FormSubmitEvent<ContactForm>) {
       <h2 class="text-white text-4xl text-center">Contact Us Today</h2>
     </template>
     <UForm
-      :schema="contactFormSchema"
+      :schema="schema"
       :state="state"
       @submit="onSubmit"
       @keydown.enter="handleKeydownSubmit(onSubmit)"

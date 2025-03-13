@@ -1,49 +1,3 @@
-<template>
-  <div class="min-h-screen bg-gray-50">
-    <div class="flex h-screen">
-      <!-- Sidebar -->
-      <div class="w-64 bg-white shadow-lg">
-        <div class="flex h-16 items-center justify-center border-b border-gray-200">
-          <NuxtLink to="/" class="flex items-center">
-            <img src="/images/ebc_logo_dark.png" alt="EBC Logo" class="h-8" />
-            <span class="ml-2 text-lg font-semibold">Admin</span>
-          </NuxtLink>
-        </div>
-        <nav class="mt-4 px-4">
-          <UVerticalNavigation :links="navigationLinks" />
-        </nav>
-      </div>
-
-      <!-- Main Content -->
-      <div class="flex-1 overflow-auto">
-        <!-- Top Nav -->
-        <header class="sticky top-0 z-10 flex h-16 items-center justify-between bg-white px-6 shadow-sm">
-          <h1 class="text-xl font-medium text-gray-800">
-            {{ pageTitle }}
-          </h1>
-          <div class="flex items-center gap-4">
-            <UButton 
-              to="/" 
-              color="gray" 
-              variant="ghost" 
-              icon="i-heroicons-home"
-              size="sm"
-            >
-              View Site
-            </UButton>
-            <!-- User dropdown would go here in a real app -->
-          </div>
-        </header>
-
-        <!-- Page Content -->
-        <main class="flex-1">
-          <slot />
-        </main>
-      </div>
-    </div>
-  </div>
-</template>
-
 <script setup lang="ts">
 // Navigation links
 const navigationLinks = [
@@ -82,3 +36,54 @@ const pageTitle = computed(() => {
   return 'Admin'
 })
 </script>
+
+<template>
+  <div class="min-h-screen">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <div class="w-64 shadow-lg border-b/20 border-1">
+        <div class="flex h-16 items-center px-4">
+          <NuxtLink class="flex" to="/">
+            <NuxtImg
+              class="h-8"
+              src="/images/ebc_logo_dark.png"
+              alt="EBC Logo"
+            />
+          </NuxtLink>
+        </div>
+        <nav class="mt-4 px-4">
+          <UVerticalNavigation :links="navigationLinks" />
+        </nav>
+      </div>
+
+      <!-- Main Content -->
+      <div class="flex-1 overflow-auto">
+        <!-- Top Nav -->
+        <header
+          class="sticky top-0 z-10 flex h-16 items-center justify-between px-6 shadow-sm"
+        >
+          <h1 class="text-xl font-medium">
+            {{ pageTitle }}
+          </h1>
+          <div class="flex items-center gap-4">
+            <UButton
+              to="/"
+              color="gray"
+              variant="ghost"
+              icon="i-heroicons-home"
+              size="sm"
+            >
+              View Site
+            </UButton>
+            <!-- User dropdown would go here in a real app -->
+          </div>
+        </header>
+
+        <!-- Page Content -->
+        <main class="flex-1">
+          <slot />
+        </main>
+      </div>
+    </div>
+  </div>
+</template>

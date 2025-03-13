@@ -56,7 +56,7 @@ const calculateHeight = (width: string) => {
 }
 
 // Add static logo URL for CMS migration
-const logoUrl = '/images/ebc_logo_light.png'
+const logoUrl = '/images/ebc_logo_dark.png'
 </script>
 
 <template>

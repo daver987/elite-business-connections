@@ -115,18 +115,17 @@ useHead({
           </div>
         </div>
       </UContainer>
-      <LazyStats />
-      <LazyUContainer class="mt-28 sm:mt-32">
+      <Stats />
+      <UContainer class="mt-28 sm:mt-32">
         <NuxtImg
           class="aspect-[9/4] w-full object-cover xl:rounded-3xl"
           src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2938&q=80"
           alt="EBC Meeting"
         />
-      </LazyUContainer>
-
-      <LazyCoreValues />
-      <LazyMembersThreeUp />
-      <LazyCtaElevate />
+      </UContainer>
+      <CoreValues />
+      <MembersThreeUp />
+      <CtaElevate />
     </div>
   </div>
 </template>

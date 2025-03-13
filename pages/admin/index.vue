@@ -1,3 +1,95 @@
+<script setup lang="ts">
+import type { Post } from '~/types/Post'
+
+definePageMeta({
+  layout: 'admin',
+})
+
+// Mock statistics for development
+const stats = reactive({
+  posts: {
+    total: 24,
+    published: 18,
+    draft: 6,
+  },
+  media: {
+    total: 42,
+  },
+  members: {
+    total: 15,
+    admin: 2,
+    regular: 13,
+  },
+  referrals: {
+    total: 87,
+    new: 12,
+    closed: 65,
+  },
+})
+
+// Recent posts
+const recentPosts = ref<Post[]>([])
+const loading = ref(true)
+
+// Format date for display
+const formatDate = (date: Date | string) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
+
+// Fetch recent posts
+const fetchRecentPosts = async () => {
+  loading.value = true
+  try {
+    const response = await $fetch('/api/posts?limit=5&sort=createdAt:desc')
+
+    // For now, using mock data until we have the actual API implementation
+    if (!response || !Array.isArray(response.data)) {
+      // Mock data for development
+      const mockPosts: Post[] = Array.from({ length: 5 }, (_, i) => ({
+        id: `post-${i + 1}`,
+        title: `Sample Blog Post ${i + 1}`,
+        slug: `sample-blog-post-${i + 1}`,
+        content: 'This is sample content.',
+        excerpt: 'This is a sample excerpt.',
+        published: i % 2 === 0,
+        createdAt: new Date(Date.now() - i * 86_400_000),
+        updatedAt: new Date(Date.now() - i * 43_200_000),
+      }))
+
+      recentPosts.value = mockPosts
+    } else {
+      recentPosts.value = response.data
+    }
+  } catch (error) {
+    console.error('Error fetching recent posts:', error)
+    // Use mock data as fallback
+    const mockPosts: Post[] = Array.from({ length: 5 }, (_, i) => ({
+      id: `post-${i + 1}`,
+      title: `Sample Blog Post ${i + 1}`,
+      slug: `sample-blog-post-${i + 1}`,
+      content: 'This is sample content.',
+      excerpt: 'This is a sample excerpt.',
+      published: i % 2 === 0,
+      createdAt: new Date(Date.now() - i * 86_400_000),
+      updatedAt: new Date(Date.now() - i * 43_200_000),
+    }))
+
+    recentPosts.value = mockPosts
+  } finally {
+    loading.value = false
+  }
+}
+
+// Fetch data on mount
+onMounted(() => {
+  fetchRecentPosts()
+})
+</script>
+
 <template>
   <div class="p-6">
     <!-- Stats Cards -->
@@ -5,15 +97,16 @@
       <UCard>
         <template #header>
           <div class="flex items-center">
-            <UIcon name="i-heroicons-document-text" class="mr-2 text-primary-500" />
+            <UIcon class="mr-2" name="i-heroicons-document-text" />
             <h3 class="text-lg font-medium">Posts</h3>
           </div>
         </template>
         <div class="flex items-baseline justify-between">
           <div>
             <div class="text-3xl font-bold">{{ stats.posts.total }}</div>
-            <div class="text-sm text-gray-500">
-              {{ stats.posts.published }} published, {{ stats.posts.draft }} drafts
+            <div class="text-sm">
+              {{ stats.posts.published }} published,
+              {{ stats.posts.draft }} drafts
             </div>
           </div>
           <UButton
@@ -29,7 +122,7 @@
       <UCard>
         <template #header>
           <div class="flex items-center">
-            <UIcon name="i-heroicons-photo" class="mr-2 text-primary-500" />
+            <UIcon class="mr-2 text-primary" name="i-heroicons-photo" />
             <h3 class="text-lg font-medium">Media</h3>
           </div>
         </template>
@@ -51,7 +144,7 @@
       <UCard>
         <template #header>
           <div class="flex items-center">
-            <UIcon name="i-heroicons-users" class="mr-2 text-primary-500" />
+            <UIcon class="mr-2 text-primary-500" name="i-heroicons-users" />
             <h3 class="text-lg font-medium">Members</h3>
           </div>
         </template>
@@ -59,7 +152,8 @@
           <div>
             <div class="text-3xl font-bold">{{ stats.members.total }}</div>
             <div class="text-sm text-gray-500">
-              {{ stats.members.admin }} admins, {{ stats.members.regular }} regular
+              {{ stats.members.admin }} admins,
+              {{ stats.members.regular }} regular
             </div>
           </div>
           <UButton
@@ -75,7 +169,10 @@
       <UCard>
         <template #header>
           <div class="flex items-center">
-            <UIcon name="i-heroicons-arrow-path" class="mr-2 text-primary-500" />
+            <UIcon
+              class="mr-2 text-primary-500"
+              name="i-heroicons-arrow-path"
+            />
             <h3 class="text-lg font-medium">Referrals</h3>
           </div>
         </template>
@@ -102,8 +199,8 @@
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <UCard class="flex flex-col items-center justify-center p-6 text-center">
         <UIcon
-          name="i-heroicons-document-plus"
           class="mb-4 h-12 w-12 text-primary-500"
+          name="i-heroicons-document-plus"
         />
         <h3 class="mb-2 text-lg font-medium">Create New Post</h3>
         <p class="mb-4 text-sm text-gray-600">
@@ -114,8 +211,8 @@
 
       <UCard class="flex flex-col items-center justify-center p-6 text-center">
         <UIcon
-          name="i-heroicons-arrow-up-tray"
           class="mb-4 h-12 w-12 text-primary-500"
+          name="i-heroicons-arrow-up-tray"
         />
         <h3 class="mb-2 text-lg font-medium">Upload Media</h3>
         <p class="mb-4 text-sm text-gray-600">
@@ -126,8 +223,8 @@
 
       <UCard class="flex flex-col items-center justify-center p-6 text-center">
         <UIcon
-          name="i-heroicons-user-plus"
           class="mb-4 h-12 w-12 text-primary-500"
+          name="i-heroicons-user-plus"
         />
         <h3 class="mb-2 text-lg font-medium">Add Member</h3>
         <p class="mb-4 text-sm text-gray-600">
@@ -138,8 +235,8 @@
 
       <UCard class="flex flex-col items-center justify-center p-6 text-center">
         <UIcon
-          name="i-heroicons-puzzle-piece"
           class="mb-4 h-12 w-12 text-primary-500"
+          name="i-heroicons-puzzle-piece"
         />
         <h3 class="mb-2 text-lg font-medium">Manage Portal</h3>
         <p class="mb-4 text-sm text-gray-600">
@@ -163,7 +260,10 @@
         :loading="loading"
       >
         <template #title-data="{ row }">
-          <ULink :to="`/admin/posts/${row.id}`" class="font-medium text-primary-500">
+          <ULink
+            class="font-medium text-primary-500"
+            :to="`/admin/posts/${row.id}`"
+          >
             {{ row.title }}
           </ULink>
         </template>
@@ -215,95 +315,3 @@
     </UCard>
   </div>
 </template>
-
-<script setup lang="ts">
-import type { Post } from '~/types/Post'
-
-definePageMeta({
-  layout: 'admin',
-})
-
-// Mock statistics for development
-const stats = reactive({
-  posts: {
-    total: 24,
-    published: 18,
-    draft: 6,
-  },
-  media: {
-    total: 42,
-  },
-  members: {
-    total: 15,
-    admin: 2,
-    regular: 13,
-  },
-  referrals: {
-    total: 87,
-    new: 12,
-    closed: 65,
-  },
-})
-
-// Recent posts
-const recentPosts = ref<Post[]>([])
-const loading = ref(true)
-
-// Format date for display
-const formatDate = (date: Date | string) => {
-  return new Date(date).toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  })
-}
-
-// Fetch recent posts
-const fetchRecentPosts = async () => {
-  loading.value = true
-  try {
-    const response = await $fetch('/api/posts?limit=5&sort=createdAt:desc')
-    
-    // For now, using mock data until we have the actual API implementation
-    if (!response || !Array.isArray(response.data)) {
-      // Mock data for development
-      const mockPosts: Post[] = Array.from({ length: 5 }, (_, i) => ({
-        id: `post-${i + 1}`,
-        title: `Sample Blog Post ${i + 1}`,
-        slug: `sample-blog-post-${i + 1}`,
-        content: 'This is sample content.',
-        excerpt: 'This is a sample excerpt.',
-        published: i % 2 === 0,
-        createdAt: new Date(Date.now() - (i * 86400000)),
-        updatedAt: new Date(Date.now() - (i * 43200000)),
-      }))
-      
-      recentPosts.value = mockPosts
-    } else {
-      recentPosts.value = response.data
-    }
-  } catch (error) {
-    console.error('Error fetching recent posts:', error)
-    // Use mock data as fallback
-    const mockPosts: Post[] = Array.from({ length: 5 }, (_, i) => ({
-      id: `post-${i + 1}`,
-      title: `Sample Blog Post ${i + 1}`,
-      slug: `sample-blog-post-${i + 1}`,
-      content: 'This is sample content.',
-      excerpt: 'This is a sample excerpt.',
-      published: i % 2 === 0,
-      createdAt: new Date(Date.now() - (i * 86400000)),
-      updatedAt: new Date(Date.now() - (i * 43200000)),
-    }))
-    
-    recentPosts.value = mockPosts
-  } finally {
-    loading.value = false
-  }
-}
-
-// Fetch data on mount
-onMounted(() => {
-  fetchRecentPosts()
-})
-</script>
