@@ -10,7 +10,6 @@ interface Testimonial {
   image: string
 }
 
-// Default testimonials if API fails
 const defaultTestimonials: Testimonial[] = [
   {
     id: 1,
@@ -23,14 +22,13 @@ const defaultTestimonials: Testimonial[] = [
   },
 ]
 
-// Define the API response type
 interface ApiResponse {
   statusCode: number
   data?: Testimonial[]
   error?: string
 }
 
-const { data: apiResponse } = await useLazyFetch<ApiResponse>(
+const { data: apiResponse } = useLazyFetch<ApiResponse>(
   '/api/pages/home/testimonials',
   {
     default: () => ({

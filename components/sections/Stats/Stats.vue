@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { Ref } from 'vue'
-import { statsData, type Stat } from '~/data/statsData'
 
 interface Props {
   isBoxed?: boolean
@@ -8,28 +7,118 @@ interface Props {
 
 defineProps<Props>()
 
-// Use mock data instead of Sanity query
-const statArray = ref(statsData)
+interface Stat {
+  id: number
+  value: string
+  label: string
+  description: string
+  start?: number
+  end?: number
+  symbol?: string
+  position?: 'start' | 'end'
+  duration?: number
+}
+
+interface ApiResponse {
+  statusCode: number
+  data?: Stat[]
+  error?: string
+}
+
+const defaultStats: Stat[] = [
+  {
+    id: 1,
+    value: '50+',
+    label: 'Active Members',
+    description: 'Professional business connections in our network',
+    start: 0,
+    end: 50,
+    symbol: '+',
+    position: 'end',
+    duration: 1500,
+  },
+  {
+    id: 2,
+    value: '100+',
+    label: 'Monthly Referrals',
+    description: 'Quality business leads shared between members',
+    start: 0,
+    end: 100,
+    symbol: '+',
+    position: 'end',
+    duration: 1500,
+  },
+  {
+    id: 3,
+    value: '25+',
+    label: 'Business Categories',
+    description: 'Diverse range of industries represented',
+    start: 0,
+    end: 25,
+    symbol: '+',
+    position: 'end',
+    duration: 1500,
+  },
+  {
+    id: 4,
+    value: '6+',
+    label: 'Years of Excellence',
+    description: 'Building strong business relationships since 2018',
+    start: 0,
+    end: 6,
+    symbol: '+',
+    position: 'end',
+    duration: 1500,
+  },
+]
+
+const { data: apiResponse } = useLazyFetch<ApiResponse>(
+  '/api/pages/home/stats',
+  {
+    default: () => ({
+      statusCode: 200,
+      data: defaultStats,
+    }),
+  }
+)
+
+const statArray = computed(() =>
+  apiResponse.value?.data && apiResponse.value.statusCode === 200
+    ? apiResponse.value.data
+    : defaultStats
+)
 
 const statContainer: Ref<null | HTMLElement> = ref(null)
 const observer: Ref<IntersectionObserver | null> = ref(null)
 const currentValues: Ref<Array<number>> = ref([])
 const timers: Record<number, ReturnType<typeof setInterval>> = {}
 
-const isAnimated: Array<boolean> = new Array(statArray.value.length).fill(false)
+const isAnimated = ref<Array<boolean>>([])
 
 const animateValue = (stat: Stat, index: number): void => {
-  const steps: number = Math.floor(stat.duration / 10)
-  const increment: number = (stat.end - stat.start) / steps
-  let current = stat.start
+  if (
+    typeof stat.start !== 'number' ||
+    typeof stat.end !== 'number' ||
+    typeof stat.duration !== 'number'
+  ) {
+    return
+  }
+
+  const start = stat.start
+  const end = stat.end
+  const duration = stat.duration
+
+  const steps: number = Math.floor(duration / 10)
+  const increment: number = (end - start) / steps
+  let current = start
 
   timers[index] = setInterval(() => {
     current += increment
     if (
-      (increment > 0 && current >= stat.end) ||
-      (increment < 0 && current <= stat.end)
+      (increment > 0 && current >= end) ||
+      (increment < 0 && current <= end)
     ) {
-      currentValues.value[index] = stat.end
+      currentValues.value[index] = end
       clearInterval(timers[index])
     } else {
       currentValues.value[index] = Math.floor(current)
@@ -41,9 +130,9 @@ const onIntersect = (entries: Array<IntersectionObserverEntry>) => {
   for (const entry of entries) {
     if (entry.isIntersecting) {
       for (const [index, stat] of statArray.value.entries()) {
-        if (!isAnimated[index]) {
+        if (!isAnimated.value[index]) {
           animateValue(stat, index)
-          isAnimated[index] = true
+          isAnimated.value[index] = true
         }
       }
       if (observer.value) {
@@ -53,8 +142,20 @@ const onIntersect = (entries: Array<IntersectionObserverEntry>) => {
   }
 }
 
+watch(
+  statArray,
+  (newStats) => {
+    isAnimated.value = new Array(newStats.length).fill(false)
+    currentValues.value = new Array(newStats.length).fill(0)
+
+    if (observer.value && statContainer.value) {
+      observer.value.observe(statContainer.value)
+    }
+  },
+  { immediate: true }
+)
+
 onMounted(() => {
-  currentValues.value = new Array(statArray.value.length).fill(0)
   observer.value = new IntersectionObserver(onIntersect, {
     rootMargin: '0px',
     threshold: 0.1,
@@ -86,7 +187,7 @@ onUnmounted(() => {
             :key="stat.id"
           >
             <dt class="text-sm font-semibold leading-6 text-gray-300">
-              {{ stat.title }}
+              {{ stat.label }}
             </dt>
             <dd
               class="order-first text-3xl font-semibold tracking-tight text-white"
@@ -107,7 +208,7 @@ onUnmounted(() => {
             :key="stat.id"
           >
             <dt class="text-base leading-7 text-gray-300">
-              {{ stat.title }}
+              {{ stat.label }}
             </dt>
             <dd class="text-3xl font-semibold tracking-tight text-white">
               <span v-if="stat.position === 'start'">{{ stat.symbol }}</span

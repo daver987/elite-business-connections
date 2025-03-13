@@ -45,7 +45,7 @@ interface ApiResponse {
   error?: string
 }
 
-const { data: apiResponse } = await useLazyFetch<ApiResponse>(
+const { data: apiResponse } = useLazyFetch<ApiResponse>(
   '/api/pages/home/core-values',
   {
     default: () => ({

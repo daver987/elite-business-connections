@@ -1,67 +1,82 @@
 <script setup lang="ts">
-import { membersData, socialIcons as mockSocialIcons } from '~/data/membersData'
+type SocialPlatform = 'Facebook' | 'Instagram' | 'LinkedIn' | 'Twitter'
 
-type SocialPlatform = 'Facebook' | 'Instagram'
-
-type SocialLinkData = {
-  link: string
-  platform: string
+interface SocialLinks {
+  facebook?: string
+  instagram?: string
+  linkedin?: string
+  twitter?: string
 }
 
-interface MemberData {
-  role: string
+interface TeamMember {
+  id: number
   name: string
-  avatar: string
-  socialLinks: SocialLinkData[]
+  title: string
+  bio: string
+  image: string
+  socialLinks: SocialLinks
 }
 
-interface SocialLink {
-  platform: SocialPlatform
-  url: string
+interface ApiResponse {
+  statusCode: number
+  data?: TeamMember[]
+  error?: string
 }
 
-interface Member {
-  name: string
-  role: string
-  imageUrl: string
-  social: SocialLink[]
-}
-
-const socialIcons: Record<SocialPlatform, string> = {
-  Facebook: 'logos:facebook',
-  Instagram: 'skill-icons:instagram',
-}
-
-const transformMemberData = (data: MemberData[]): Member[] => {
-  return data.map((item) => {
-    const member: Member = {
-      name: item.name,
-      role: item.role,
-      imageUrl: item.avatar,
-      social: item.socialLinks.map((social: any) => {
-        const platform = social.platform.split(':')[1]
-        return {
-          platform: platform.charAt(0).toUpperCase() + platform.slice(1),
-          url: social.link,
-        }
-      }),
+const defaultMembers: TeamMember[] = [
+  {
+    id: 1,
+    name: "Rachelle Lodge",
+    title: "President",
+    bio: "Leading EBC with vision and dedication.",
+    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    socialLinks: {
+      facebook: "https://facebook.com"
     }
-    return member
-  })
-}
+  },
+  {
+    id: 2,
+    name: "Anik Lalonde",
+    title: "Treasurer",
+    bio: "Managing EBC's finances with precision and integrity.",
+    image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    socialLinks: {
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com"
+    }
+  },
+  {
+    id: 3,
+    name: "Patrick Cobban",
+    title: "Vice President",
+    bio: "Helping guide EBC toward continued success and growth.",
+    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    socialLinks: {
+      facebook: "https://facebook.com",
+      instagram: "https://instagram.com"
+    }
+  }
+]
 
-// Transform the mock data to match the expected format
-const transformedMemberData = transformMemberData(
-  membersData.map((member) => ({
-    name: member.name,
-    role: member.role,
-    avatar: member.imageUrl,
-    socialLinks: member.social.map((social) => ({
-      platform: `platform:${social.platform.toLowerCase()}`,
-      link: social.url,
-    })),
-  })) as unknown as MemberData[]
+const { data: apiResponse } = useLazyFetch<ApiResponse>('/api/pages/home/members', {
+  default: () => ({ 
+    statusCode: 200, 
+    data: defaultMembers 
+  })
+})
+
+const members = computed(() => 
+  apiResponse.value?.data && apiResponse.value.statusCode === 200
+    ? apiResponse.value.data
+    : defaultMembers
 )
+
+const socialIcons: Record<string, string> = {
+  facebook: 'logos:facebook',
+  instagram: 'skill-icons:instagram',
+  linkedin: 'logos:linkedin-icon',
+  twitter: 'logos:twitter'
+}
 </script>
 
 <template>
@@ -82,31 +97,35 @@ const transformedMemberData = transformMemberData(
       >
         <li
           class="rounded-2xl bg-gray-800 px-8 py-10"
-          v-for="member in transformedMemberData"
-          :key="member.name"
+          v-for="member in members"
+          :key="member.id"
         >
-          <NuxtImg
+          <img
             class="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56 object-cover object-top"
-            :src="member.imageUrl"
-            alt="Team Member"
+            :src="member.image"
+            :alt="member.name"
           />
           <h3
             class="mt-6 text-base font-semibold leading-7 tracking-tight text-white"
           >
             {{ member.name }}
           </h3>
-          <p class="text-sm leading-6 text-gray-400">{{ member.role }}</p>
+          <p class="text-sm leading-6 text-gray-400">{{ member.title }}</p>
+          <p v-if="member.bio" class="mt-2 text-xs text-gray-500">{{ member.bio }}</p>
           <ul class="mt-6 flex justify-center gap-x-6" role="list">
-            <li v-for="social in member.social" :key="social.platform">
-              <NuxtLink
-                v-if="socialIcons[social.platform]"
-                :to="social.url"
-                target="_blank"
-              >
-                <span class="sr-only">{{ social.platform }}</span>
-                <Icon class="w-6 h-6" :name="socialIcons[social.platform]" />
-              </NuxtLink>
-            </li>
+            <!-- Loop through the socialLinks object -->
+            <template v-for="(url, platform) in member.socialLinks" :key="platform">
+              <li v-if="url">
+                <a
+                  :href="url"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="sr-only">{{ platform }}</span>
+                  <Icon class="w-6 h-6" :name="socialIcons[platform]" />
+                </a>
+              </li>
+            </template>
           </ul>
         </li>
       </ul>
