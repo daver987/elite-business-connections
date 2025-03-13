@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref } from '#imports'
+import { z } from 'zod'
 import { showToast } from '~/utils/showToast'
 import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 import type { FormSubmitEvent } from '#ui/types'
-import { subscriptionSchema } from '~/types/Subscription'
 import type { FooterNavigation } from '~/types/Navigation'
 
 const loading = ref(false)
@@ -14,6 +14,19 @@ const { data: navigation } = await useFetch<FooterNavigation>(
   '/api/navigation?navType=footer'
 )
 
+// Define schema directly in the component
+const schema = z.object({
+  email_address: z
+    .string({ required_error: 'An email address is required' })
+    .email('Please enter a valid email address')
+    .trim()
+    .toLowerCase(),
+})
+
+// Define type from schema
+type Schema = z.output<typeof schema>
+
+// Initial form state
 const state = reactive({
   email_address: undefined,
 })
@@ -22,31 +35,43 @@ async function resetForm() {
   state.email_address = undefined
 }
 
-type StatusCodeResponse = {
+type ApiResponse = {
   statusCode: number
+  message?: string
+  error?: string
 }
 
-async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
+async function onSubmit(event: FormSubmitEvent<Schema>) {
   loading.value = true
-  const response = await $fetch<StatusCodeResponse>('/api/subscribe', {
-    method: 'POST',
-    body: event.data,
-  })
+  try {
+    const response = await $fetch<ApiResponse>('/api/subscribe', {
+      method: 'POST',
+      body: event.data,
+    })
 
-  if (response.statusCode === 202) {
-    setTimeout(async () => {
+    if (response.statusCode === 202) {
       await showToast(
         'submit_subscription',
         'green',
         'Success',
-        'Your request has successfully been submitted',
+        'Thanks for subscribing to our newsletter!',
         'i-heroicons-check-badge'
       )
       loading.value = false
       await resetForm()
-    }, 3500)
-  } else {
-    console.error('Error parsing server response:', response.statusCode)
+    } else {
+      console.error('Error in server response:', response)
+      await showToast(
+        'subscription_error',
+        'red',
+        'Error',
+        'There was an error submitting your form.',
+        dangerIcon
+      )
+      loading.value = false
+    }
+  } catch (error) {
+    console.error('Exception during form submission:', error)
     await showToast(
       'subscription_error',
       'red',
@@ -135,7 +160,7 @@ async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
           </p>
 
           <UForm
-            :schema="subscriptionSchema"
+            :schema="schema"
             :state="state"
             @submit="onSubmit"
             @keydown.enter="handleKeydownSubmit(onSubmit)"
@@ -143,7 +168,7 @@ async function onSubmit(event: FormSubmitEvent<{ email: string }>) {
             <UFormGroup
               class="my-4"
               label="Email address"
-              name="email"
+              name="email_address"
               required
             >
               <UInput

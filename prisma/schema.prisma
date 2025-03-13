@@ -114,3 +114,13 @@ model Contact {
 
   @@map("contacts")
 }
+
+model Subscription {
+  id           String   @id @default(uuid()) @map("id")
+  emailAddress String   @map("email_address")
+  isActive     Boolean  @default(true) @map("is_active")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("subscriptions")
+}
