@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client/edge'
-import { withAccelerate } from '@prisma/extension-accelerate'
+import { PrismaClient } from '@prisma/client'
+// import { withAccelerate } from '@prisma/extension-accelerate'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient().$extends(withAccelerate())
+  return new PrismaClient()
 }
 
 // biome-ignore lint/suspicious/noShadowRestrictedNames: This is required for a Prisma Singleton

@@ -124,3 +124,15 @@ model Subscription {
 
   @@map("subscriptions")
 }
+
+model PageContent {
+  id          String   @id @default(uuid()) @map("id")
+  pageId      String   @map("page_id") // e.g., "home", "about"
+  sectionId   String   @map("section_id") // e.g., "testimonials", "stats", "core-values"
+  content     Json     @map("content") // Store the entire JSON needed by the component
+  lastUpdated DateTime @updatedAt @map("last_updated")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  @@unique([pageId, sectionId])
+  @@map("page_contents")
+}

@@ -244,6 +244,18 @@ onMounted(() => {
         </p>
         <UButton to="/portal" color="primary">Go to Portal</UButton>
       </UCard>
+
+      <UCard class="flex flex-col items-center justify-center p-6 text-center">
+        <UIcon
+          class="mb-4 h-12 w-12 text-primary-500"
+          name="i-heroicons-squares-2x2"
+        />
+        <h3 class="mb-2 text-lg font-medium">Page Content</h3>
+        <p class="mb-4 text-sm text-gray-600">
+          Manage dynamic content sections on your pages
+        </p>
+        <UButton to="/admin/pages" color="primary">Edit Content</UButton>
+      </UCard>
     </div>
 
     <!-- Recent Posts -->

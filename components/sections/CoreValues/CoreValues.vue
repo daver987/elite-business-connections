@@ -1,40 +1,65 @@
 <script setup lang="ts">
 import { Icon } from '#components'
 
-interface CoreValues {
-  title: string
-  description: string
-  iconName: string
-  iconCollection: string
-}
-
-interface TransformedCoreValues {
+interface CoreValue {
+  id: number
   title: string
   description: string
   icon: string
 }
 
-// const query = groq`*[ _type == "coreValues"]{
-//     "iconName": icon.metadata.iconName,
-//     "iconCollection": icon.metadata.collectionId,
-//     description,
-//     title
-// }`
+const defaultCoreValues: CoreValue[] = [
+  {
+    id: 1,
+    title: 'Integrity',
+    description:
+      'We believe in ethical business practices and honest communication.',
+    icon: 'i-heroicons-shield-check',
+  },
+  {
+    id: 2,
+    title: 'Excellence',
+    description:
+      'We are committed to providing top-quality service and exceeding expectations.',
+    icon: 'i-heroicons-star',
+  },
+  {
+    id: 3,
+    title: 'Collaboration',
+    description:
+      'We foster meaningful connections that create mutual growth and success.',
+    icon: 'i-heroicons-user-group',
+  },
+  {
+    id: 4,
+    title: 'Innovation',
+    description:
+      'We embrace change and continuously seek new ways to add value.',
+    icon: 'i-heroicons-light-bulb',
+  },
+]
 
-// const sanity = useSanity()
+interface ApiResponse {
+  statusCode: number
+  data?: CoreValue[]
+  error?: string
+}
 
-// const { data: coreValues } = await useAsyncData<CoreValues[]>(
-//   'coreValues',
-//   () => sanity.fetch(query)
-// )
-// const transformedCoreValues: Array<TransformedCoreValues> =
-//   coreValues.value?.map((value: CoreValues) => {
-//     return {
-//       title: value.title,
-//       description: value.description,
-//       icon: `${value.iconCollection}:${value.iconName}`,
-//     }
-//   }) ?? []
+const { data: apiResponse } = await useLazyFetch<ApiResponse>(
+  '/api/pages/home/core-values',
+  {
+    default: () => ({
+      statusCode: 200,
+      data: defaultCoreValues,
+    }),
+  }
+)
+
+const coreValues = computed(() =>
+  apiResponse.value?.data && apiResponse.value.statusCode === 200
+    ? apiResponse.value.data
+    : defaultCoreValues
+)
 </script>
 
 <template>
@@ -52,11 +77,7 @@ interface TransformedCoreValues {
     <dl
       class="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-8 text-base leading-7 text-gray-300 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:gap-x-16"
     >
-      <!-- <div
-        class="relative pl-9"
-        v-for="value in transformedCoreValues"
-        :key="value.title"
-      >
+      <div class="relative pl-9" v-for="value in coreValues" :key="value.id">
         <dt class="inline font-semibold text-white">
           <Icon
             class="absolute left-1 top-1 h-5 w-5 text-primary"
@@ -67,7 +88,7 @@ interface TransformedCoreValues {
         </dt>
         {{ ' ' }}
         <dd class="inline">{{ value.description }}</dd>
-      </div> -->
+      </div>
     </dl>
   </UContainer>
 </template>
