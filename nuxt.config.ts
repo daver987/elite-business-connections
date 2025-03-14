@@ -20,7 +20,12 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/fonts',
     '@nuxt/icon',
+    'nuxt-tiptap-editor',
   ],
+
+  tiptap: {
+    prefix: '',
+  },
 
   nitro: {
     preset: process.env.NITRO_PRESET,

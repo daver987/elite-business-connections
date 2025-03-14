@@ -2,17 +2,17 @@ import prisma from '~/lib/prisma'
 
 export default defineEventHandler(async (event) => {
   try {
-    const id = getRouterParam(event, 'id')
+    const slug = getRouterParam(event, 'slug')
 
-    if (!id) {
+    if (!slug) {
       return {
         statusCode: 400,
-        error: 'Post ID is required',
+        error: 'Post slug is required',
       }
     }
 
     const post = await prisma.post.findUnique({
-      where: { id },
+      where: { slug },
     })
 
     if (!post) {
@@ -22,12 +22,20 @@ export default defineEventHandler(async (event) => {
       }
     }
 
+    // Only return published posts publicly
+    if (!post.published) {
+      return {
+        statusCode: 404,
+        error: 'Post not found or not published',
+      }
+    }
+
     return {
       statusCode: 200,
       data: post,
     }
   } catch (error) {
-    console.error('Error fetching post:', error)
+    console.error('Error fetching post by slug:', error)
 
     return {
       statusCode: 500,

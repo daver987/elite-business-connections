@@ -6,7 +6,6 @@ import type { SpotlightItem } from '~/data/spotlightsData'
 const { spotlight, urlFor } = useCms()
 const spotlightData = ref<SpotlightItem[]>([])
 
-
 spotlight.fetch().then((data) => {
   spotlightData.value = data
 })

@@ -63,7 +63,10 @@
   "dependencies": {
     "@nuxt/ui": "^2.21.1",
     "@prisma/client": "^6.5.0",
-    "@prisma/extension-accelerate": "^1.2.2"
+    "@prisma/extension-accelerate": "^1.2.2",
+    "@tiptap/extension-placeholder": "^2.11.5",
+    "nuxt-tiptap-editor": "^2.1.4",
+    "slugify": "^1.6.6"
   },
   "engines": {
     "node": "20.x"

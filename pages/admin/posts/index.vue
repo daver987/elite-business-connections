@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import type { Post } from '~/types/Post'
-import { useDebounce } from '@vueuse/core'
+import { useDebounceFn } from '@vueuse/core'
 
 definePageMeta({
   layout: 'admin',
+  colorMode: 'dark',
 })
 
 // Table columns
@@ -89,7 +90,13 @@ const fetchPosts = async () => {
       posts.value = mockPosts
       totalPosts.value = 25
     } else {
-      posts.value = response.data
+      posts.value = response.data.map((post) => ({
+        ...post,
+        excerpt: post.excerpt || undefined,
+        featuredImage: post.featuredImage || undefined,
+        createdAt: new Date(post.createdAt),
+        updatedAt: new Date(post.updatedAt),
+      })) as Post[]
       totalPosts.value = response.total
     }
   } catch (error) {
@@ -113,8 +120,8 @@ const fetchPosts = async () => {
   }
 }
 
-// Debounced search
-const debouncedSearch = useDebounce(() => {
+// Debounced search function
+const debouncedSearch = useDebounceFn(() => {
   page.value = 1
   fetchPosts()
 }, 300)

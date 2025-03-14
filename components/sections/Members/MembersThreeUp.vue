@@ -26,46 +26,52 @@ interface ApiResponse {
 const defaultMembers: TeamMember[] = [
   {
     id: 1,
-    name: "Rachelle Lodge",
-    title: "President",
-    bio: "Leading EBC with vision and dedication.",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    name: 'Rachelle Lodge',
+    title: 'President',
+    bio: 'Leading EBC with vision and dedication.',
+    image:
+      'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     socialLinks: {
-      facebook: "https://facebook.com"
-    }
+      facebook: 'https://facebook.com',
+    },
   },
   {
     id: 2,
-    name: "Anik Lalonde",
-    title: "Treasurer",
+    name: 'Anik Lalonde',
+    title: 'Treasurer',
     bio: "Managing EBC's finances with precision and integrity.",
-    image: "https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    image:
+      'https://images.unsplash.com/photo-1580894732444-8ecded7900cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     socialLinks: {
-      facebook: "https://facebook.com",
-      instagram: "https://instagram.com"
-    }
+      facebook: 'https://facebook.com',
+      instagram: 'https://instagram.com',
+    },
   },
   {
     id: 3,
-    name: "Patrick Cobban",
-    title: "Vice President",
-    bio: "Helping guide EBC toward continued success and growth.",
-    image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80",
+    name: 'Patrick Cobban',
+    title: 'Vice President',
+    bio: 'Helping guide EBC toward continued success and growth.',
+    image:
+      'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     socialLinks: {
-      facebook: "https://facebook.com",
-      instagram: "https://instagram.com"
-    }
-  }
+      facebook: 'https://facebook.com',
+      instagram: 'https://instagram.com',
+    },
+  },
 ]
 
-const { data: apiResponse } = useLazyFetch<ApiResponse>('/api/pages/home/members', {
-  default: () => ({ 
-    statusCode: 200, 
-    data: defaultMembers 
-  })
-})
+const { data: apiResponse } = useLazyFetch<ApiResponse>(
+  '/api/pages/home/members',
+  {
+    default: () => ({
+      statusCode: 200,
+      data: defaultMembers,
+    }),
+  }
+)
 
-const members = computed(() => 
+const members = computed(() =>
   apiResponse.value?.data && apiResponse.value.statusCode === 200
     ? apiResponse.value.data
     : defaultMembers
@@ -75,7 +81,7 @@ const socialIcons: Record<string, string> = {
   facebook: 'logos:facebook',
   instagram: 'skill-icons:instagram',
   linkedin: 'logos:linkedin-icon',
-  twitter: 'logos:twitter'
+  twitter: 'logos:twitter',
 }
 </script>
 
@@ -111,16 +117,17 @@ const socialIcons: Record<string, string> = {
             {{ member.name }}
           </h3>
           <p class="text-sm leading-6 text-gray-400">{{ member.title }}</p>
-          <p v-if="member.bio" class="mt-2 text-xs text-gray-500">{{ member.bio }}</p>
+          <p class="mt-2 text-xs text-gray-500" v-if="member.bio">
+            {{ member.bio }}
+          </p>
           <ul class="mt-6 flex justify-center gap-x-6" role="list">
             <!-- Loop through the socialLinks object -->
-            <template v-for="(url, platform) in member.socialLinks" :key="platform">
+            <template
+              v-for="(url, platform) in member.socialLinks"
+              :key="platform"
+            >
               <li v-if="url">
-                <a
-                  :href="url"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a :href="url" target="_blank" rel="noopener noreferrer">
                   <span class="sr-only">{{ platform }}</span>
                   <Icon class="w-6 h-6" :name="socialIcons[platform]" />
                 </a>
