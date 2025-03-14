@@ -5,20 +5,20 @@ definePageMeta({
 const links = [
   [
     {
-      label: 'Profile',
+      label: 'Admin Settings',
       icon: 'i-heroicons-user-circle',
-      to: '/portal/settings',
+      to: '/portal/admin/settings',
       exact: true,
     },
     {
       label: 'Members',
       icon: 'i-heroicons-user-group',
-      to: '/portal/settings/members',
+      to: '/portal/admin/settings/members',
     },
     {
-      label: 'Notifications',
-      icon: 'i-heroicons-bell',
-      to: '/portal/settings/notifications',
+      label: 'Security',
+      icon: 'i-heroicons-lock-closed',
+      to: '/portal/admin/settings/security',
     },
   ],
   [
@@ -35,7 +35,7 @@ const links = [
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="Settings" />
+      <UDashboardNavbar title="Admin Settings" />
 
       <UDashboardToolbar class="py-0 px-1.5 overflow-x-auto">
         <UHorizontalNavigation :links="links" />

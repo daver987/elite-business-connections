@@ -5,20 +5,20 @@ definePageMeta({
 const links = [
   [
     {
-      label: 'Profile',
+      label: 'Active Referrals',
       icon: 'i-heroicons-user-circle',
-      to: '/portal/settings',
+      to: '/portal/referrals',
       exact: true,
     },
     {
-      label: 'Members',
+      label: 'Closed Business',
       icon: 'i-heroicons-user-group',
-      to: '/portal/settings/members',
+      to: '/portal/referrals/closed',
     },
     {
-      label: 'Notifications',
-      icon: 'i-heroicons-bell',
-      to: '/portal/settings/notifications',
+      label: 'Business Referrals',
+      icon: 'i-heroicons-clock',
+      to: '/portal/referrals/business',
     },
   ],
   [

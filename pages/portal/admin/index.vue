@@ -16,9 +16,9 @@ const items = [
       to: '/portal/inbox',
     },
     {
-      label: 'New user',
+      label: 'New member',
       icon: 'i-heroicons-user-plus',
-      to: '/portal/users',
+      to: '/portal/admin/members',
     },
   ],
 ]
@@ -33,7 +33,7 @@ const period = ref<Period>('daily')
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="Member Portal">
+      <UDashboardNavbar title="Home">
         <template #right>
           <UTooltip text="Notifications" :shortcuts="['N']">
             <UButton

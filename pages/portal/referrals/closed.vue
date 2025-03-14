@@ -1,15 +1,14 @@
 <script setup lang="ts">
 definePageMeta({
   layout: 'portal',
+  path: '/portal/referrals/closed',
 })
-
-const { id } = useRoute().params
 </script>
 
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar :title="`Member ${id}`" />
+      <UDashboardNavbar title="Closed Business" />
     </UDashboardPanel>
   </UDashboardPage>
 </template>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { ref, reactive } from '#imports'
-import { showToast } from '~/utils/showToast'
-
 definePageMeta({
-  layout: 'admin',
+  layout: 'portal',
+  path: '/portal/editor/page',
 })
 
 const sections = ref([
@@ -256,92 +254,101 @@ async function runSeed() {
 </script>
 
 <template>
-  <div class="p-6">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold">Page Content Management</h1>
-      <UButton
-        color="gray"
-        @click="runSeed"
-        :loading="isSeeding"
-        icon="i-heroicons-arrow-path"
-        title="Load default content for all sections"
-      >
-        Load Default Content
-      </UButton>
-    </div>
+  <UDashboardPage>
+    <UDashboardPanel grow>
+      <UDashboardNavbar title="Page Editor" />
+      <UDashboardPanelContent>
+        <div class="p-6">
+          <div class="flex justify-between items-center mb-6">
+            <h1 class="text-2xl font-bold">Page Content Management</h1>
+            <UButton
+              color="gray"
+              @click="runSeed"
+              :loading="isSeeding"
+              icon="i-heroicons-arrow-path"
+              title="Load default content for all sections"
+            >
+              Load Default Content
+            </UButton>
+          </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-      <!-- Sidebar with sections -->
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-        <h2 class="text-lg font-semibold mb-4">Content Sections</h2>
-        <div class="space-y-2">
-          <UButton
-            v-for="section in sections"
-            :key="section.id"
-            :class="[
-              'w-full justify-start',
-              selectedSection?.id === section.id
-                ? 'bg-primary-500'
-                : 'bg-gray-100 dark:bg-gray-700',
-            ]"
-            :color="selectedSection?.id === section.id ? 'white' : 'gray'"
-            @click="selectSection(section)"
-          >
-            {{ section.label }}
-          </UButton>
-        </div>
-      </div>
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <!-- Sidebar with sections -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
+              <h2 class="text-lg font-semibold mb-4">Content Sections</h2>
+              <div class="space-y-2">
+                <UButton
+                  v-for="section in sections"
+                  :key="section.id"
+                  :class="[
+                    'w-full justify-start',
+                    selectedSection?.id === section.id
+                      ? 'bg-primary-500'
+                      : 'bg-gray-100 dark:bg-gray-700',
+                  ]"
+                  :color="selectedSection?.id === section.id ? 'white' : 'gray'"
+                  @click="selectSection(section)"
+                >
+                  {{ section.label }}
+                </UButton>
+              </div>
+            </div>
 
-      <!-- Content editor -->
-      <div
-        class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 md:col-span-3"
-      >
-        <div v-if="selectedSection">
-          <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold">
-              Editing: {{ selectedSection.label }}
-            </h2>
-            <div class="flex gap-2">
-              <UButton
-                color="primary"
-                :loading="isSaving"
-                :disabled="!jsonValid"
-                @click="saveContent"
-              >
-                Save Changes
-              </UButton>
+            <!-- Content editor -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-lg shadow p-4 md:col-span-3"
+            >
+              <div v-if="selectedSection">
+                <div class="flex justify-between items-center mb-4">
+                  <h2 class="text-lg font-semibold">
+                    Editing: {{ selectedSection.label }}
+                  </h2>
+                  <div class="flex gap-2">
+                    <UButton
+                      color="primary"
+                      :loading="isSaving"
+                      :disabled="!jsonValid"
+                      @click="saveContent"
+                    >
+                      Save Changes
+                    </UButton>
+                  </div>
+                </div>
+
+                <div class="mb-4">
+                  <UAlert
+                    v-if="!jsonValid"
+                    color="red"
+                    title="Invalid JSON"
+                    :description="jsonError"
+                    icon="i-heroicons-exclamation-triangle"
+                  />
+                </div>
+
+                <UTextarea
+                  class="font-mono text-sm"
+                  v-model="jsonContent"
+                  rows="20"
+                  :error="!jsonValid"
+                  @blur="validateJSON"
+                />
+
+                <div class="mt-4">
+                  <p class="text-xs text-gray-500">
+                    Edit the JSON above to update the content. Click "Save
+                    Changes" when done.
+                  </p>
+                </div>
+              </div>
+              <div class="flex items-center justify-center h-64" v-else>
+                <p class="text-gray-500">
+                  Select a section to edit from the sidebar
+                </p>
+              </div>
             </div>
           </div>
-
-          <div class="mb-4">
-            <UAlert
-              v-if="!jsonValid"
-              color="red"
-              title="Invalid JSON"
-              :description="jsonError"
-              icon="i-heroicons-exclamation-triangle"
-            />
-          </div>
-
-          <UTextarea
-            class="font-mono text-sm"
-            v-model="jsonContent"
-            rows="20"
-            :error="!jsonValid"
-            @blur="validateJSON"
-          />
-
-          <div class="mt-4">
-            <p class="text-xs text-gray-500">
-              Edit the JSON above to update the content. Click "Save Changes"
-              when done.
-            </p>
-          </div>
         </div>
-        <div class="flex items-center justify-center h-64" v-else>
-          <p class="text-gray-500">Select a section to edit from the sidebar</p>
-        </div>
-      </div>
-    </div>
-  </div>
+      </UDashboardPanelContent>
+    </UDashboardPanel>
+  </UDashboardPage>
 </template>
