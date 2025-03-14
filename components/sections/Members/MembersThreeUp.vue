@@ -106,7 +106,7 @@ const socialIcons: Record<string, string> = {
           v-for="member in members"
           :key="member.id"
         >
-          <img
+          <NuxtImg
             class="mx-auto h-48 w-48 rounded-full md:h-56 md:w-56 object-cover object-top"
             :src="member.image"
             :alt="member.name"
@@ -127,10 +127,10 @@ const socialIcons: Record<string, string> = {
               :key="platform"
             >
               <li v-if="url">
-                <a :href="url" target="_blank" rel="noopener noreferrer">
+                <NuxtLink :to="url" target="_blank" rel="noopener noreferrer">
                   <span class="sr-only">{{ platform }}</span>
                   <Icon class="w-6 h-6" :name="socialIcons[platform]" />
-                </a>
+                </NuxtLink>
               </li>
             </template>
           </ul>

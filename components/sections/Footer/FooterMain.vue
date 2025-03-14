@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import { ref } from '#imports'
 import { z } from 'zod'
-import { showToast } from '~/utils/showToast'
-import { handleKeydownSubmit } from '~/utils/handleKeydownSubmit'
 import type { FormSubmitEvent } from '#ui/types'
 import type { FooterNavigation } from '~/types/Navigation'
 

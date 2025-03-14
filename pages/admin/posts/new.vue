@@ -139,6 +139,39 @@ const confirmMediaSelection = () => {
   showMediaModal.value = false
 }
 
+// Editor actions
+const toggleBold = () => editor.value?.chain().focus().toggleBold().run()
+const toggleItalic = () => editor.value?.chain().focus().toggleItalic().run()
+const toggleBulletList = () =>
+  editor.value?.chain().focus().toggleBulletList().run()
+const toggleOrderedList = () =>
+  editor.value?.chain().focus().toggleOrderedList().run()
+const toggleHeading2 = () =>
+  editor.value?.chain().focus().toggleHeading({ level: 2 }).run()
+const toggleHeading3 = () =>
+  editor.value?.chain().focus().toggleHeading({ level: 3 }).run()
+const toggleCodeBlock = () =>
+  editor.value?.chain().focus().toggleCodeBlock().run()
+const toggleCode = () => editor.value?.chain().focus().toggleCode().run()
+const toggleBlockquote = () =>
+  editor.value?.chain().focus().toggleBlockquote().run()
+const addHorizontalRule = () =>
+  editor.value?.chain().focus().setHorizontalRule().run()
+const unsetLink = () =>
+  editor.value?.chain().focus().extendMarkRange('link').unsetLink().run()
+const setLink = (close: () => void) => {
+  editor.value?.chain().focus().setLink({ href: linkUrl.value }).run()
+  linkUrl.value = ''
+  close()
+}
+
+// Media actions
+const selectMediaItem = (index: number) => {
+  selectMedia({
+    filepath: `https://picsum.photos/seed/${index}/400/300`,
+  })
+}
+
 // Define API response type
 type ApiResponse = {
   statusCode: number
@@ -276,16 +309,22 @@ const savePost = async () => {
                           variant="ghost"
                           size="xs"
                           icon="i-heroicons-bold"
-                          :class="{ 'bg-gray-100': editor.isActive('bold') }"
-                          @click="editor.chain().focus().toggleBold().run()"
+                          :class="{
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('bold'),
+                          }"
+                          @click="toggleBold"
                         />
                         <UButton
                           color="gray"
                           variant="ghost"
                           size="xs"
                           icon="i-heroicons-italic"
-                          :class="{ 'bg-gray-100': editor.isActive('italic') }"
-                          @click="editor.chain().focus().toggleItalic().run()"
+                          :class="{
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('italic'),
+                          }"
+                          @click="toggleItalic"
                         />
                         <UButton
                           color="gray"
@@ -293,11 +332,10 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-list-bullet"
                           :class="{
-                            'bg-gray-100': editor.isActive('bulletList'),
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('bulletList'),
                           }"
-                          @click="
-                            editor.chain().focus().toggleBulletList().run()
-                          "
+                          @click="toggleBulletList"
                         />
                         <UButton
                           color="gray"
@@ -305,11 +343,10 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-list-decimal"
                           :class="{
-                            'bg-gray-100': editor.isActive('orderedList'),
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('orderedList'),
                           }"
-                          @click="
-                            editor.chain().focus().toggleOrderedList().run()
-                          "
+                          @click="toggleOrderedList"
                         />
                         <UButton
                           color="gray"
@@ -317,17 +354,14 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-heading"
                           :class="{
-                            'bg-gray-100': editor.isActive('heading', {
-                              level: 2,
-                            }),
+                            'bg-gray-100 dark:bg-gray-800': editor.isActive(
+                              'heading',
+                              {
+                                level: 2,
+                              }
+                            ),
                           }"
-                          @click="
-                            editor
-                              .chain()
-                              .focus()
-                              .toggleHeading({ level: 2 })
-                              .run()
-                          "
+                          @click="toggleHeading2"
                         >
                           H2
                         </UButton>
@@ -337,17 +371,14 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-heading"
                           :class="{
-                            'bg-gray-100': editor.isActive('heading', {
-                              level: 3,
-                            }),
+                            'bg-gray-100 dark:bg-gray-800': editor.isActive(
+                              'heading',
+                              {
+                                level: 3,
+                              }
+                            ),
                           }"
-                          @click="
-                            editor
-                              .chain()
-                              .focus()
-                              .toggleHeading({ level: 3 })
-                              .run()
-                          "
+                          @click="toggleHeading3"
                         >
                           H3
                         </UButton>
@@ -364,15 +395,11 @@ const savePost = async () => {
                           variant="ghost"
                           size="xs"
                           icon="i-heroicons-link"
-                          :class="{ 'bg-gray-100': editor.isActive('link') }"
-                          @click="
-                            editor
-                              .chain()
-                              .focus()
-                              .extendMarkRange('link')
-                              .unsetLink()
-                              .run()
-                          "
+                          :class="{
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('link'),
+                          }"
+                          @click="unsetLink"
                         />
                         <UPopover v-else>
                           <UButton
@@ -401,15 +428,7 @@ const savePost = async () => {
                                 <UButton
                                   size="sm"
                                   color="primary"
-                                  @click="
-                                    editor
-                                      .chain()
-                                      .focus()
-                                      .setLink({ href: linkUrl })
-                                      .run()
-                                    linkUrl = ''
-                                    close()
-                                  "
+                                  @click="setLink(close)"
                                 >
                                   Add Link
                                 </UButton>
@@ -423,19 +442,21 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-code-bracket"
                           :class="{
-                            'bg-gray-100': editor.isActive('codeBlock'),
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('codeBlock'),
                           }"
-                          @click="
-                            editor.chain().focus().toggleCodeBlock().run()
-                          "
+                          @click="toggleCodeBlock"
                         />
                         <UButton
                           color="gray"
                           variant="ghost"
                           size="xs"
                           icon="i-heroicons-code-bracket-square"
-                          :class="{ 'bg-gray-100': editor.isActive('code') }"
-                          @click="editor.chain().focus().toggleCode().run()"
+                          :class="{
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('code'),
+                          }"
+                          @click="toggleCode"
                         />
                         <UButton
                           color="gray"
@@ -443,20 +464,17 @@ const savePost = async () => {
                           size="xs"
                           icon="i-heroicons-quote-right"
                           :class="{
-                            'bg-gray-100': editor.isActive('blockquote'),
+                            'bg-gray-100 dark:bg-gray-800':
+                              editor.isActive('blockquote'),
                           }"
-                          @click="
-                            editor.chain().focus().toggleBlockquote().run()
-                          "
+                          @click="toggleBlockquote"
                         />
                         <UButton
                           color="gray"
                           variant="ghost"
                           size="xs"
                           icon="i-heroicons-horizontal-rule"
-                          @click="
-                            editor.chain().focus().setHorizontalRule().run()
-                          "
+                          @click="addHorizontalRule"
                         />
                       </div>
                       <TiptapEditor
@@ -628,11 +646,7 @@ const savePost = async () => {
                   'ring-2 ring-primary-500':
                     selectedMedia === `https://picsum.photos/seed/${i}/400/300`,
                 }"
-                @click="
-                  selectMedia({
-                    filepath: `https://picsum.photos/seed/${i}/400/300`,
-                  })
-                "
+                @click="selectMediaItem(i)"
               >
                 <div class="aspect-square relative overflow-hidden bg-gray-100">
                   <NuxtImg
