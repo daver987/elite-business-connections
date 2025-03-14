@@ -7,12 +7,13 @@ definePageMeta({
 
 const defaultColumns = [
   {
-    key: 'id',
-    label: '#',
-  },
-  {
     key: 'name',
     label: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'company',
+    label: 'Company',
     sortable: true,
   },
   {
@@ -77,6 +78,11 @@ function onSelect(row: User) {
   } else {
     selected.value.splice(index, 1)
   }
+}
+
+function onRowClick(row: User) {
+  // Navigate to the member detail page
+  navigateTo(`/portal/members/${row.id}`)
 }
 
 defineShortcuts({
@@ -164,11 +170,16 @@ defineShortcuts({
         :columns="columns"
         :loading="pending"
         sort-mode="manual"
-        :ui="{ divide: 'divide-gray-200 dark:divide-gray-800' }"
+        :ui="{
+          divide: 'divide-gray-200 dark:divide-gray-800',
+          tr: {
+            base: 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800/50',
+          },
+        }"
         @select="onSelect"
       >
         <template #name-data="{ row }">
-          <div class="flex items-center gap-3">
+          <div class="flex items-center gap-3" @click="onRowClick(row)">
             <UAvatar v-bind="row.avatar" :alt="row.name" size="xs" />
 
             <span class="text-gray-900 dark:text-white font-medium">{{
@@ -190,6 +201,11 @@ defineShortcuts({
             "
             variant="subtle"
           />
+        </template>
+        <template #company-data="{ row }">
+          <span class="text-gray-900 dark:text-white">
+            {{ row.company || 'N/A' }}
+          </span>
         </template>
       </UTable>
     </UDashboardPanel>
