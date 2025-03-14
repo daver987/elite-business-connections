@@ -479,7 +479,7 @@ const previewPost = () => {
                     <div class="font-medium">Publication Settings</div>
                   </template>
 
-                  <div class="space-y-4">
+                  <div class="space-y-6 p-2">
                     <!-- Slug -->
                     <UFormGroup label="Post URL Slug" name="slug">
                       <UInput
@@ -490,26 +490,26 @@ const previewPost = () => {
                       />
                       <template #hint>
                         <span class="text-xs text-gray-500">
-                          URL-friendly version of the title. Automatically
-                          generated but can be edited.
+                          URL-friendly version of the title. Automatically generated but can be edited.
                         </span>
                       </template>
                     </UFormGroup>
 
                     <!-- Publication Status -->
-                    <UFormGroup label="Status" name="published">
-                      <UToggle
-                        v-model="state.published"
-                        :on-icon="'i-heroicons-eye'"
-                        :off-icon="'i-heroicons-eye-slash'"
-                      >
-                        <span v-if="state.published">Published</span>
-                        <span v-else>Draft</span>
-                      </UToggle>
+                    <UFormGroup label="Status" name="published" class="mb-4">
+                      <div class="flex items-center">
+                        <UToggle
+                          v-model="state.published"
+                          :on-icon="'i-heroicons-eye'"
+                          :off-icon="'i-heroicons-eye-slash'"
+                          class="mr-3"
+                        />
+                        <span class="text-sm" v-if="state.published">Published</span>
+                        <span class="text-sm" v-else>Draft</span>
+                      </div>
                       <template #hint>
-                        <span class="text-xs text-gray-500">
-                          Draft posts are only visible to admins. Published
-                          posts are public.
+                        <span class="text-xs text-gray-500 mt-2">
+                          Draft posts are only visible to admins. Published posts are public.
                         </span>
                       </template>
                     </UFormGroup>
